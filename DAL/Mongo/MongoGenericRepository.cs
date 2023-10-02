@@ -5,15 +5,7 @@ using System.Linq.Expressions;
 
 namespace DocumentStoreManagement.DAL.Mongo
 {
-    /// <summary>
-    /// A non-instantiable base entity which defines members available across all entities
-    /// </summary>
-    public abstract class EntityBase
-    {
-        public string Id { get; set; }
-    }
-
-    public class MongoGenericRepository<T> : IGenericRepository<T> where T : class
+    public class MongoGenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
         protected readonly IMongoDatabase database;
         protected readonly IMongoCollection<T> dbSet;
@@ -41,7 +33,7 @@ namespace DocumentStoreManagement.DAL.Mongo
 
         public async Task<T> GetByIdAsync(object id)
         {
-            return await dbSet.Find(FilterId(id)).FirstOrDefaultAsync();
+            return await dbSet.Find(x => x.Id == (string)id).FirstOrDefaultAsync();
         }
 
         public IEnumerable<T> FindAsync(Expression<Func<T, bool>> expression)
@@ -51,7 +43,7 @@ namespace DocumentStoreManagement.DAL.Mongo
 
         public async Task RemoveAsync(T entity)
         {
-            await dbSet.DeleteOneAsync(FilterId(entity));
+            await dbSet.DeleteOneAsync(x => x.Id == entity.Id);
         }
 
         public Task RemoveRangeAsync(IEnumerable<T> entities)
@@ -61,17 +53,12 @@ namespace DocumentStoreManagement.DAL.Mongo
 
         public async Task UpdateAsync(T entity)
         {
-            await dbSet.ReplaceOneAsync(FilterId(entity), entity);
+            await dbSet.ReplaceOneAsync(x => x.Id == entity.Id, entity);
         }
 
         public async Task<bool> CheckExistsAsync(Expression<Func<T, bool>> expression)
         {
             return await dbSet.Find(expression).AnyAsync();
-        }
-
-        private static FilterDefinition<T> FilterId(object key)
-        {
-            return Builders<T>.Filter.Eq("Id", key);
         }
     }
 }
