@@ -30,6 +30,14 @@ namespace DocumentStoreManagement.Services
 
         public async Task Create(Document document)
         {
+            document = new Book
+            {
+                Id = document.Id,
+                PublisherName = document.PublisherName,
+                ReleaseQuantity = 12,
+                AuthorName = "bà ơi bà ơi",
+                PageNumber = 1
+            };
             await _documentRepository.AddAsync(document);
         }
 

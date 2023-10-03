@@ -18,6 +18,10 @@ namespace DocumentStoreManagement.Controllers
         }
 
         // GET: api/Students
+        /// <summary>
+        /// ABC
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IEnumerable<Student>> GetStudents()
         {
