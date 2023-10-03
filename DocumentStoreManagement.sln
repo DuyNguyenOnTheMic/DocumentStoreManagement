@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocumentStoreManagement", "DocumentStoreManagement.csproj", "{704522CA-CFEA-4A70-8C85-E1CF94BB3C82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocumentStoreManagement", "DocumentStoreManagement\DocumentStoreManagement.csproj", "{704522CA-CFEA-4A70-8C85-E1CF94BB3C82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentStoreManagement.Core", "DocumentStoreManagement.Core\DocumentStoreManagement.Core.csproj", "{FC4A3778-1A1D-42E2-A079-3651B07F788C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{704522CA-CFEA-4A70-8C85-E1CF94BB3C82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{704522CA-CFEA-4A70-8C85-E1CF94BB3C82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{704522CA-CFEA-4A70-8C85-E1CF94BB3C82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC4A3778-1A1D-42E2-A079-3651B07F788C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC4A3778-1A1D-42E2-A079-3651B07F788C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC4A3778-1A1D-42E2-A079-3651B07F788C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC4A3778-1A1D-42E2-A079-3651B07F788C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
