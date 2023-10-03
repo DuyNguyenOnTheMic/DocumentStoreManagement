@@ -1,6 +1,7 @@
 ﻿using DocumentStoreManagement.Core.Interfaces;
 using DocumentStoreManagement.Core.Models.SQL;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DocumentStoreManagement.Controllers
 {
@@ -16,7 +17,7 @@ namespace DocumentStoreManagement.Controllers
             _studentRepository = studentRepository;
         }
 
-        /*// GET: api/Students
+        // GET: api/Students
         [HttpGet]
         public async Task<IEnumerable<Student>> GetStudents()
         {
@@ -112,6 +113,6 @@ namespace DocumentStoreManagement.Controllers
         private async Task<bool> StudentExists(int id)
         {
             return await _studentRepository.CheckExistsAsync(e => e.Id == id);
-        }*/
+        }
     }
 }
