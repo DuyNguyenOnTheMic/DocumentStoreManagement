@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocumentStoreManagement", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentStoreManagement.Core", "DocumentStoreManagement.Core\DocumentStoreManagement.Core.csproj", "{FC4A3778-1A1D-42E2-A079-3651B07F788C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentStoreManagement.Infrastructure", "DocumentStoreManagement.Infrastructure\DocumentStoreManagement.Infrastructure.csproj", "{65902040-3595-40B7-ADAF-7B5028CFB0B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentStoreManagement.Services", "DocumentStoreManagement.Services\DocumentStoreManagement.Services.csproj", "{9D55ED96-09E2-4FBD-9BAC-C5AF602E599C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{FC4A3778-1A1D-42E2-A079-3651B07F788C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC4A3778-1A1D-42E2-A079-3651B07F788C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC4A3778-1A1D-42E2-A079-3651B07F788C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65902040-3595-40B7-ADAF-7B5028CFB0B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65902040-3595-40B7-ADAF-7B5028CFB0B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65902040-3595-40B7-ADAF-7B5028CFB0B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65902040-3595-40B7-ADAF-7B5028CFB0B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D55ED96-09E2-4FBD-9BAC-C5AF602E599C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D55ED96-09E2-4FBD-9BAC-C5AF602E599C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D55ED96-09E2-4FBD-9BAC-C5AF602E599C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D55ED96-09E2-4FBD-9BAC-C5AF602E599C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
