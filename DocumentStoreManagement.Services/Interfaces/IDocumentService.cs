@@ -2,7 +2,7 @@
 
 namespace DocumentStoreManagement.Services.Interfaces
 {
-    public interface IDocument
+    public interface IDocumentService
     {
         Task<IEnumerable<Document>> GetAll();
         Task<Document> GetById(string id);

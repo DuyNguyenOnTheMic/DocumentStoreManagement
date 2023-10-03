@@ -8,18 +8,18 @@ namespace DocumentStoreManagement.Controllers
     [ApiController]
     public class DocumentsController : ControllerBase
     {
-        private readonly IDocument _document;
+        private readonly IDocumentService _documentService;
 
-        public DocumentsController(IDocument document)
+        public DocumentsController(IDocumentService documentService)
         {
-            _document = document;
+            _documentService = documentService;
         }
 
         // GET: api/Documents
         [HttpGet]
         public async Task<IEnumerable<Document>> GetDocuments()
         {
-            return await _document.GetAll();
+            return await _documentService.GetAll();
         }
 
         // POST: api/Documents
@@ -27,7 +27,7 @@ namespace DocumentStoreManagement.Controllers
         [HttpPost]
         public async Task<IActionResult> PostDocument(Document document)
         {
-            await _document.AddNew(document);
+            await _documentService.AddNew(document);
             return CreatedAtAction(nameof(GetDocuments), new { id = document.Id }, document);
         }
 
@@ -35,12 +35,12 @@ namespace DocumentStoreManagement.Controllers
         [HttpDelete("{id:length(24)}")]
         public async Task<IActionResult> Delete(string id)
         {
-            Document document = await _document.GetById(id);
+            Document document = await _documentService.GetById(id);
             if (document is null)
             {
                 return NotFound();
             }
-            await _document.Delete(document);
+            await _documentService.Delete(document);
             return NoContent();
         }
     }

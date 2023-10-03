@@ -1,28 +1,9 @@
-using DocumentStoreManagement.Core.Interfaces;
-using DocumentStoreManagement.Infrastructure;
-using DocumentStoreManagement.Infrastructure.Repositories.SQL;
-using Microsoft.EntityFrameworkCore;
+using DocumentStoreManagement.Infrastructure.ServiceExtension;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container
-
-// SQL context
-builder.Services.AddScoped<DbContext, SqlApplicationContext>();
-builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(SqlGenericRepository<>));
-builder.Services.AddTransient<IUnitOfWork, SqlUnitOfWork>();
-var connectionString = builder.Configuration.GetConnectionString("SqlDbConnection") ?? throw new InvalidOperationException("Connection string 'SqlDbConnection' not found.");
-var issuerUri = builder.Configuration["IdentityServer:IssuerUri"];
-builder.Services.AddDbContext<DbContext>(options => options.UseSqlServer(connectionString));
-
-// MongoDB context
-/*builder.Services.Configure<MongoDbSettings>(
-    builder.Configuration.GetSection("MongoDBDatabase"));
-builder.Services.AddSingleton<IMongoDbSettings>(sp =>
-    sp.GetRequiredService<IOptions<MongoDbSettings>>().Value);
-builder.Services.AddScoped<IMongoApplicationContext, MongoApplicationContext>();
-builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(MongoGenericRepository<>));
-builder.Services.AddScoped<IDocument, DocumentBo>();*/
+// Add services to the container.
+builder.Services.AddDIServices(builder.Configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

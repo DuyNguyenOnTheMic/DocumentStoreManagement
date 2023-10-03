@@ -4,11 +4,11 @@ using DocumentStoreManagement.Services.Interfaces;
 
 namespace DocumentStoreManagement.Services
 {
-    public class DocumentBo : IDocument
+    public class DocumentService : IDocumentService
     {
         private readonly IGenericRepository<Document> _documentRepository;
 
-        public DocumentBo(IGenericRepository<Document> documentRepository)
+        public DocumentService(IGenericRepository<Document> documentRepository)
         {
             _documentRepository = documentRepository;
         }
