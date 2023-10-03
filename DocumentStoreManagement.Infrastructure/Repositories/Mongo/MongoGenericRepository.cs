@@ -1,6 +1,5 @@
 ﻿using DocumentStoreManagement.Core.Interfaces;
 using DocumentStoreManagement.Core.Models.MongoDB;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Linq.Expressions;
 
@@ -29,7 +28,7 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.Mongo
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return await dbSet.Find(new BsonDocument()).ToListAsync();
+            return await dbSet.Find(_ => true).ToListAsync();
         }
 
         public async Task<T> GetByIdAsync(object id)
