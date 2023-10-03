@@ -75,6 +75,18 @@ namespace DocumentStoreManagement.Controllers
 
         // POST: api/Students
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /Students
+        ///     {
+        ///         "identityCode": "StudentCode",
+        ///         "name": "Student #1",
+        ///         "age": 18,
+        ///         "description": "Very Good"
+        ///     }
+        ///
+        /// </remarks>
         [HttpPost]
         public async Task<ActionResult<Student>> PostStudent(Student student)
         {

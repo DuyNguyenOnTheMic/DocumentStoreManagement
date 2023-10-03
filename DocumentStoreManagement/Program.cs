@@ -1,5 +1,7 @@
+using DocumentStoreManagement.Helpers;
 using DocumentStoreManagement.Infrastructure;
 using DocumentStoreManagement.Infrastructure.ServiceExtension;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 
@@ -10,7 +12,8 @@ builder.Services.Configure<MongoDbSettings>(
     builder.Configuration.GetSection("MongoDBDatabase"));
 builder.Services.AddDIServices(builder.Configuration);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(opts =>
+    opts.Conventions.Add(new RouteTokenTransformerConvention(new ToKebabParameterTransformer())));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
