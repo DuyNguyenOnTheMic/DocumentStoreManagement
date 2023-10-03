@@ -1,6 +1,6 @@
 ﻿using MongoDB.Driver;
 
-namespace DocumentStoreManagement.Models.MongoDB
+namespace DocumentStoreManagement.Core.Models.MongoDB
 {
     public interface IMongoApplicationContext
     {

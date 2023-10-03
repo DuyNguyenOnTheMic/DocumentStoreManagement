@@ -1,32 +1,34 @@
-﻿using DocumentStoreManagement.DAL;
+﻿using DocumentStoreManagement.Core.Interfaces;
+using DocumentStoreManagement.Core.Models.MongoDB;
+using DocumentStoreManagement.Services.Interfaces;
 
-namespace DocumentStoreManagement.Services.Document
+namespace DocumentStoreManagement.Services
 {
     public class DocumentBo : IDocument
     {
-        private readonly IGenericRepository<Models.MongoDB.Document> _documentRepository;
+        private readonly IGenericRepository<Document> _documentRepository;
 
-        public DocumentBo(IGenericRepository<Models.MongoDB.Document> documentRepository)
+        public DocumentBo(IGenericRepository<Document> documentRepository)
         {
             _documentRepository = documentRepository;
         }
 
-        public async Task<IEnumerable<Models.MongoDB.Document>> GetAll()
+        public async Task<IEnumerable<Document>> GetAll()
         {
             return await _documentRepository.GetAllAsync();
         }
 
-        public async Task<Models.MongoDB.Document> GetById(string id)
+        public async Task<Document> GetById(string id)
         {
             return await _documentRepository.GetByIdAsync(id);
         }
 
-        public async Task AddNew(Models.MongoDB.Document document)
+        public async Task AddNew(Document document)
         {
             await _documentRepository.AddAsync(document);
         }
 
-        public async Task Delete(Models.MongoDB.Document document)
+        public async Task Delete(Document document)
         {
             await _documentRepository.RemoveAsync(document);
         }

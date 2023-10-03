@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace DocumentStoreManagement.Models.SQL
+namespace DocumentStoreManagement.Core.Models.SQL
 {
     public class SqlApplicationContext : DbContext
     {

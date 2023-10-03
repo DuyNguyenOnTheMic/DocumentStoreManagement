@@ -1,4 +1,4 @@
-﻿namespace DocumentStoreManagement.DAL
+﻿namespace DocumentStoreManagement.Core.Interfaces
 {
     public interface IUnitOfWork : IAsyncDisposable
     {

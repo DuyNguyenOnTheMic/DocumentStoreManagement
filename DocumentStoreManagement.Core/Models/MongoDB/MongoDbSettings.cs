@@ -1,4 +1,4 @@
-﻿namespace DocumentStoreManagement.Models.MongoDB
+﻿namespace DocumentStoreManagement.Core.Models.MongoDB
 {
     public class MongoDbSettings : IMongoDbSettings
     {

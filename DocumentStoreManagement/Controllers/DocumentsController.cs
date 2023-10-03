@@ -1,5 +1,5 @@
-﻿using DocumentStoreManagement.Models.MongoDB;
-using DocumentStoreManagement.Services.Document;
+﻿using DocumentStoreManagement.Core.Models.MongoDB;
+using DocumentStoreManagement.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DocumentStoreManagement.Controllers

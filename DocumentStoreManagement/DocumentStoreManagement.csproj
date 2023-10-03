@@ -15,12 +15,13 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.10" />
-    <PackageReference Include="MongoDB.Driver" Version="2.21.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <ProjectReference Include="..\DocumentStoreManagement.Core\DocumentStoreManagement.Core.csproj" />
+    <ProjectReference Include="..\DocumentStoreManagement.Infrastructure\DocumentStoreManagement.Infrastructure.csproj" />
+    <ProjectReference Include="..\DocumentStoreManagement.Services\DocumentStoreManagement.Services.csproj" />
   </ItemGroup>
 
 </Project>

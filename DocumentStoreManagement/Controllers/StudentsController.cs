@@ -1,5 +1,5 @@
-﻿using DocumentStoreManagement.DAL;
-using DocumentStoreManagement.Models.SQL;
+﻿using DocumentStoreManagement.Core.Interfaces;
+using DocumentStoreManagement.Core.Models.SQL;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DocumentStoreManagement.Controllers

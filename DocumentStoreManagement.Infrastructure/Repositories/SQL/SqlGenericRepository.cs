@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DocumentStoreManagement.Core.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace DocumentStoreManagement.DAL.SQL
+namespace DocumentStoreManagement.Infrastructure.Repositories.SQL
 {
     public class SqlGenericRepository<T> : IGenericRepository<T> where T : class
     {

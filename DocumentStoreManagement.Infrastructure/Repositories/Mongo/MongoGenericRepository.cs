@@ -1,9 +1,9 @@
-﻿using DocumentStoreManagement.Models.MongoDB;
-using Microsoft.EntityFrameworkCore;
+﻿using DocumentStoreManagement.Core.Interfaces;
+using DocumentStoreManagement.Core.Models.MongoDB;
 using MongoDB.Driver;
 using System.Linq.Expressions;
 
-namespace DocumentStoreManagement.DAL.Mongo
+namespace DocumentStoreManagement.Infrastructure.Repositories.Mongo
 {
     public class MongoGenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {

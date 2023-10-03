@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace DocumentStoreManagement.DAL
+namespace DocumentStoreManagement.Core.Interfaces
 {
     public interface IGenericRepository<T> where T : class
     {

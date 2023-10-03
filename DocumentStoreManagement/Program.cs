@@ -1,7 +1,8 @@
-using DocumentStoreManagement.DAL;
-using DocumentStoreManagement.DAL.Mongo;
-using DocumentStoreManagement.Models.MongoDB;
-using DocumentStoreManagement.Services.Document;
+using DocumentStoreManagement.Core.Interfaces;
+using DocumentStoreManagement.Core.Models.MongoDB;
+using DocumentStoreManagement.Infrastructure.Repositories.Mongo;
+using DocumentStoreManagement.Services;
+using DocumentStoreManagement.Services.Interfaces;
 using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);

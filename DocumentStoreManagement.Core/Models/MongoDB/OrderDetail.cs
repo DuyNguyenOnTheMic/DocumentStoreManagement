@@ -1,7 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace DocumentStoreManagement.Models.MongoDB
+namespace DocumentStoreManagement.Core.Models.MongoDB
 {
     public class OrderDetail
     {

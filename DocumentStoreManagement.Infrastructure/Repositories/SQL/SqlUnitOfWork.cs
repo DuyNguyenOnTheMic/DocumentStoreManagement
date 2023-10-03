@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DocumentStoreManagement.Core.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
-namespace DocumentStoreManagement.DAL.SQL
+namespace DocumentStoreManagement.Infrastructure.Repositories.SQL
 {
     /// <summary>
     /// Encapsulates all repository transactions.

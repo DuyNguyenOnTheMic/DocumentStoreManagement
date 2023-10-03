@@ -1,10 +1,12 @@
-﻿namespace DocumentStoreManagement.Services.Document
+﻿using DocumentStoreManagement.Core.Models.MongoDB;
+
+namespace DocumentStoreManagement.Services.Interfaces
 {
     public interface IDocument
     {
-        Task<IEnumerable<Models.MongoDB.Document>> GetAll();
-        Task<Models.MongoDB.Document> GetById(string id);
-        Task AddNew(Models.MongoDB.Document document);
-        Task Delete(Models.MongoDB.Document document);
+        Task<IEnumerable<Document>> GetAll();
+        Task<Document> GetById(string id);
+        Task AddNew(Document document);
+        Task Delete(Document document);
     }
 }
