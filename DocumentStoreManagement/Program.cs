@@ -1,5 +1,5 @@
 using DocumentStoreManagement.Core.Interfaces;
-using DocumentStoreManagement.Core.Models.MongoDB;
+using DocumentStoreManagement.Infrastructure;
 using DocumentStoreManagement.Infrastructure.Repositories.Mongo;
 using DocumentStoreManagement.Services;
 using DocumentStoreManagement.Services.Interfaces;

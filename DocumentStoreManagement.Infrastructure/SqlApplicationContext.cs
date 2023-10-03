@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DocumentStoreManagement.Core.Models.SQL;
+using Microsoft.EntityFrameworkCore;
 
-namespace DocumentStoreManagement.Core.Models.SQL
+namespace DocumentStoreManagement.Infrastructure
 {
     public class SqlApplicationContext : DbContext
     {
