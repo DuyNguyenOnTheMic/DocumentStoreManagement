@@ -22,18 +22,33 @@ namespace DocumentStoreManagement.Controllers
             return await _documentService.GetAll();
         }
 
+        // PUT: api/Documents/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id:length(24)}")]
+        public async Task<IActionResult> PutDocument(string id, Document updatedDocument)
+        {
+            var document = await _documentService.GetById(id);
+            if (document is null)
+            {
+                return NotFound();
+            }
+            updatedDocument.Id = document.Id;
+            await _documentService.Update(updatedDocument);
+            return NoContent();
+        }
+
         // POST: api/Documents
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<IActionResult> PostDocument(Document document)
         {
-            await _documentService.AddNew(document);
+            await _documentService.Create(document);
             return CreatedAtAction(nameof(GetDocuments), new { id = document.Id }, document);
         }
 
         // DELETE: api/Documents/5
         [HttpDelete("{id:length(24)}")]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> DeleteDocument(string id)
         {
             Document document = await _documentService.GetById(id);
             if (document is null)

@@ -23,7 +23,12 @@ namespace DocumentStoreManagement.Services
             return await _documentRepository.GetByIdAsync(id);
         }
 
-        public async Task AddNew(Document document)
+        public async Task Update(Document document)
+        {
+            await _documentRepository.UpdateAsync(document);
+        }
+
+        public async Task Create(Document document)
         {
             await _documentRepository.AddAsync(document);
         }

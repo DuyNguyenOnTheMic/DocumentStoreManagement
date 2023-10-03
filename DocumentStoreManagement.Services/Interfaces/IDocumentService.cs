@@ -6,7 +6,8 @@ namespace DocumentStoreManagement.Services.Interfaces
     {
         Task<IEnumerable<Document>> GetAll();
         Task<Document> GetById(string id);
-        Task AddNew(Document document);
+        Task Create(Document document);
+        Task Update(Document document);
         Task Delete(Document document);
     }
 }

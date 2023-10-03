@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DocumentStoreManagement.Core\DocumentStoreManagement.Core.csproj" />
+    <ProjectReference Include="..\DocumentStoreManagement.Services\DocumentStoreManagement.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>
