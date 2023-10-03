@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="Main API Project">
+    <Position X="1.994" Y="0.633" Height="0.375" Width="4.366" />
+  </Comment>
+  <Comment CommentText="Application Core Layer">
+    <Position X="7.442" Y="0.625" Height="0.375" Width="10.625" />
+  </Comment>
+  <Comment CommentText="Infrastructure Layer">
+    <Position X="7.432" Y="9.257" Height="0.375" Width="10.625" />
+  </Comment>
+  <Comment CommentText="Services Layer">
+    <Position X="2" Y="9.25" Height="0.375" Width="4.378" />
+  </Comment>
+  <Class Name="DocumentStoreManagement.Controllers.DocumentsController">
+    <Position X="2.75" Y="1.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAUAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAgBAAAAAAA=</HashCode>
+      <FileName>Controllers\DocumentsController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DocumentStoreManagement.Core.Models.MongoDB.BaseEntity">
+    <Position X="10" Y="1.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="DocumentStoreManagement.Core.Models.MongoDB.Book">
+    <Position X="12.25" Y="6" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="DocumentStoreManagement.Core.Models.MongoDB.Document">
+    <Position X="10" Y="3.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="DocumentStoreManagement.Core.Models.MongoDB.Magazine">
+    <Position X="7.75" Y="6" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="DocumentStoreManagement.Core.Models.MongoDB.Newspaper">
+    <Position X="10" Y="6" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="DocumentStoreManagement.Core.Models.MongoDB.Order">
+    <Position X="14.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="DocumentStoreManagement.Core.Models.MongoDB.OrderDetail">
+    <Position X="16.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="DocumentStoreManagement.Infrastructure.Repositories.Mongo.MongoGenericRepository&lt;T&gt;">
+    <Position X="8.5" Y="12.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DocumentStoreManagement.Infrastructure.ServiceExtension.ServiceExtension">
+    <Position X="8.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="DocumentStoreManagement.Infrastructure.MongoApplicationContext">
+    <Position X="10.5" Y="12.5" Width="2.25" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DocumentStoreManagement.Infrastructure.MongoDbSettings">
+    <Position X="10.5" Y="10" Width="2.25" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DocumentStoreManagement.Services.DocumentService">
+    <Position X="2.25" Y="10" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="DocumentStoreManagement.Core.Interfaces.IGenericRepository&lt;T&gt;">
+    <Position X="14.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="DocumentStoreManagement.Core.Interfaces.IUnitOfWork">
+    <Position X="16.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="DocumentStoreManagement.Infrastructure.IMongoApplicationContext">
+    <Position X="13.25" Y="12.5" Width="2.25" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="DocumentStoreManagement.Infrastructure.IMongoDbSettings">
+    <Position X="13.25" Y="10.5" Width="2.25" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="DocumentStoreManagement.Services.Interfaces.IDocumentService">
+    <Position X="4.25" Y="10" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
