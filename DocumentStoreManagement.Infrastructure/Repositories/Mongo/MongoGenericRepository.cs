@@ -5,6 +5,10 @@ using System.Linq.Expressions;
 
 namespace DocumentStoreManagement.Infrastructure.Repositories.Mongo
 {
+    /// <summary>
+    /// Mongodb Generic Repository
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class MongoGenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
         protected readonly IMongoDatabase database;
@@ -16,6 +20,10 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.Mongo
             dbSet = database.GetCollection<T>(typeof(T).Name);
         }
 
+        /// <summary>
+        /// Add a new item
+        /// </summary>
+        /// <param name="entity"></param>
         public async Task AddAsync(T entity)
         {
             await dbSet.InsertOneAsync(entity);
@@ -36,6 +44,7 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.Mongo
             return await dbSet.Find(x => x.Id == (string)id).FirstOrDefaultAsync();
         }
 
+        // TODO: Not being implemented yet
         public IEnumerable<T> FindAsync(Expression<Func<T, bool>> expression)
         {
             throw new NotImplementedException();
@@ -46,6 +55,7 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.Mongo
             await dbSet.DeleteOneAsync(x => x.Id == entity.Id);
         }
 
+        // TODO: Not being implemented yet
         public Task RemoveRangeAsync(IEnumerable<T> entities)
         {
             throw new NotImplementedException();

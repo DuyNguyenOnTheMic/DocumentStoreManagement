@@ -24,17 +24,33 @@ namespace DocumentStoreManagement.Controllers
             _mediator = mediator;
         }
 
-        // GET: api/Documents
         /// <summary>
-        /// Get the document list from database
+        /// Gets the document list from database
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A list of all documents</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET api/documents
+        ///
+        /// </remarks>
         [HttpGet]
         public async Task<IEnumerable<Document>> GetDocuments()
         {
             return await _mediator.Send(new GetDocumentListQuery());
         }
 
+        /// <summary>
+        /// Gets a document bases on document id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>A document matches input id</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET api/documents/{id}
+        ///
+        /// </remarks>
         [HttpGet("{id:length(24)}")]
         public async Task<ActionResult<Document>> GetDocument(string id)
         {
@@ -48,10 +64,38 @@ namespace DocumentStoreManagement.Controllers
             return document;
         }
 
-        // PUT: api/Documents/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Updates a document
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="updatedDocument"></param>
+        /// <returns>An updated document</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     PUT api/documents/{id}
+        ///     {
+        ///         "id": "id",
+        ///         "publisherName": "Example Name",
+        ///         "releaseQuantity": 12,
+        ///         "book": {
+        ///           "authorName": "J. K. Rowling",
+        ///           "pageNumber": 218
+        ///         },
+        ///         "magazine": {
+        ///           "releaseNumber": 200,
+        ///           "releaseMonth": "07/2023"
+        ///         },
+        ///         "newspaper": {
+        ///           "releaseDate": "2023-10-04T08:44:20.351Z"
+        ///         }
+        ///     }
+        ///
+        /// ***NOTES***: Either book, magazine or newspaper is updated, the others will have null values.
+        ///
+        /// </remarks>
         [HttpPut("{id:length(24)}")]
-        public async Task<IActionResult> PutDocument(string id, Document updatedDocument)
+        public async Task<IActionResult> PutDocument(string id, [FromBody] Document updatedDocument)
         {
             var document = await _mediator.Send(new GetDocumentByIdQuery() { Id = id });
             if (document is null)
@@ -68,10 +112,36 @@ namespace DocumentStoreManagement.Controllers
             return NoContent();
         }
 
-        // POST: api/Documents
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Creates a document
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns>A newly created document</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST api/documents
+        ///     {
+        ///         "publisherName": "Example Name",
+        ///         "releaseQuantity": 12,
+        ///         "book": {
+        ///           "authorName": "J. K. Rowling",
+        ///           "pageNumber": 218
+        ///         },
+        ///         "magazine": {
+        ///           "releaseNumber": 200,
+        ///           "releaseMonth": "07/2023"
+        ///         },
+        ///         "newspaper": {
+        ///           "releaseDate": "2023-10-04T08:44:20.351Z"
+        ///         }
+        ///     }
+        ///
+        /// ***NOTES***: Either book, magazine or newspaper is added to this document object, the others will have null values.
+        ///
+        /// </remarks>
         [HttpPost]
-        public async Task<IActionResult> PostDocument(Document document)
+        public async Task<IActionResult> PostDocument([FromBody] Document document)
         {
             await _mediator.Send(new CreateDocumentCommand(
                             document.PublisherName,
@@ -82,7 +152,17 @@ namespace DocumentStoreManagement.Controllers
             return CreatedAtAction(nameof(GetDocuments), new { id = document.Id }, document);
         }
 
-        // DELETE: api/Documents/5
+        /// <summary>
+        /// Deletes a document
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Document is deleted</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     DELETE api/documents/{id}
+        ///
+        /// </remarks>
         [HttpDelete("{id:length(24)}")]
         public async Task<IActionResult> DeleteDocument(string id)
         {

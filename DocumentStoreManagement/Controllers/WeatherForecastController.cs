@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DocumentStoreManagement.Controllers
 {
+    /// <summary>
+    /// Sample weather forecase API controller
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
@@ -13,12 +16,20 @@ namespace DocumentStoreManagement.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
+        /// <summary>
+        /// Initiate logger for controller
+        /// </summary>
+        /// <param name="logger"></param>
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
+        /// <summary>
+        /// Fetchts the random weather forecast properties to api
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast

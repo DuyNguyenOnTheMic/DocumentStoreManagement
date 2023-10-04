@@ -25,18 +25,33 @@ namespace DocumentStoreManagement.Controllers
             _studentRepository = studentRepository;
         }
 
-        // GET: api/Students
         /// <summary>
-        /// Get the student list from database
+        /// Gets the student list from database
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A list of all students</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET api/students
+        ///
+        /// </remarks>
         [HttpGet]
         public async Task<IEnumerable<Student>> GetStudents()
         {
             return await _studentRepository.GetAllAsync();
         }
 
-        // GET: api/Students/5
+        /// <summary>
+        /// Gets a student bases on student id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>A student matches input id</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET api/students/{id}
+        ///
+        /// </remarks>
         [HttpGet("{id}")]
         public async Task<ActionResult<Student>> GetStudent(int id)
         {
@@ -50,10 +65,27 @@ namespace DocumentStoreManagement.Controllers
             return student;
         }
 
-        // PUT: api/Students/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Updates a student
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="student"></param>
+        /// <returns>An updated student</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     PUT api/students/{id}
+        ///     {
+        ///         "id": "Student Id"
+        ///         "identityCode": "Student Identity Code",
+        ///         "name": "Student #1",
+        ///         "age": 18,
+        ///         "description": "Wants to learn C#"
+        ///     }
+        ///
+        /// </remarks>
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutStudent(int id, Student student)
+        public async Task<IActionResult> PutStudent(int id, [FromBody] Student student)
         {
             if (id != student.Id)
             {
@@ -81,12 +113,17 @@ namespace DocumentStoreManagement.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Creates a student
+        /// </summary>
+        /// <param name="student"></param>
+        /// <returns>A newly created student</returns>
         /// <remarks>
         /// Sample request:
         ///
         ///     POST api/students
         ///     {
-        ///         "identityCode": "StudentCode",
+        ///         "identityCode": "Student Identity Code",
         ///         "name": "Student #1",
         ///         "age": 18,
         ///         "description": "Wants to learn C#"
@@ -94,7 +131,7 @@ namespace DocumentStoreManagement.Controllers
         ///
         /// </remarks>
         [HttpPost]
-        public async Task<ActionResult<Student>> PostStudent(Student student)
+        public async Task<ActionResult<Student>> PostStudent([FromBody] Student student)
         {
             await _studentRepository.AddAsync(student);
             try
@@ -116,7 +153,17 @@ namespace DocumentStoreManagement.Controllers
             return CreatedAtAction(nameof(GetStudent), new { id = student.Id }, student);
         }
 
-        // DELETE: api/Students/5
+        /// <summary>
+        /// Deletes a student
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Student is deleted</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     DELETE api/students/{id}
+        ///
+        /// </remarks>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteStudent(int id)
         {
@@ -132,6 +179,32 @@ namespace DocumentStoreManagement.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Deletes all students from database
+        /// </summary>
+        /// <returns>All students from database are deleted</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     DELETE api/students
+        ///
+        /// </remarks>
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAllStudents()
+        {
+            // Get all students from database and delete
+            var students = await _studentRepository.GetAllAsync();
+            await _studentRepository.RemoveRangeAsync(students);
+            await _unitOfWork.SaveAsync();
+
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Check if student exists method
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         private async Task<bool> StudentExists(int id)
         {
             return await _studentRepository.CheckExistsAsync(e => e.Id == id);

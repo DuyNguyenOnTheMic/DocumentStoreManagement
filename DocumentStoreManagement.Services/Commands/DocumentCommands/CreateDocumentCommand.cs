@@ -6,7 +6,7 @@ namespace DocumentStoreManagement.Services.Commands.DocumentCommands
     /// <summary>
     /// Command class to create document
     /// </summary>
-    public class CreateDocumentCommand : IRequest<Core.Models.MongoDB.Document>
+    public class CreateDocumentCommand : IRequest<Document>
     {
         public string PublisherName { get; set; } = null!;
         public int ReleaseQuantity { get; set; }
