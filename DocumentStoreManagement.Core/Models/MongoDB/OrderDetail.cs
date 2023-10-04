@@ -3,6 +3,9 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace DocumentStoreManagement.Core.Models.MongoDB
 {
+    /// <summary>
+    /// OrderDetail collection - to store order details of customer order
+    /// </summary>
     public class OrderDetail
     {
         [BsonId]

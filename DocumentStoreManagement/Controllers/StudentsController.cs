@@ -5,12 +5,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DocumentStoreManagement.Controllers
 {
+    /// <summary>
+    /// Student Management api controller
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class StudentsController : BaseController
     {
         private readonly IGenericRepository<Student> _studentRepository;
 
+        /// <summary>
+        /// Add dependencies to controller
+        /// </summary>
+        /// <param name="unitOfWork"></param>
+        /// <param name="studentRepository"></param>
         public StudentsController(IUnitOfWork unitOfWork, IGenericRepository<Student> studentRepository) : base(unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -19,7 +27,7 @@ namespace DocumentStoreManagement.Controllers
 
         // GET: api/Students
         /// <summary>
-        /// ABC
+        /// Get the student list from database
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -73,17 +81,15 @@ namespace DocumentStoreManagement.Controllers
             return NoContent();
         }
 
-        // POST: api/Students
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         /// <remarks>
         /// Sample request:
         ///
-        ///     POST /Students
+        ///     POST api/students
         ///     {
         ///         "identityCode": "StudentCode",
         ///         "name": "Student #1",
         ///         "age": 18,
-        ///         "description": "Very Good"
+        ///         "description": "Wants to learn C#"
         ///     }
         ///
         /// </remarks>
