@@ -15,7 +15,7 @@
   <Class Name="DocumentStoreManagement.Controllers.DocumentsController">
     <Position X="2.75" Y="1.25" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAUAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAgBAAAAAAA=</HashCode>
+      <HashCode>AAEBAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAgBAAAAAAA=</HashCode>
       <FileName>Controllers\DocumentsController.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -66,11 +66,6 @@
     <TypeIdentifier />
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="DocumentStoreManagement.Services.DocumentService">
-    <Position X="2.25" Y="10" Width="1.5" />
-    <TypeIdentifier />
-    <Lollipop Position="0.2" />
-  </Class>
   <Interface Name="DocumentStoreManagement.Core.Interfaces.IGenericRepository&lt;T&gt;">
     <Position X="14.25" Y="1.5" Width="1.5" />
     <TypeIdentifier />
@@ -85,10 +80,6 @@
   </Interface>
   <Interface Name="DocumentStoreManagement.Infrastructure.IMongoDbSettings">
     <Position X="13.25" Y="10.5" Width="2.25" />
-    <TypeIdentifier />
-  </Interface>
-  <Interface Name="DocumentStoreManagement.Services.Interfaces.IDocumentService">
-    <Position X="4.25" Y="10" Width="1.5" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />

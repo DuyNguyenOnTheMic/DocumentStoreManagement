@@ -204,7 +204,7 @@ namespace DocumentStoreManagement.Controllers
         /// Check if student exists method
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>Boolean</returns>
         private async Task<bool> StudentExists(int id)
         {
             return await _studentRepository.CheckExistsAsync(e => e.Id == id);
