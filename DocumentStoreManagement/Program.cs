@@ -1,11 +1,17 @@
 using DocumentStoreManagement.Helpers;
 using DocumentStoreManagement.Infrastructure;
 using DocumentStoreManagement.Infrastructure.ServiceExtension;
+using DocumentStoreManagement.Services.Behaviors;
+using MediatR;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Register MediatR services.
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(AppDomain.CurrentDomain.Load("DocumentStoreManagement.Services")));
+builder.Services.AddSingleton(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 
 // Add services to the container.
 builder.Services.Configure<MongoDbSettings>(
@@ -36,6 +42,7 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 
+    // Enable comments on Swagger UI
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });

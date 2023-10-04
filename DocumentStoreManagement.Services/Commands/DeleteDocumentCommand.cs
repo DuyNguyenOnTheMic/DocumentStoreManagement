@@ -2,7 +2,10 @@
 
 namespace DocumentStoreManagement.Services.Commands
 {
-    public class DeleteDocumentCommand : IRequest<int>
+    /// <summary>
+    /// Command class to delete document
+    /// </summary>
+    public class DeleteDocumentCommand : IRequest
     {
         public string Id { get; set; }
     }

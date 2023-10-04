@@ -3,7 +3,10 @@ using MediatR;
 
 namespace DocumentStoreManagement.Services.Commands
 {
-    public class UpdateDocumentCommand : IRequest<int>
+    /// <summary>
+    /// Command class to update document
+    /// </summary>
+    public class UpdateDocumentCommand : IRequest
     {
         public string Id { get; set; }
         public string PublisherName { get; set; } = null!;
@@ -12,8 +15,9 @@ namespace DocumentStoreManagement.Services.Commands
         public Magazine Magazine { get; set; }
         public Newspaper Newspaper { get; set; }
 
-        public UpdateDocumentCommand(string publisherName, int releaseQuantity, Book book, Magazine magazine, Newspaper newspaper)
+        public UpdateDocumentCommand(string id, string publisherName, int releaseQuantity, Book book, Magazine magazine, Newspaper newspaper)
         {
+            Id = id;
             PublisherName = publisherName;
             ReleaseQuantity = releaseQuantity;
             Book = book;

@@ -10,6 +10,9 @@ namespace DocumentStoreManagement.Infrastructure.ServiceExtension
 {
     public static class ServiceExtension
     {
+        /// <summary>
+        /// Add the dependency injections of database and repositories here
+        /// </summary>
         public static IServiceCollection AddDIServices(this IServiceCollection services, IConfiguration configuration)
         {
             // SQL context

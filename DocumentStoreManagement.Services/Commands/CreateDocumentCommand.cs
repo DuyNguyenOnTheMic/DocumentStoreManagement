@@ -3,6 +3,9 @@ using MediatR;
 
 namespace DocumentStoreManagement.Services.Commands
 {
+    /// <summary>
+    /// Command class to create document
+    /// </summary>
     public class CreateDocumentCommand : IRequest<Document>
     {
         public string PublisherName { get; set; } = null!;

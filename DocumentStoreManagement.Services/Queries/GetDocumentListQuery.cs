@@ -3,7 +3,8 @@ using MediatR;
 
 namespace DocumentStoreManagement.Services.Queries
 {
-    public class GetDocumentListQuery : IRequest<List<Document>>
-    {
-    }
+    /// <summary>
+    /// Query class to get all documents
+    /// </summary>
+    public record GetDocumentListQuery() : IRequest<IEnumerable<Document>>;
 }

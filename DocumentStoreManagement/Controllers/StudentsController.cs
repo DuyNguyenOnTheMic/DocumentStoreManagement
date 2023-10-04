@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace DocumentStoreManagement.Controllers
 {
     /// <summary>
-    /// Student Management api controller
+    /// Student Management API Controller
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
