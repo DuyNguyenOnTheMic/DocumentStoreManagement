@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace DocumentStoreManagement.Services.Commands
+namespace DocumentStoreManagement.Services.Commands.DocumentCommands
 {
     /// <summary>
     /// Command class to delete document

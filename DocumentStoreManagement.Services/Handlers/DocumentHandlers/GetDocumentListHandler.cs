@@ -1,9 +1,9 @@
 ﻿using DocumentStoreManagement.Core.Interfaces;
 using DocumentStoreManagement.Core.Models.MongoDB;
-using DocumentStoreManagement.Services.Queries;
+using DocumentStoreManagement.Services.Queries.DocumentQueries;
 using MediatR;
 
-namespace DocumentStoreManagement.Services.Handlers
+namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
 {
     public class GetDocumentListHandler : IRequestHandler<GetDocumentListQuery, IEnumerable<Document>>
     {

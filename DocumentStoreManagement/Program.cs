@@ -28,16 +28,16 @@ builder.Services.AddSwaggerGen(options =>
     {
         Version = "v1",
         Title = "Document Store Management",
-        Description = "An ASP.NET Core Web API for managing ToDo items",
+        Description = "An ASP.NET Core Web API for managing documents",
         TermsOfService = new Uri("https://example.com/terms"),
         Contact = new OpenApiContact
         {
-            Name = "Example Contact",
+            Name = "Contact",
             Url = new Uri("https://example.com/contact")
         },
         License = new OpenApiLicense
         {
-            Name = "Example License",
+            Name = "License",
             Url = new Uri("https://example.com/license")
         }
     });

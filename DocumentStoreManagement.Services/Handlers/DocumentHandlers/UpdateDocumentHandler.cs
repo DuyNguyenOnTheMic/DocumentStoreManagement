@@ -1,9 +1,9 @@
 ﻿using DocumentStoreManagement.Core.Interfaces;
 using DocumentStoreManagement.Core.Models.MongoDB;
-using DocumentStoreManagement.Services.Commands;
+using DocumentStoreManagement.Services.Commands.DocumentCommands;
 using MediatR;
 
-namespace DocumentStoreManagement.Services.Handlers
+namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
 {
     public class UpdateDocumentHandler : IRequestHandler<UpdateDocumentCommand>
     {

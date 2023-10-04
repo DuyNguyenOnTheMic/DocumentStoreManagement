@@ -1,7 +1,7 @@
 ﻿using DocumentStoreManagement.Core.Models.MongoDB;
-using DocumentStoreManagement.Services.Commands;
+using DocumentStoreManagement.Services.Commands.DocumentCommands;
 using DocumentStoreManagement.Services.Interfaces;
-using DocumentStoreManagement.Services.Queries;
+using DocumentStoreManagement.Services.Queries.DocumentQueries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,8 +36,20 @@ namespace DocumentStoreManagement.Controllers
         [HttpGet]
         public async Task<IEnumerable<Document>> GetDocuments()
         {
-            //return await _documentService.GetAll();
             return await _mediator.Send(new GetDocumentListQuery());
+        }
+
+        [HttpGet("{id:length(24)}")]
+        public async Task<ActionResult<Document>> GetDocument(string id)
+        {
+            var document = await _mediator.Send(new GetDocumentByIdQuery() { Id = id });
+
+            if (document == null)
+            {
+                return NotFound();
+            }
+
+            return document;
         }
 
         // PUT: api/Documents/5
@@ -79,11 +91,13 @@ namespace DocumentStoreManagement.Controllers
         public async Task<IActionResult> DeleteDocument(string id)
         {
             var document = await _mediator.Send(new GetDocumentByIdQuery() { Id = id });
-            if (document is null)
+            if (document == null)
             {
                 return NotFound();
             }
+
             await _mediator.Send(new DeleteDocumentCommand() { Id = id });
+
             return NoContent();
         }
     }

@@ -1,7 +1,7 @@
 ﻿using DocumentStoreManagement.Core.Models.MongoDB;
 using MediatR;
 
-namespace DocumentStoreManagement.Services.Queries
+namespace DocumentStoreManagement.Services.Queries.DocumentQueries
 {
     /// <summary>
     /// Query class to find document by id
