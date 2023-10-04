@@ -1,7 +1,5 @@
 ﻿using DocumentStoreManagement.Core.Interfaces;
 using DocumentStoreManagement.Infrastructure.Repositories.Mongo;
-using DocumentStoreManagement.Services;
-using DocumentStoreManagement.Services.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -28,7 +26,6 @@ namespace DocumentStoreManagement.Infrastructure.ServiceExtension
                 sp.GetRequiredService<IOptions<MongoDbSettings>>().Value);
             services.AddScoped<IMongoApplicationContext, MongoApplicationContext>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(MongoGenericRepository<>));
-            services.AddScoped<IDocumentService, DocumentService>();
             return services;
         }
     }

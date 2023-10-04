@@ -1,6 +1,5 @@
 ﻿using DocumentStoreManagement.Core.Models.MongoDB;
 using DocumentStoreManagement.Services.Commands.DocumentCommands;
-using DocumentStoreManagement.Services.Interfaces;
 using DocumentStoreManagement.Services.Queries.DocumentQueries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -14,17 +13,14 @@ namespace DocumentStoreManagement.Controllers
     [ApiController]
     public class DocumentsController : ControllerBase
     {
-        private readonly IDocumentService _documentService;
         private readonly IMediator _mediator;
 
         /// <summary>
         /// Add dependencies to controller
         /// </summary>
-        /// <param name="documentService"></param>
         /// <param name="mediator"></param>
-        public DocumentsController(IDocumentService documentService, IMediator mediator)
+        public DocumentsController(IMediator mediator)
         {
-            _documentService = documentService;
             _mediator = mediator;
         }
 
