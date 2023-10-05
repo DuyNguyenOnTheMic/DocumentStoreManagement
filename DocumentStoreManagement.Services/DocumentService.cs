@@ -22,7 +22,7 @@ namespace DocumentStoreManagement.Services
 
         public async Task<Document> GetById(string id)
         {
-            return await _mediator.Send(new GetDocumentByIdQuery() { Id = id });
+            return await _mediator.Send(new GetDocumentByIdQuery(id));
         }
 
         public async Task Update(Document document)
@@ -37,7 +37,7 @@ namespace DocumentStoreManagement.Services
 
         public async Task Delete(string id)
         {
-            await _mediator.Send(new DeleteDocumentCommand() { Id = id });
+            await _mediator.Send(new DeleteDocumentCommand(id));
         }
     }
 }
