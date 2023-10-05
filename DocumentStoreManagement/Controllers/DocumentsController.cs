@@ -24,7 +24,7 @@ namespace DocumentStoreManagement.Controllers
         }
 
         /// <summary>
-        /// Gets the document list from database
+        /// Gets the document list
         /// </summary>
         /// <returns>A list of all documents</returns>
         /// <remarks>
@@ -38,6 +38,24 @@ namespace DocumentStoreManagement.Controllers
         {
             // Get list of documents
             return await _documentService.GetAll();
+        }
+
+        /// <summary>
+        /// Searches the document list by type
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns>A document list filtered by type</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET api/documents/{type}
+        ///
+        /// </remarks>
+        [HttpGet("{type}")]
+        public async Task<IEnumerable<Document>> GetDocumentsByType(string type)
+        {
+            // Get documents by type
+            return await _documentService.GetByType(type);
         }
 
         /// <summary>

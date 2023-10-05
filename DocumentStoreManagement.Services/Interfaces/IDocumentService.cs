@@ -8,6 +8,7 @@ namespace DocumentStoreManagement.Services.Interfaces
     public interface IDocumentService
     {
         Task<IEnumerable<Document>> GetAll();
+        Task<IEnumerable<Document>> GetByType(string type);
         Task<Document> GetById(string id);
         Task Create(Document document);
         Task Update(Document document);

@@ -24,6 +24,11 @@ namespace DocumentStoreManagement.Services
             return await _mediator.Send(new GetDocumentListQuery());
         }
 
+        public async Task<IEnumerable<Document>> GetByType(string type)
+        {
+            return await _mediator.Send(new GetDocumentListByTypeQuery(type));
+        }
+
         public async Task<Document> GetById(string id)
         {
             return await _mediator.Send(new GetDocumentByIdQuery(id));

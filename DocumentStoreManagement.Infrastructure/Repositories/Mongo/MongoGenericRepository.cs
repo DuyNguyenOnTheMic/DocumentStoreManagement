@@ -35,12 +35,17 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.Mongo
             return await dbSet.Find(_ => true).ToListAsync();
         }
 
+        public async Task<IEnumerable<T>> FindAsync(object expression)
+        {
+            return await dbSet.Find((FilterDefinition<T>)expression).ToListAsync();
+        }
+
         public async Task<T> GetByIdAsync(object id)
         {
             return await dbSet.Find(x => x.Id == (string)id).FirstOrDefaultAsync();
         }
 
-        // TODO: Not being implemented yet
+        // NOTE: Not implemented yet
         public IEnumerable<T> FindAsync(Expression<Func<T, bool>> expression)
         {
             throw new NotImplementedException();
@@ -51,7 +56,7 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.Mongo
             await dbSet.DeleteOneAsync(x => x.Id == entity.Id);
         }
 
-        // TODO: Not being implemented yet
+        // NOTE: Not implemented yet
         public Task RemoveRangeAsync(IEnumerable<T> entities)
         {
             throw new NotImplementedException();

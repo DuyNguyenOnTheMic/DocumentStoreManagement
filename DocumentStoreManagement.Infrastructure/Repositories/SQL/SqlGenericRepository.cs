@@ -29,14 +29,20 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.SQL
             await _dbSet.AddRangeAsync(entities);
         }
 
-        public IEnumerable<T> FindAsync(Expression<Func<T, bool>> expression)
+        public async Task<IEnumerable<T>> FindAsync(object expression)
         {
-            return _dbSet.Where(expression);
+            return await _dbSet.Where((Expression<Func<T, bool>>)expression).ToListAsync();
         }
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _dbSet.ToListAsync();
+        }
+
+        // NOTE: Not implemented yet
+        public Task<IEnumerable<T>> GetByTypeAsync(object filter)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<T> GetByIdAsync(object id)

@@ -10,7 +10,7 @@ namespace DocumentStoreManagement.Core.Interfaces
     {
         Task<T> GetByIdAsync(object id);
         Task<IEnumerable<T>> GetAllAsync();
-        IEnumerable<T> FindAsync(Expression<Func<T, bool>> expression);
+        Task<IEnumerable<T>> FindAsync(object expression);
         Task AddAsync(T entity);
         Task UpdateAsync(T entity);
         Task AddRangeAsync(IEnumerable<T> entities);
