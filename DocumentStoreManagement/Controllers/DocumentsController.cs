@@ -121,15 +121,26 @@ namespace DocumentStoreManagement.Controllers
                 return BadRequest();
             }
 
-            // Check if document exists
-            Document document = await _documentService.GetById(id);
-            if (document == null)
+            try
             {
-                return NotFound();
+                // Update document
+                await _documentService.Update(updatedDocument);
             }
-
-            // Update document
-            await _documentService.Update(updatedDocument);
+            catch (MongoException e)
+            {
+                // Check if document exists
+                Document document = await _documentService.GetById(id);
+                if (document == null)
+                {
+                    // Return document not found error
+                    return NotFound();
+                }
+                else
+                {
+                    // Return error message
+                    return BadRequest(e.Message);
+                }
+            }
 
             return NoContent();
         }

@@ -36,14 +36,23 @@ namespace DocumentStoreManagement.Services
 
         public async Task Update(Document document)
         {
-            await _mediator.Send(new UpdateDocumentCommand(document));
+            // Check if document only have one document type
+            if (HasOnlyOneDocument(document))
+            {
+                // Update document
+                await _mediator.Send(new UpdateDocumentCommand(document));
+            }
+            else
+            {
+                // Throw error
+                throw new MongoException("Only one document type is allowed!");
+            }
         }
 
         public async Task Create(Document document)
         {
-            // Check that only one document type is passed in
-            bool hasOneDocument = OnlyOneObjectNotNull(document.Book, document.Magazine, document.Newspaper);
-            if (hasOneDocument)
+            // Check if document only have one document type
+            if (HasOnlyOneDocument(document))
             {
                 // Create document
                 await _mediator.Send(new CreateDocumentCommand(document));
@@ -61,12 +70,14 @@ namespace DocumentStoreManagement.Services
         }
 
         /// <summary>
-        /// Only one object is not null
+        /// Only one document is allowed in request
         /// </summary>
-        /// <param name="objects"></param>
+        /// <param name="document"></param>
         /// <returns></returns>
-        public static bool OnlyOneObjectNotNull(params object[] objects)
+        public static bool HasOnlyOneDocument(Document document)
         {
+            // Check that only one document type is passed in
+            object[] objects = { document.Book, document.Magazine, document.Newspaper };
             int trueCount = objects.Count(x => x != null);
 
             return trueCount == 1;
