@@ -19,7 +19,6 @@ namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
         /// </summary>
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         public async Task<Document> Handle(CreateDocumentCommand command, CancellationToken cancellationToken)
         {
             await _documentRepository.AddAsync(command.Document);

@@ -19,7 +19,6 @@ namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
         /// </summary>
         /// <param name="query"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         public async Task<Document> Handle(GetDocumentByIdQuery query, CancellationToken cancellationToken)
         {
             return await _documentRepository.GetByIdAsync(query.Id);
