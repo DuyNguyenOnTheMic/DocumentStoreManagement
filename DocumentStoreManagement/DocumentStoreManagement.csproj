@@ -20,8 +20,4 @@
 		<ProjectReference Include="..\DocumentStoreManagement.Services\DocumentStoreManagement.Services.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Middlewares\" />
-	</ItemGroup>
-
 </Project>
