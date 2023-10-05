@@ -76,7 +76,6 @@ namespace DocumentStoreManagement.Controllers
         ///     PUT api/documents/{id}
         ///     {
         ///         "id": "id",
-        ///         "documentId": "Document ID",
         ///         "publisherName": "Example Name",
         ///         "releaseQuantity": 12,
         ///         "book": {
@@ -127,7 +126,6 @@ namespace DocumentStoreManagement.Controllers
         ///
         ///     POST api/documents
         ///     {
-        ///         "documentId": "Document ID",
         ///         "publisherName": "Example Name",
         ///         "releaseQuantity": 12,
         ///         "book": {
