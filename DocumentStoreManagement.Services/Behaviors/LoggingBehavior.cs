@@ -27,7 +27,7 @@ namespace DocumentStoreManagement.Services.Behaviors
         {
             _logger.LogInformation("Handling {TRequestName}", typeof(TRequest).Name);
 
-            var response = await next();
+            TResponse response = await next();
 
             _logger.LogInformation("Handled {TResponseName}", typeof(TResponse).Name);
 

@@ -57,7 +57,7 @@ namespace DocumentStoreManagement.Controllers
         public async Task<ActionResult<Student>> GetStudent(int id)
         {
             // Get student by id
-            var student = await _studentRepository.GetByIdAsync(id);
+            Student student = await _studentRepository.GetByIdAsync(id);
             if (student == null)
             {
                 return NotFound();
@@ -176,7 +176,7 @@ namespace DocumentStoreManagement.Controllers
         public async Task<IActionResult> DeleteStudent(int id)
         {
             // Get student by id
-            var student = await _studentRepository.GetByIdAsync(id);
+            Student student = await _studentRepository.GetByIdAsync(id);
             if (student == null)
             {
                 return NotFound();
@@ -203,7 +203,7 @@ namespace DocumentStoreManagement.Controllers
         public async Task<IActionResult> DeleteAllStudents()
         {
             // Get all students from database and delete
-            var students = await _studentRepository.GetAllAsync();
+            IEnumerable<Student> students = await _studentRepository.GetAllAsync();
             await _studentRepository.RemoveRangeAsync(students);
             await _unitOfWork.SaveAsync();
 

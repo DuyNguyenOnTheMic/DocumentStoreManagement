@@ -56,9 +56,9 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.Mongo
         }
 
         // TODO: Not being implemented yet
-        public Task RemoveRangeAsync(IEnumerable<T> entities)
+        public async Task RemoveRangeAsync(IEnumerable<T> entities)
         {
-            throw new NotImplementedException();
+            await dbSet.DeleteManyAsync(_ => true);
         }
 
         public async Task UpdateAsync(T entity)

@@ -8,6 +8,8 @@ namespace DocumentStoreManagement.Core.Models.MongoDB
     public class Document : BaseEntity
     {
         [Required]
+        public string DocumentId { get; set; }
+        [Required]
         public string PublisherName { get; set; }
         [Required]
         public int ReleaseQuantity { get; set; }

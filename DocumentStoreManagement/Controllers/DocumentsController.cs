@@ -55,7 +55,7 @@ namespace DocumentStoreManagement.Controllers
         public async Task<ActionResult<Document>> GetDocument(string id)
         {
             // Get document by id
-            var document = await _documentService.GetById(id);
+            Document document = await _documentService.GetById(id);
             if (document == null)
             {
                 return NotFound();
@@ -104,7 +104,7 @@ namespace DocumentStoreManagement.Controllers
             }
 
             // Check if document exists
-            var document = await _documentService.GetById(id);
+            Document document = await _documentService.GetById(id);
             if (document == null)
             {
                 return NotFound();
@@ -152,17 +152,18 @@ namespace DocumentStoreManagement.Controllers
                 // Add a new document
                 await _documentService.Create(newDocument);
             }
-            catch (MongoWriteException)
+            catch (MongoException e)
             {
                 // Check if document exists
-                var document = await _documentService.GetById(newDocument.Id);
+                Document document = await _documentService.GetById(newDocument.Id);
                 if (document != null)
                 {
                     return Conflict();
                 }
                 else
                 {
-                    throw;
+                    // Return error message
+                    return BadRequest(e.Message);
                 }
             }
             return CreatedAtAction(nameof(GetDocuments), new { id = newDocument.Id }, newDocument);
@@ -183,7 +184,7 @@ namespace DocumentStoreManagement.Controllers
         public async Task<IActionResult> DeleteDocument(string id)
         {
             // Get document by id
-            var document = await _documentService.GetById(id);
+            Document document = await _documentService.GetById(id);
             if (document == null)
             {
                 return NotFound();
@@ -191,6 +192,26 @@ namespace DocumentStoreManagement.Controllers
 
             // Delete document
             await _documentService.Delete(id);
+
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Deletes all documents
+        /// </summary>
+        /// <returns>All documents are deleted</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     DELETE api/documents
+        ///
+        /// </remarks>
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAllDocuments()
+        {
+            // Get all documents from database and delete
+            IEnumerable<Document> documents = await _documentService.GetAll();
+            await _documentService.DeleteAll(documents);
 
             return NoContent();
         }

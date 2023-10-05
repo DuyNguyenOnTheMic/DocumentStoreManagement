@@ -11,7 +11,7 @@ namespace DocumentStoreManagement.Infrastructure
     {
         public MongoApplicationContext(IMongoDbSettings connectionSetting)
         {
-            var mongoClient = new MongoClient(connectionSetting.ConnectionString);
+            MongoClient mongoClient = new(connectionSetting.ConnectionString);
             Database = mongoClient.GetDatabase(connectionSetting.DatabaseName);
         }
 

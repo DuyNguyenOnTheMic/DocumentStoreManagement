@@ -12,5 +12,6 @@ namespace DocumentStoreManagement.Services.Interfaces
         Task Create(Document document);
         Task Update(Document document);
         Task Delete(string id);
+        Task DeleteAll(IEnumerable<Document> documents);
     }
 }
