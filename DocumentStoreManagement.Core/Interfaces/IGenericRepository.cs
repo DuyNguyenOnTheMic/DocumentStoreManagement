@@ -2,6 +2,10 @@
 
 namespace DocumentStoreManagement.Core.Interfaces
 {
+    /// <summary>
+    /// Generic Repository interface
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface IGenericRepository<T> where T : class
     {
         Task<T> GetByIdAsync(object id);

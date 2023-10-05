@@ -22,17 +22,8 @@ namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
         /// <returns></returns>
         public async Task<Document> Handle(CreateDocumentCommand command, CancellationToken cancellationToken)
         {
-            var document = new Document()
-            {
-                PublisherName = command.PublisherName,
-                ReleaseQuantity = command.ReleaseQuantity,
-                Book = command.Book,
-                Magazine = command.Magazine,
-                Newspaper = command.Newspaper
-            };
-
-            await _documentRepository.AddAsync(document);
-            return document;
+            await _documentRepository.AddAsync(command.Document);
+            return command.Document;
         }
     }
 }

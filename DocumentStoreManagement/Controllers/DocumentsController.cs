@@ -1,27 +1,26 @@
 ﻿using DocumentStoreManagement.Core.Models.MongoDB;
-using DocumentStoreManagement.Services.Commands.DocumentCommands;
-using DocumentStoreManagement.Services.Queries.DocumentQueries;
-using MediatR;
+using DocumentStoreManagement.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
 
 namespace DocumentStoreManagement.Controllers
 {
     /// <summary>
-    /// Document Management API Controller
+    /// Document Management API Controller - MongoDB database
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class DocumentsController : ControllerBase
     {
-        private readonly IMediator _mediator;
+        private readonly IDocumentService _documentService;
 
         /// <summary>
         /// Add dependencies to controller
         /// </summary>
-        /// <param name="mediator"></param>
-        public DocumentsController(IMediator mediator)
+        /// <param name="documentService"></param>
+        public DocumentsController(IDocumentService documentService)
         {
-            _mediator = mediator;
+            _documentService = documentService;
         }
 
         /// <summary>
@@ -37,7 +36,8 @@ namespace DocumentStoreManagement.Controllers
         [HttpGet]
         public async Task<IEnumerable<Document>> GetDocuments()
         {
-            return await _mediator.Send(new GetDocumentListQuery());
+            // Get list of documents
+            return await _documentService.GetAll();
         }
 
         /// <summary>
@@ -54,8 +54,8 @@ namespace DocumentStoreManagement.Controllers
         [HttpGet("{id:length(24)}")]
         public async Task<ActionResult<Document>> GetDocument(string id)
         {
-            var document = await _mediator.Send(new GetDocumentByIdQuery() { Id = id });
-
+            // Get document by id
+            var document = await _documentService.GetById(id);
             if (document == null)
             {
                 return NotFound();
@@ -97,25 +97,29 @@ namespace DocumentStoreManagement.Controllers
         [HttpPut("{id:length(24)}")]
         public async Task<IActionResult> PutDocument(string id, [FromBody] Document updatedDocument)
         {
-            var document = await _mediator.Send(new GetDocumentByIdQuery() { Id = id });
-            if (document is null)
+            // Return bad request if ids don't match
+            if (id != updatedDocument.Id)
+            {
+                return BadRequest();
+            }
+
+            // Check if document exists
+            var document = await _documentService.GetById(id);
+            if (document == null)
             {
                 return NotFound();
             }
-            await _mediator.Send(new UpdateDocumentCommand(
-                updatedDocument.Id,
-                updatedDocument.PublisherName,
-                updatedDocument.ReleaseQuantity,
-                updatedDocument.Book,
-                updatedDocument.Magazine,
-                updatedDocument.Newspaper));
+
+            // Update document
+            await _documentService.Update(updatedDocument);
+
             return NoContent();
         }
 
         /// <summary>
         /// Creates a document
         /// </summary>
-        /// <param name="document"></param>
+        /// <param name="newDocument"></param>
         /// <returns>A newly created document</returns>
         /// <remarks>
         /// Sample request:
@@ -141,15 +145,27 @@ namespace DocumentStoreManagement.Controllers
         ///
         /// </remarks>
         [HttpPost]
-        public async Task<IActionResult> PostDocument([FromBody] Document document)
+        public async Task<IActionResult> PostDocument([FromBody] Document newDocument)
         {
-            await _mediator.Send(new CreateDocumentCommand(
-                            document.PublisherName,
-                            document.ReleaseQuantity,
-                            document.Book,
-                            document.Magazine,
-                            document.Newspaper));
-            return CreatedAtAction(nameof(GetDocuments), new { id = document.Id }, document);
+            try
+            {
+                // Add a new document
+                await _documentService.Create(newDocument);
+            }
+            catch (MongoWriteException)
+            {
+                // Check if document exists
+                var document = await _documentService.GetById(newDocument.Id);
+                if (document != null)
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return CreatedAtAction(nameof(GetDocuments), new { id = newDocument.Id }, newDocument);
         }
 
         /// <summary>
@@ -166,13 +182,15 @@ namespace DocumentStoreManagement.Controllers
         [HttpDelete("{id:length(24)}")]
         public async Task<IActionResult> DeleteDocument(string id)
         {
-            var document = await _mediator.Send(new GetDocumentByIdQuery() { Id = id });
+            // Get document by id
+            var document = await _documentService.GetById(id);
             if (document == null)
             {
                 return NotFound();
             }
 
-            await _mediator.Send(new DeleteDocumentCommand() { Id = id });
+            // Delete document
+            await _documentService.Delete(id);
 
             return NoContent();
         }

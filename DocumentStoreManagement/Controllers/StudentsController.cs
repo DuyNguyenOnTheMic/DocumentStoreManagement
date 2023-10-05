@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace DocumentStoreManagement.Controllers
 {
     /// <summary>
-    /// Student Management API Controller
+    /// Student Management API Controller - SQL database
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
@@ -38,6 +38,7 @@ namespace DocumentStoreManagement.Controllers
         [HttpGet]
         public async Task<IEnumerable<Student>> GetStudents()
         {
+            // Get list of students
             return await _studentRepository.GetAllAsync();
         }
 
@@ -55,8 +56,8 @@ namespace DocumentStoreManagement.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Student>> GetStudent(int id)
         {
+            // Get student by id
             var student = await _studentRepository.GetByIdAsync(id);
-
             if (student == null)
             {
                 return NotFound();
@@ -87,19 +88,23 @@ namespace DocumentStoreManagement.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutStudent(int id, [FromBody] Student student)
         {
+            // Return bad request if ids don't match
             if (id != student.Id)
             {
                 return BadRequest();
             }
 
+            // Update student
             await _studentRepository.UpdateAsync(student);
 
             try
             {
+                // Save changes
                 await _unitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
+                // Check if student exists
                 if (!await StudentExists(id))
                 {
                     return NotFound();
@@ -133,13 +138,16 @@ namespace DocumentStoreManagement.Controllers
         [HttpPost]
         public async Task<ActionResult<Student>> PostStudent([FromBody] Student student)
         {
+            // Add a new student
             await _studentRepository.AddAsync(student);
             try
             {
+                // Save changes
                 await _unitOfWork.SaveAsync();
             }
             catch (DbUpdateException)
             {
+                // Check if student exists
                 if (await StudentExists(student.Id))
                 {
                     return Conflict();
@@ -167,12 +175,14 @@ namespace DocumentStoreManagement.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteStudent(int id)
         {
+            // Get student by id
             var student = await _studentRepository.GetByIdAsync(id);
             if (student == null)
             {
                 return NotFound();
             }
 
+            // Delete student
             await _studentRepository.RemoveAsync(student);
             await _unitOfWork.SaveAsync();
 
