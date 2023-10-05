@@ -55,11 +55,6 @@ namespace DocumentStoreManagement.Services
             await _mediator.Send(new DeleteDocumentCommand(id));
         }
 
-        public async Task DeleteAll(IEnumerable<Document> documents)
-        {
-            await _mediator.Send(new DeleteAllDocumentsCommand(documents));
-        }
-
         /// <summary>
         /// Only one object is not null
         /// </summary>

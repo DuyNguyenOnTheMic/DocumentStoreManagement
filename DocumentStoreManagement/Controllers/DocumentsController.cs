@@ -76,6 +76,7 @@ namespace DocumentStoreManagement.Controllers
         ///     PUT api/documents/{id}
         ///     {
         ///         "id": "id",
+        ///         "documentId": "Document ID",
         ///         "publisherName": "Example Name",
         ///         "releaseQuantity": 12,
         ///         "book": {
@@ -126,6 +127,7 @@ namespace DocumentStoreManagement.Controllers
         ///
         ///     POST api/documents
         ///     {
+        ///         "documentId": "Document ID",
         ///         "publisherName": "Example Name",
         ///         "releaseQuantity": 12,
         ///         "book": {
@@ -158,6 +160,7 @@ namespace DocumentStoreManagement.Controllers
                 Document document = await _documentService.GetById(newDocument.Id);
                 if (document != null)
                 {
+                    // Return document already exists error
                     return Conflict();
                 }
                 else
@@ -192,26 +195,6 @@ namespace DocumentStoreManagement.Controllers
 
             // Delete document
             await _documentService.Delete(id);
-
-            return NoContent();
-        }
-
-        /// <summary>
-        /// Deletes all documents
-        /// </summary>
-        /// <returns>All documents are deleted</returns>
-        /// <remarks>
-        /// Sample request:
-        ///
-        ///     DELETE api/documents
-        ///
-        /// </remarks>
-        [HttpDelete]
-        public async Task<IActionResult> DeleteAllDocuments()
-        {
-            // Get all documents from database and delete
-            IEnumerable<Document> documents = await _documentService.GetAll();
-            await _documentService.DeleteAll(documents);
 
             return NoContent();
         }
