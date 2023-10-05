@@ -20,10 +20,6 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.Mongo
             dbSet = database.GetCollection<T>(typeof(T).Name);
         }
 
-        /// <summary>
-        /// Add a new item
-        /// </summary>
-        /// <param name="entity"></param>
         public async Task AddAsync(T entity)
         {
             await dbSet.InsertOneAsync(entity);

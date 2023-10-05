@@ -4,6 +4,10 @@ using System.Linq.Expressions;
 
 namespace DocumentStoreManagement.Infrastructure.Repositories.SQL
 {
+    /// <summary>
+    /// SQL Generic Repository
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class SqlGenericRepository<T> : IGenericRepository<T> where T : class
     {
         protected readonly DbContext _dbContext;
