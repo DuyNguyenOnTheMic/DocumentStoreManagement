@@ -1,7 +1,9 @@
 ﻿using DocumentStoreManagement.Core.Models.MongoDB;
+using DocumentStoreManagement.Helpers;
 using DocumentStoreManagement.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
+using StackExchange.Redis;
 
 namespace DocumentStoreManagement.Controllers
 {
@@ -13,14 +15,17 @@ namespace DocumentStoreManagement.Controllers
     public class DocumentsController : ControllerBase
     {
         private readonly IDocumentService _documentService;
+        private readonly IDatabase _database;
 
         /// <summary>
         /// Add dependencies to controller
         /// </summary>
         /// <param name="documentService"></param>
-        public DocumentsController(IDocumentService documentService)
+        /// <param name="database"></param>
+        public DocumentsController(IDocumentService documentService, IDatabase database)
         {
             _documentService = documentService;
+            _database = database;
         }
 
         /// <summary>
@@ -37,7 +42,8 @@ namespace DocumentStoreManagement.Controllers
         public async Task<IEnumerable<Document>> GetDocuments()
         {
             // Get list of documents
-            return await _documentService.GetAll();
+            RedisCacheHelper redisCacheHelper = new(_database);
+            return await redisCacheHelper.GetOrSetAsync("hehe", _documentService.GetAll);
         }
 
         /// <summary>

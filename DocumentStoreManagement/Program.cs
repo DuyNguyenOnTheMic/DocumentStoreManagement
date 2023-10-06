@@ -5,6 +5,7 @@ using DocumentStoreManagement.Services.Behaviors;
 using MediatR;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.OpenApi.Models;
+using StackExchange.Redis;
 using System.Reflection;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,11 @@ builder.Services.AddDIServices(builder.Configuration);
 
 builder.Services.AddControllers(opts =>
     opts.Conventions.Add(new RouteTokenTransformerConvention(new ToKebabParameterTransformer())));
+
+// Register Redis Cache
+IConnectionMultiplexer redis = ConnectionMultiplexer.Connect("localhost");
+builder.Services.AddScoped(s => redis.GetDatabase());
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
