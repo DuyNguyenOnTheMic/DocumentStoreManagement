@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DocumentStoreManagement.Core.Models.SQL
+namespace DocumentStoreManagement.Core.Models
 {
     public class Student
     {

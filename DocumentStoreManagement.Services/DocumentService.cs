@@ -1,5 +1,5 @@
-﻿using DocumentStoreManagement.Core.Models.MongoDB;
-using DocumentStoreManagement.Helpers;
+﻿using DocumentStoreManagement.Core;
+using DocumentStoreManagement.Core.Models;
 using DocumentStoreManagement.Services.Commands.DocumentCommands;
 using DocumentStoreManagement.Services.Interfaces;
 using DocumentStoreManagement.Services.Queries.DocumentQueries;

@@ -1,6 +1,6 @@
-﻿using DocumentStoreManagement.Core.Interfaces;
-using DocumentStoreManagement.Core.Models.MongoDB;
-using DocumentStoreManagement.Helpers;
+﻿using DocumentStoreManagement.Core;
+using DocumentStoreManagement.Core.Interfaces;
+using DocumentStoreManagement.Core.Models;
 using DocumentStoreManagement.Services.Queries.DocumentQueries;
 using MediatR;
 using MongoDB.Bson;

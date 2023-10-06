@@ -1,4 +1,4 @@
-﻿using DocumentStoreManagement.Core.Models.SQL;
+﻿using DocumentStoreManagement.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DocumentStoreManagement.Infrastructure

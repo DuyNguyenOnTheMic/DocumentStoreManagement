@@ -1,4 +1,4 @@
-﻿using DocumentStoreManagement.Core.Models.MongoDB;
+﻿using DocumentStoreManagement.Core.Models;
 using DocumentStoreManagement.Helpers;
 using DocumentStoreManagement.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;

@@ -1,5 +1,5 @@
 ﻿using DocumentStoreManagement.Core.Interfaces;
-using DocumentStoreManagement.Core.Models.SQL;
+using DocumentStoreManagement.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

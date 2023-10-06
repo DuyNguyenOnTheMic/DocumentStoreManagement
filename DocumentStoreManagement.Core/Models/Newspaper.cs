@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DocumentStoreManagement.Core.Models.MongoDB
+namespace DocumentStoreManagement.Core.Models
 {
     /// <summary>
     /// Newspaper collection - a document type

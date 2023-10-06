@@ -1,5 +1,5 @@
 ﻿using DocumentStoreManagement.Core.Interfaces;
-using DocumentStoreManagement.Core.Models.MongoDB;
+using DocumentStoreManagement.Core.Models;
 using MongoDB.Driver;
 using System.Linq.Expressions;
 

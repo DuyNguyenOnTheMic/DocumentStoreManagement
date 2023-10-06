@@ -2,7 +2,7 @@
 using MongoDB.Bson.Serialization.Attributes;
 using System.ComponentModel.DataAnnotations;
 
-namespace DocumentStoreManagement.Core.Models.MongoDB
+namespace DocumentStoreManagement.Core.Models
 {
     /// <summary>
     /// A non-instantiable base entity which defines members available across all entities

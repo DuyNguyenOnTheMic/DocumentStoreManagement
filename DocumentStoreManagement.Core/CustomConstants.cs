@@ -1,6 +1,6 @@
-﻿using DocumentStoreManagement.Core.Models.MongoDB;
+﻿using DocumentStoreManagement.Core.Models;
 
-namespace DocumentStoreManagement.Helpers
+namespace DocumentStoreManagement.Core
 {
     /// <summary>
     /// Constants class for reusable variables

@@ -2,7 +2,7 @@
 using MongoDB.Bson.Serialization.Attributes;
 using System.ComponentModel.DataAnnotations;
 
-namespace DocumentStoreManagement.Core.Models.MongoDB
+namespace DocumentStoreManagement.Core.Models
 {
     /// <summary>
     /// Order collection - to store customer orders

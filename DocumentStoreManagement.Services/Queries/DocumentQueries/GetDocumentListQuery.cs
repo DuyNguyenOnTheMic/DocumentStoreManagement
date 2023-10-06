@@ -1,4 +1,4 @@
-﻿using DocumentStoreManagement.Core.Models.MongoDB;
+﻿using DocumentStoreManagement.Core.Models;
 using MediatR;
 
 namespace DocumentStoreManagement.Services.Queries.DocumentQueries
