@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DocumentStoreManagement.Core.Models.MongoDB
+namespace DocumentStoreManagement.Core.Models.PostgresQL
 {
-    /// <summary>
-    /// Document Collection to manage documents
-    /// </summary>
-    public class Document : BaseEntity
+    public class Document
     {
+        [Key]
+        public string Id { get; set; }
         [Required]
         [MaxLength(255)]
         public string PublisherName { get; set; }

@@ -166,10 +166,10 @@ namespace DocumentStoreManagement.Controllers
         }
 
         /// <summary>
-        /// Creates a document
+        /// Creates a book
         /// </summary>
-        /// <param name="newDocument"></param>
-        /// <returns>A newly created document</returns>
+        /// <param name="newBook"></param>
+        /// <returns>A newly created book</returns>
         /// <remarks>
         /// Sample request:
         ///
@@ -190,11 +190,27 @@ namespace DocumentStoreManagement.Controllers
         ///         }
         ///     }
         ///
-        /// ***NOTES***: Either book, magazine or newspaper is added to this document object, the others will have null values.
-        ///
         /// </remarks>
-        [HttpPost]
-        public async Task<ActionResult> PostDocument([FromBody] Document newDocument)
+        [HttpPost("book")]
+        public async Task<ActionResult> PostBook([FromBody] Book newBook)
+        {
+            return await CreateDocument(newBook);
+        }
+
+        [HttpPost("magazine")]
+        public async Task<ActionResult> PostMagazine([FromBody] Magazine newMagazine)
+        {
+            return await CreateDocument(newMagazine);
+        }
+
+        [HttpPost("newspaper")]
+        public async Task<ActionResult> PostNewspaper([FromBody] Newspaper newNewspaper)
+        {
+            return await CreateDocument(newNewspaper);
+        }
+
+
+        private async Task<ActionResult> CreateDocument(Document newDocument)
         {
             try
             {
@@ -216,7 +232,7 @@ namespace DocumentStoreManagement.Controllers
                     return BadRequest(e.Message);
                 }
             }
-            return CreatedAtAction(nameof(GetDocuments), new { id = newDocument.Id }, newDocument);
+            return CreatedAtAction(nameof(GetDocument), new { id = newDocument.Id }, newDocument);
         }
 
         /// <summary>

@@ -5,7 +5,7 @@
 namespace DocumentStoreManagement.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialStudentTable : Migration
+    public partial class InitialSqlDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -1,4 +1,4 @@
-﻿using DocumentStoreManagement.Core.Models.MongoDB;
+﻿using DocumentStoreManagement.Core.Models.PostgresQL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -16,7 +16,7 @@ namespace DocumentStoreManagement.Infrastructure
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             // connect to postgres with connection string from app settings
-            options.UseNpgsql(Configuration.GetConnectionString("WebApiDatabase"));
+            options.UseNpgsql(Configuration.GetConnectionString("PostgresConnection"));
         }
 
         public DbSet<Document> Documents { get; set; }

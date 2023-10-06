@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DocumentStoreManagement.Infrastructure.Migrations
 {
     [DbContext(typeof(SqlApplicationContext))]
-    [Migration("20231003025555_InitialStudentTable")]
-    partial class InitialStudentTable
+    [Migration("20231006041437_InitialSqlDatabase")]
+    partial class InitialSqlDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

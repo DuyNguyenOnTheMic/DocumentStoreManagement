@@ -15,37 +15,9 @@
   <Class Name="DocumentStoreManagement.Controllers.DocumentsController">
     <Position X="2" Y="1.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAUAAAAAAAAiAAAAAAAAAAAAAAAAAAAAAAgBAAAAAAA=</HashCode>
+      <HashCode>AAUAAAAAAAAiAAAAAAAAAAAAAAAAAAQAAAgBAAAAAAA=</HashCode>
       <FileName>Controllers\DocumentsController.cs</FileName>
     </TypeIdentifier>
-  </Class>
-  <Class Name="DocumentStoreManagement.Core.Models.MongoDB.BaseEntity">
-    <Position X="10" Y="1.5" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="DocumentStoreManagement.Core.Models.MongoDB.Book">
-    <Position X="12.25" Y="6.25" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="DocumentStoreManagement.Core.Models.MongoDB.Document">
-    <Position X="10" Y="3.5" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="DocumentStoreManagement.Core.Models.MongoDB.Magazine">
-    <Position X="7.75" Y="6.25" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="DocumentStoreManagement.Core.Models.MongoDB.Newspaper">
-    <Position X="10" Y="6.25" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="DocumentStoreManagement.Core.Models.MongoDB.Order">
-    <Position X="14.25" Y="5" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="DocumentStoreManagement.Core.Models.MongoDB.OrderDetail">
-    <Position X="16.25" Y="5" Width="1.5" />
-    <TypeIdentifier />
   </Class>
   <Class Name="DocumentStoreManagement.Infrastructure.Repositories.Mongo.MongoGenericRepository&lt;T&gt;">
     <Position X="9" Y="12.75" Width="1.5" />
@@ -107,8 +79,36 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
+  <Class Name="DocumentStoreManagement.Core.Models.MongoDB.BaseEntity">
+    <Position X="9.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="DocumentStoreManagement.Core.Models.MongoDB.Book">
+    <Position X="9.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="DocumentStoreManagement.Core.Models.MongoDB.Document">
+    <Position X="9.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="DocumentStoreManagement.Core.Models.MongoDB.Magazine">
+    <Position X="7" Y="6.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="DocumentStoreManagement.Core.Models.MongoDB.Newspaper">
+    <Position X="11.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="DocumentStoreManagement.Core.Models.MongoDB.Order">
+    <Position X="14.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="DocumentStoreManagement.Core.Models.MongoDB.OrderDetail">
+    <Position X="16.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
   <Interface Name="DocumentStoreManagement.Core.Interfaces.IGenericRepository&lt;T&gt;">
-    <Position X="14.25" Y="1.75" Width="1.5" />
+    <Position X="14.25" Y="1.5" Width="1.5" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="DocumentStoreManagement.Infrastructure.IMongoApplicationContext">
