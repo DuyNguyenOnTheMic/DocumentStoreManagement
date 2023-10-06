@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace DocumentStoreManagement.Core.Models
 {
     /// <summary>
     /// Document Collection to manage documents
     /// </summary>
+    [BsonKnownTypes(typeof(Book), typeof(Magazine), typeof(Newspaper))]
     public class Document : BaseEntity
     {
         [Required]

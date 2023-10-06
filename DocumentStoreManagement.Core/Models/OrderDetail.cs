@@ -13,6 +13,7 @@ namespace DocumentStoreManagement.Core.Models
         [Key]
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; }
         [Required]
         public decimal UnitPrice { get; set; }

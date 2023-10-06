@@ -1,8 +1,8 @@
-﻿using DocumentStoreManagement.Core.Models;
+﻿using DocumentStoreManagement.Core.Interfaces;
+using DocumentStoreManagement.Core.Models;
 using DocumentStoreManagement.Helpers;
 using DocumentStoreManagement.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Driver;
 using StackExchange.Redis;
 
 namespace DocumentStoreManagement.Controllers
@@ -12,7 +12,7 @@ namespace DocumentStoreManagement.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class DocumentsController : ControllerBase
+    public class DocumentsController : BaseController
     {
         private readonly IDocumentService _documentService;
         private readonly IDatabase _database;
@@ -20,10 +20,12 @@ namespace DocumentStoreManagement.Controllers
         /// <summary>
         /// Add dependencies to controller
         /// </summary>
+        /// <param name="unitOfWork"></param>
         /// <param name="documentService"></param>
         /// <param name="database"></param>
-        public DocumentsController(IDocumentService documentService, IDatabase database)
+        public DocumentsController(IUnitOfWork unitOfWork, IDocumentService documentService, IDatabase database) : base(unitOfWork)
         {
+            _unitOfWork = unitOfWork;
             _documentService = documentService;
             _database = database;
         }
@@ -43,7 +45,7 @@ namespace DocumentStoreManagement.Controllers
         {
             // Get list of documents
             RedisCacheHelper redisCacheHelper = new(_database);
-            return await redisCacheHelper.GetOrSetAsync("hehe", _documentService.GetAll);
+            return await redisCacheHelper.GetOrSetAsync("document-list-cache", _documentService.GetAll);
         }
 
         /// <summary>
@@ -62,7 +64,7 @@ namespace DocumentStoreManagement.Controllers
         /// * **3**: Gets the newspaper data.
         ///
         /// </remarks>
-        [HttpGet("{type}")]
+        [HttpGet("filter/{type}")]
         public async Task<ActionResult<IEnumerable<Document>>> GetDocumentsByType(int type)
         {
             try
@@ -89,7 +91,7 @@ namespace DocumentStoreManagement.Controllers
         ///     GET api/documents/{id}
         ///
         /// </remarks>
-        [HttpGet("{id:length(24)}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Document>> GetDocument(string id)
         {
             // Get document by id
@@ -132,7 +134,7 @@ namespace DocumentStoreManagement.Controllers
         /// ***NOTES***: Either book, magazine or newspaper is updated, the others will have null values.
         ///
         /// </remarks>
-        [HttpPut("{id:length(24)}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> PutDocument(string id, [FromBody] Document updatedDocument)
         {
             // Return bad request if ids don't match
@@ -146,7 +148,7 @@ namespace DocumentStoreManagement.Controllers
                 // Update document
                 await _documentService.Update(updatedDocument);
             }
-            catch (MongoException e)
+            catch (Exception e)
             {
                 // Check if document exists
                 Document document = await _documentService.GetById(id);
@@ -244,7 +246,7 @@ namespace DocumentStoreManagement.Controllers
         ///     DELETE api/documents/{id}
         ///
         /// </remarks>
-        [HttpDelete("{id:length(24)}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDocument(string id)
         {
             // Get document by id
@@ -267,8 +269,9 @@ namespace DocumentStoreManagement.Controllers
             {
                 // Add a new document
                 await _documentService.Create(newDocument);
+                await _unitOfWork.SaveAsync();
             }
-            catch (MongoException e)
+            catch (Exception e)
             {
                 // Check if document exists
                 Document document = await _documentService.GetById(newDocument.Id);

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DocumentStoreManagement.Infrastructure.Migrations.PostgresApplication
 {
     [DbContext(typeof(PostgresApplicationContext))]
-    [Migration("20231006073536_InitialPostgresDatabase")]
+    [Migration("20231006091654_InitialPostgresDatabase")]
     partial class InitialPostgresDatabase
     {
         /// <inheritdoc />
@@ -25,9 +25,10 @@ namespace DocumentStoreManagement.Infrastructure.Migrations.PostgresApplication
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("DocumentStoreManagement.Core.Models.MongoDB.Document", b =>
+            modelBuilder.Entity("DocumentStoreManagement.Core.Models.Document", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("text");
 
                     b.Property<string>("Discriminator")
@@ -51,9 +52,10 @@ namespace DocumentStoreManagement.Infrastructure.Migrations.PostgresApplication
                     b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("DocumentStoreManagement.Core.Models.MongoDB.Order", b =>
+            modelBuilder.Entity("DocumentStoreManagement.Core.Models.Order", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("BorrowDate")
@@ -78,9 +80,10 @@ namespace DocumentStoreManagement.Infrastructure.Migrations.PostgresApplication
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("DocumentStoreManagement.Core.Models.MongoDB.OrderDetail", b =>
+            modelBuilder.Entity("DocumentStoreManagement.Core.Models.OrderDetail", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("text");
 
                     b.Property<string>("DocumentId")
@@ -109,9 +112,9 @@ namespace DocumentStoreManagement.Infrastructure.Migrations.PostgresApplication
                     b.ToTable("OrderDetails");
                 });
 
-            modelBuilder.Entity("DocumentStoreManagement.Core.Models.MongoDB.Book", b =>
+            modelBuilder.Entity("DocumentStoreManagement.Core.Models.Book", b =>
                 {
-                    b.HasBaseType("DocumentStoreManagement.Core.Models.MongoDB.Document");
+                    b.HasBaseType("DocumentStoreManagement.Core.Models.Document");
 
                     b.Property<string>("AuthorName")
                         .IsRequired()
@@ -124,9 +127,9 @@ namespace DocumentStoreManagement.Infrastructure.Migrations.PostgresApplication
                     b.HasDiscriminator().HasValue("Book");
                 });
 
-            modelBuilder.Entity("DocumentStoreManagement.Core.Models.MongoDB.Magazine", b =>
+            modelBuilder.Entity("DocumentStoreManagement.Core.Models.Magazine", b =>
                 {
-                    b.HasBaseType("DocumentStoreManagement.Core.Models.MongoDB.Document");
+                    b.HasBaseType("DocumentStoreManagement.Core.Models.Document");
 
                     b.Property<string>("ReleaseMonth")
                         .IsRequired()
@@ -139,9 +142,9 @@ namespace DocumentStoreManagement.Infrastructure.Migrations.PostgresApplication
                     b.HasDiscriminator().HasValue("Magazine");
                 });
 
-            modelBuilder.Entity("DocumentStoreManagement.Core.Models.MongoDB.Newspaper", b =>
+            modelBuilder.Entity("DocumentStoreManagement.Core.Models.Newspaper", b =>
                 {
-                    b.HasBaseType("DocumentStoreManagement.Core.Models.MongoDB.Document");
+                    b.HasBaseType("DocumentStoreManagement.Core.Models.Document");
 
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("timestamp with time zone");
@@ -149,15 +152,15 @@ namespace DocumentStoreManagement.Infrastructure.Migrations.PostgresApplication
                     b.HasDiscriminator().HasValue("Newspaper");
                 });
 
-            modelBuilder.Entity("DocumentStoreManagement.Core.Models.MongoDB.OrderDetail", b =>
+            modelBuilder.Entity("DocumentStoreManagement.Core.Models.OrderDetail", b =>
                 {
-                    b.HasOne("DocumentStoreManagement.Core.Models.MongoDB.Document", "Document")
+                    b.HasOne("DocumentStoreManagement.Core.Models.Document", "Document")
                         .WithMany()
                         .HasForeignKey("DocumentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DocumentStoreManagement.Core.Models.MongoDB.Order", "Order")
+                    b.HasOne("DocumentStoreManagement.Core.Models.Order", "Order")
                         .WithMany()
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
