@@ -173,66 +173,64 @@ namespace DocumentStoreManagement.Controllers
         /// <remarks>
         /// Sample request:
         ///
-        ///     POST api/documents
+        ///     POST api/documents/books
         ///     {
         ///         "publisherName": "Example Name",
         ///         "releaseQuantity": 12,
-        ///         "book": {
-        ///           "authorName": "J. K. Rowling",
-        ///           "pageNumber": 218
-        ///         },
-        ///         "magazine": {
-        ///           "releaseNumber": 200,
-        ///           "releaseMonth": "07/2023"
-        ///         },
-        ///         "newspaper": {
-        ///           "releaseDate": "2023-10-04T08:44:20.351Z"
-        ///         }
+        ///         "authorName": "J. K. Rowling",
+        ///         "pageNumber": 218
         ///     }
         ///
         /// </remarks>
-        [HttpPost("book")]
+        [HttpPost("books")]
         public async Task<ActionResult> PostBook([FromBody] Book newBook)
         {
             return await CreateDocument(newBook);
         }
 
-        [HttpPost("magazine")]
+        /// <summary>
+        /// Creates a magazine
+        /// </summary>
+        /// <param name="newMagazine"></param>
+        /// <returns>A newly created magazine</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST api/documents/magazines
+        ///     {
+        ///         "publisherName": "Example Name",
+        ///         "releaseQuantity": 12,
+        ///         "releaseNumber": 200,
+        ///         "releaseMonth": "07/2023"
+        ///     }
+        ///
+        /// </remarks>
+        [HttpPost("magazines")]
         public async Task<ActionResult> PostMagazine([FromBody] Magazine newMagazine)
         {
             return await CreateDocument(newMagazine);
         }
 
-        [HttpPost("newspaper")]
+        /// <summary>
+        /// Creates a newspaper
+        /// </summary>
+        /// <param name="newNewspaper"></param>
+        /// <returns>A newly created newspaper</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST api/documents/newspapers
+        ///     {
+        ///         "publisherName": "Example Name",
+        ///         "releaseQuantity": 12,
+        ///         "releaseDate": "2023-10-04T08:44:20.351Z"
+        ///     }
+        ///
+        /// </remarks>
+        [HttpPost("newspapers")]
         public async Task<ActionResult> PostNewspaper([FromBody] Newspaper newNewspaper)
         {
             return await CreateDocument(newNewspaper);
-        }
-
-
-        private async Task<ActionResult> CreateDocument(Document newDocument)
-        {
-            try
-            {
-                // Add a new document
-                await _documentService.Create(newDocument);
-            }
-            catch (MongoException e)
-            {
-                // Check if document exists
-                Document document = await _documentService.GetById(newDocument.Id);
-                if (document != null)
-                {
-                    // Return document already exists error
-                    return Conflict();
-                }
-                else
-                {
-                    // Return error message
-                    return BadRequest(e.Message);
-                }
-            }
-            return CreatedAtAction(nameof(GetDocument), new { id = newDocument.Id }, newDocument);
         }
 
         /// <summary>
@@ -261,5 +259,32 @@ namespace DocumentStoreManagement.Controllers
 
             return NoContent();
         }
+
+        #region Helpers 
+        private async Task<ActionResult> CreateDocument(Document newDocument)
+        {
+            try
+            {
+                // Add a new document
+                await _documentService.Create(newDocument);
+            }
+            catch (MongoException e)
+            {
+                // Check if document exists
+                Document document = await _documentService.GetById(newDocument.Id);
+                if (document != null)
+                {
+                    // Return document already exists error
+                    return Conflict();
+                }
+                else
+                {
+                    // Return error message
+                    return BadRequest(e.Message);
+                }
+            }
+            return CreatedAtAction(nameof(GetDocument), new { id = newDocument.Id }, newDocument);
+        }
+        #endregion
     }
 }

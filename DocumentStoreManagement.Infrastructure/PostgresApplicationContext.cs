@@ -1,4 +1,4 @@
-﻿using DocumentStoreManagement.Core.Models.PostgresQL;
+﻿using DocumentStoreManagement.Core.Models.MongoDB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -20,5 +20,10 @@ namespace DocumentStoreManagement.Infrastructure
         }
 
         public DbSet<Document> Documents { get; set; }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Magazine> Magazines { get; set; }
+        public DbSet<Newspaper> Newspapers { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
     }
 }

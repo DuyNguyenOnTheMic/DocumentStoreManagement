@@ -1,11 +1,16 @@
-﻿namespace DocumentStoreManagement.Core.Models.MongoDB
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace DocumentStoreManagement.Core.Models.MongoDB
 {
     /// <summary>
     /// Manazine collection - a document type
     /// </summary>
     public class Magazine : Document
     {
+        [Required]
         public int ReleaseNumber { get; set; }
-        public string ReleaseMonth { get; set; } = null!;
+        [Required]
+        [MaxLength(50)]
+        public string ReleaseMonth { get; set; }
     }
 }

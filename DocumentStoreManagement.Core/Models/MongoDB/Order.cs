@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace DocumentStoreManagement.Core.Models.MongoDB
 {
@@ -8,13 +9,18 @@ namespace DocumentStoreManagement.Core.Models.MongoDB
     /// </summary>
     public class Order
     {
+        [Key]
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
-        public string FullName { get; set; } = null!;
-        public string PhoneNumber { get; set; } = null!;
+        [Required]
+        public string FullName { get; set; }
+        [Required]
+        public string PhoneNumber { get; set; }
+        [Required]
         public DateTime BorrowDate { get; set; }
         public DateTime? ReturnDate { get; set; }
+        [Required]
         public int Status { get; set; }
     }
 }
