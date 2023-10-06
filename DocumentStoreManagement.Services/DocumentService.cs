@@ -1,4 +1,5 @@
 ﻿using DocumentStoreManagement.Core.Models.MongoDB;
+using DocumentStoreManagement.Helpers;
 using DocumentStoreManagement.Services.Commands.DocumentCommands;
 using DocumentStoreManagement.Services.Interfaces;
 using DocumentStoreManagement.Services.Queries.DocumentQueries;
@@ -24,9 +25,19 @@ namespace DocumentStoreManagement.Services
             return await _mediator.Send(new GetDocumentListQuery());
         }
 
-        public async Task<IEnumerable<Document>> GetByType(string type)
+        public async Task<IEnumerable<Document>> GetByType(int type)
         {
-            return await _mediator.Send(new GetDocumentListByTypeQuery(type));
+            bool hasKeyValue = CustomConstants.DocumentTypes.ContainsKey(type);
+            if (hasKeyValue)
+            {
+                // Get document list by type
+                return await _mediator.Send(new GetDocumentListByTypeQuery(type));
+            }
+            else
+            {
+                // Throw error
+                throw new Exception("The input type is not valid, please try again!");
+            }
         }
 
         public async Task<Document> GetById(string id)

@@ -1,5 +1,6 @@
 ﻿using DocumentStoreManagement.Core.Interfaces;
 using DocumentStoreManagement.Core.Models.MongoDB;
+using DocumentStoreManagement.Helpers;
 using DocumentStoreManagement.Services.Queries.DocumentQueries;
 using MediatR;
 using MongoDB.Bson;
@@ -23,7 +24,9 @@ namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
         /// <param name="cancellationToken"></param>
         public async Task<IEnumerable<Document>> Handle(GetDocumentListByTypeQuery query, CancellationToken cancellationToken)
         {
-            var filter = Builders<Document>.Filter.Ne(query.Type, BsonNull.Value);
+            // Filter documents by finding document type which is not null
+            string type = CustomConstants.DocumentTypes[query.Type];
+            FilterDefinition<Document> filter = Builders<Document>.Filter.Ne(type, BsonNull.Value);
             return await _documentRepository.FindAsync(filter);
         }
     }

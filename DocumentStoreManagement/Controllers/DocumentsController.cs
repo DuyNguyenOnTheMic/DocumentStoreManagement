@@ -49,13 +49,27 @@ namespace DocumentStoreManagement.Controllers
         /// Sample request:
         ///
         ///     GET api/documents/{type}
+        ///     
+        /// ***NOTES***: To get data by type, enters one of the following values:
+        /// * **1**: Gets the book data.
+        /// * **2**: Gets the magazine data.
+        /// * **3**: Gets the newspaper data.
         ///
         /// </remarks>
         [HttpGet("{type}")]
-        public async Task<IEnumerable<Document>> GetDocumentsByType(string type)
+        public async Task<ActionResult<IEnumerable<Document>>> GetDocumentsByType(int type)
         {
-            // Get documents by type
-            return await _documentService.GetByType(type);
+            try
+            {
+                // Get documents by type
+                IEnumerable<Document> result = await _documentService.GetByType(type);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                // Return error message
+                return BadRequest(e.Message);
+            }
         }
 
         /// <summary>
@@ -174,7 +188,7 @@ namespace DocumentStoreManagement.Controllers
         ///
         /// </remarks>
         [HttpPost]
-        public async Task<IActionResult> PostDocument([FromBody] Document newDocument)
+        public async Task<ActionResult> PostDocument([FromBody] Document newDocument)
         {
             try
             {

@@ -6,7 +6,7 @@ namespace DocumentStoreManagement.Helpers
     /// <summary>
     /// Constants class for reusable variables
     /// </summary>
-    public class Constants
+    public class CustomConstants
     {
         public static readonly int DocumentBookType = 1;
         public static readonly int DocumentMagazineType = 2;
