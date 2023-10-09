@@ -1,5 +1,4 @@
-﻿using DocumentStoreManagement.Core;
-using DocumentStoreManagement.Core.Models;
+﻿using DocumentStoreManagement.Core.Models;
 using DocumentStoreManagement.Services.Commands.DocumentCommands;
 using DocumentStoreManagement.Services.Interfaces;
 using DocumentStoreManagement.Services.Queries.DocumentQueries;
@@ -21,41 +20,37 @@ namespace DocumentStoreManagement.Services
 
         public async Task<IEnumerable<Document>> GetAll()
         {
+            // Get document list
             return await _mediator.Send(new GetDocumentListQuery());
         }
 
         public async Task<IEnumerable<Document>> GetByType(int type)
         {
-            bool hasKeyValue = CustomConstants.DocumentTypes.ContainsKey(type);
-            if (hasKeyValue)
-            {
-                // Get document list by type
-                return await _mediator.Send(new GetDocumentListByTypeQuery(type));
-            }
-            else
-            {
-                // Throw error
-                throw new Exception("The input type is not valid, please try again!");
-            }
+            // Get document list by type
+            return await _mediator.Send(new GetDocumentListByTypeQuery(type));
         }
 
         public async Task<Document> GetById(string id)
         {
+            // Get document by id
             return await _mediator.Send(new GetDocumentByIdQuery(id));
         }
 
         public async Task Update(Document document)
         {
+            // Update document
             await _mediator.Send(new UpdateDocumentCommand(document));
         }
 
         public async Task Create(Document document)
         {
+            // Create new document
             await _mediator.Send(new CreateDocumentCommand(document));
         }
 
         public async Task Delete(string id)
         {
+            // Delete document
             await _mediator.Send(new DeleteDocumentCommand(id));
         }
     }

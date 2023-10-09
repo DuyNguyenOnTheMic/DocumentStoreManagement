@@ -42,7 +42,8 @@ namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
                 return await _newspaperRepository.GetAllAsync();
             }
 
-            throw new Exception();
+            // Throw error
+            throw new Exception("The input type is not valid, please try again!");
         }
     }
 }
