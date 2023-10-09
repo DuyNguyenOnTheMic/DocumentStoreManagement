@@ -16,11 +16,11 @@ namespace DocumentStoreManagement.Infrastructure.ServiceExtension
         public static IServiceCollection AddDIServices(this IServiceCollection services, IConfiguration configuration)
         {
             // SQL context
-            /* services.AddScoped<DbContext, SqlApplicationContext>();
-             services.AddTransient<IUnitOfWork, SqlUnitOfWork>();
-             services.AddScoped(typeof(IGenericRepository<>), typeof(SqlGenericRepository<>));
-             var connectionString = configuration.GetConnectionString("SqlDbConnection") ?? throw new InvalidOperationException("Connection string 'SqlDbConnection' not found.");
-             services.AddDbContext<DbContext>(options => options.UseSqlServer(connectionString));*/
+            /*services.AddScoped<DbContext, SqlApplicationContext>();
+            services.AddTransient<IUnitOfWork, SqlUnitOfWork>();
+            services.AddScoped(typeof(IGenericRepository<>), typeof(SqlGenericRepository<>));
+            var connectionString = configuration.GetConnectionString("SqlDbConnection") ?? throw new InvalidOperationException("Connection string 'SqlDbConnection' not found.");
+            services.AddDbContext<DbContext>(options => options.UseSqlServer(connectionString));*/
 
             // MongoDB context
             /*services.AddSingleton<IMongoDbSettings>(sp =>

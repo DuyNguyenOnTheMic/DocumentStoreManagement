@@ -13,7 +13,6 @@ namespace DocumentStoreManagement.Core.Interfaces
         Task<IEnumerable<T>> GetAllAsync();
         Task<T> GetByIdAsync(object id);
         Task<IEnumerable<T>> FindAsync(object expression);
-        Task<IEnumerable<T>> FindByTypeAsync(string type);
         Task UpdateAsync(T entity);
         Task RemoveAsync(T entity);
         Task RemoveRangeAsync(IEnumerable<T> entities);

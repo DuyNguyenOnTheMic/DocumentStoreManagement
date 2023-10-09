@@ -1,20 +1,17 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DocumentStoreManagement.Core.Models
 {
     /// <summary>
     /// Order collection - to store customer orders
     /// </summary>
-    public class Order
+    public class Order : BaseEntity
     {
-        [Key]
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string Id { get; set; }
+        public Order()
+        {
+            OrderDetails = new HashSet<OrderDetail>();
+        }
+
         [Required]
         public string FullName { get; set; }
         [Required]
@@ -24,5 +21,6 @@ namespace DocumentStoreManagement.Core.Models
         public DateTime? ReturnDate { get; set; }
         [Required]
         public int Status { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }
