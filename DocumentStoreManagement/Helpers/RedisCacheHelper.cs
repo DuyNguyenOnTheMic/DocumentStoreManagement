@@ -6,20 +6,30 @@ namespace DocumentStoreManagement.Helpers
     /// <summary>
     /// Redis Cache Helper
     /// </summary>
-    /// <param name="Database"></param>
-    public record RedisCacheHelper(IDatabase Database)
+    public class RedisCacheHelper
     {
+        private readonly IDatabase _database;
+
+        /// <summary>
+        /// Constructor for database interface
+        /// </summary>
+        /// <param name="database"></param>
+        public RedisCacheHelper(IDatabase database)
+        {
+            _database = database;
+        }
+
         /// <summary>
         /// Get cache or set new if not exists
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <param name="func"></param>
-        /// <returns></returns>
-        public async Task<IEnumerable<T>> GetOrSetAsync<T>(string key, Func<Task<IEnumerable<T>>> func)
+        /// <param name="expiration"></param>
+        public async Task<IEnumerable<T>> GetOrSetAsync<T>(string key, Func<Task<IEnumerable<T>>> func, TimeSpan expiration)
         {
-            RedisValue cached = await Database.StringGetAsync(key);
-            if (cached.HasValue)
+            RedisValue cached = _database.StringGet(key);
+            if (!cached.IsNull)
             {
                 // Get the cached value
                 return JsonConvert.DeserializeObject<IEnumerable<T>>(cached);
@@ -27,8 +37,18 @@ namespace DocumentStoreManagement.Helpers
 
             // Otherwise, set new cache value
             IEnumerable<T> result = await func();
-            await Database.StringSetAsync(key, JsonConvert.SerializeObject(result));
+            await _database.StringSetAsync(key, JsonConvert.SerializeObject(result), expiration, When.NotExists);
             return result;
+        }
+
+        /// <summary>
+        /// Flush cache values
+        /// </summary>
+        /// <param name="key"></param>
+        public async Task FlushAsync(string key)
+        {
+            // Flush cached value by key
+            await _database.KeyDeleteAsync(key);
         }
     }
 }

@@ -3,7 +3,6 @@ using DocumentStoreManagement.Core.Interfaces;
 using DocumentStoreManagement.Core.Models;
 using DocumentStoreManagement.Services.Queries.DocumentQueries;
 using MediatR;
-using MongoDB.Driver;
 
 namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
 {
@@ -23,10 +22,8 @@ namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
         /// <param name="cancellationToken"></param>
         public async Task<IEnumerable<Document>> Handle(GetDocumentListByTypeQuery query, CancellationToken cancellationToken)
         {
-            // Filter documents by finding document type which is not null
             string type = CustomConstants.DocumentTypes[query.Type];
-            var filter = Builders<Document>.Filter.Eq("_t", type);
-            return await _documentRepository.FindAsync(filter);
+            return await _documentRepository.FindByTypeAsync(type);
         }
     }
 }

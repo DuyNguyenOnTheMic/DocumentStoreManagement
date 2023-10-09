@@ -3,7 +3,6 @@ using DocumentStoreManagement.Core.Models;
 using DocumentStoreManagement.Helpers;
 using DocumentStoreManagement.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using StackExchange.Redis;
 
 namespace DocumentStoreManagement.Controllers
 {
@@ -15,19 +14,20 @@ namespace DocumentStoreManagement.Controllers
     public class DocumentsController : BaseController
     {
         private readonly IDocumentService _documentService;
-        private readonly IDatabase _database;
+        private readonly RedisCacheHelper _redisCacheHelper;
+        private static readonly string cacheKey = "document-list-cache";
 
         /// <summary>
         /// Add dependencies to controller
         /// </summary>
         /// <param name="unitOfWork"></param>
         /// <param name="documentService"></param>
-        /// <param name="database"></param>
-        public DocumentsController(IUnitOfWork unitOfWork, IDocumentService documentService, IDatabase database) : base(unitOfWork)
+        /// <param name="redisCacheHelper"></param>
+        public DocumentsController(IUnitOfWork unitOfWork, IDocumentService documentService, RedisCacheHelper redisCacheHelper) : base(unitOfWork)
         {
             _unitOfWork = unitOfWork;
             _documentService = documentService;
-            _database = database;
+            _redisCacheHelper = redisCacheHelper;
         }
 
         /// <summary>
@@ -43,9 +43,11 @@ namespace DocumentStoreManagement.Controllers
         [HttpGet]
         public async Task<IEnumerable<Document>> GetDocuments()
         {
+            // Set the expiration of cache
+            TimeSpan expiration = TimeSpan.FromSeconds(30);
+
             // Get list of documents
-            RedisCacheHelper redisCacheHelper = new(_database);
-            return await redisCacheHelper.GetOrSetAsync("document-list-cache", _documentService.GetAll);
+            return await _redisCacheHelper.GetOrSetAsync(cacheKey, _documentService.GetAll, expiration);
         }
 
         /// <summary>
@@ -147,6 +149,10 @@ namespace DocumentStoreManagement.Controllers
             {
                 // Update document
                 await _documentService.Update(updatedDocument);
+                await _unitOfWork.SaveAsync();
+
+                // Clear cache
+                await _redisCacheHelper.FlushAsync(cacheKey);
             }
             catch (Exception e)
             {
@@ -258,6 +264,10 @@ namespace DocumentStoreManagement.Controllers
 
             // Delete document
             await _documentService.Delete(id);
+            await _unitOfWork.SaveAsync();
+
+            // Clear cache
+            await _redisCacheHelper.FlushAsync(cacheKey);
 
             return NoContent();
         }
@@ -270,6 +280,9 @@ namespace DocumentStoreManagement.Controllers
                 // Add a new document
                 await _documentService.Create(newDocument);
                 await _unitOfWork.SaveAsync();
+
+                // Clear cache
+                await _redisCacheHelper.FlushAsync(cacheKey);
             }
             catch (Exception e)
             {
