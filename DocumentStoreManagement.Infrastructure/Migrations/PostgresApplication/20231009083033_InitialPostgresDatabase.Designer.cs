@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DocumentStoreManagement.Infrastructure.Migrations.PostgresApplication
 {
     [DbContext(typeof(PostgresApplicationContext))]
-    [Migration("20231006091654_InitialPostgresDatabase")]
+    [Migration("20231009083033_InitialPostgresDatabase")]
     partial class InitialPostgresDatabase
     {
         /// <inheritdoc />
@@ -98,10 +98,10 @@ namespace DocumentStoreManagement.Infrastructure.Migrations.PostgresApplication
                         .HasColumnType("integer");
 
                     b.Property<decimal>("Total")
-                        .HasColumnType("numeric");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<decimal>("UnitPrice")
-                        .HasColumnType("numeric");
+                        .HasColumnType("decimal(18,4)");
 
                     b.HasKey("Id");
 
@@ -161,7 +161,7 @@ namespace DocumentStoreManagement.Infrastructure.Migrations.PostgresApplication
                         .IsRequired();
 
                     b.HasOne("DocumentStoreManagement.Core.Models.Order", "Order")
-                        .WithMany()
+                        .WithMany("OrderDetails")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -169,6 +169,11 @@ namespace DocumentStoreManagement.Infrastructure.Migrations.PostgresApplication
                     b.Navigation("Document");
 
                     b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("DocumentStoreManagement.Core.Models.Order", b =>
+                {
+                    b.Navigation("OrderDetails");
                 });
 #pragma warning restore 612, 618
         }

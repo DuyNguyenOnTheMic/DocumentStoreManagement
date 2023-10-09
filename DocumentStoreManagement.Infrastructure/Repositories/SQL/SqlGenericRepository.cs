@@ -1,5 +1,4 @@
 ﻿using DocumentStoreManagement.Core.Interfaces;
-using DocumentStoreManagement.Core.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -9,7 +8,7 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.SQL
     /// SQL Generic Repository
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class SqlGenericRepository<T> : IGenericRepository<T> where T : BaseEntity
+    public class SqlGenericRepository<T> : IGenericRepository<T> where T : class
     {
         protected readonly DbContext _dbContext;
         protected readonly DbSet<T> _dbSet;
@@ -48,7 +47,7 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.SQL
         public async Task<IEnumerable<T>> FindByTypeAsync(string type)
         {
             return await _dbSet.FromSqlRaw(@"SELECT *
-            FROM public.""Documents""
+            FROM ""Documents""
             WHERE ""Discriminator"" = '" + type + "';").ToListAsync();
         }
 
