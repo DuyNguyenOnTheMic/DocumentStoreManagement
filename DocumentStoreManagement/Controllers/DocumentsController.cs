@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DocumentStoreManagement.Controllers
 {
     /// <summary>
-    /// Document Management API Controller - MongoDB database
+    /// Document Management API Controller
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]

@@ -1,12 +1,10 @@
 ﻿using DocumentStoreManagement.Core.Interfaces;
-using DocumentStoreManagement.Infrastructure.Repositories.Mongo;
 using DocumentStoreManagement.Infrastructure.Repositories.SQL;
 using DocumentStoreManagement.Services;
 using DocumentStoreManagement.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 
 namespace DocumentStoreManagement.Infrastructure.ServiceExtension
 {
@@ -25,22 +23,22 @@ namespace DocumentStoreManagement.Infrastructure.ServiceExtension
              services.AddDbContext<DbContext>(options => options.UseSqlServer(connectionString));*/
 
             // MongoDB context
-            services.AddSingleton<IMongoDbSettings>(sp =>
+            /*services.AddSingleton<IMongoDbSettings>(sp =>
                 sp.GetRequiredService<IOptions<MongoDbSettings>>().Value);
             services.AddScoped<IMongoApplicationContext, MongoApplicationContext>();
             services.AddTransient<IUnitOfWork, SqlUnitOfWork>();
             services.AddScoped<IDocumentService, DocumentService>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(MongoGenericRepository<>));
             var connectionString = configuration.GetConnectionString("SqlDbConnection") ?? throw new InvalidOperationException("Connection string 'SqlDbConnection' not found.");
-            services.AddDbContext<DbContext>(options => options.UseSqlServer(connectionString));
+            services.AddDbContext<DbContext>(options => options.UseSqlServer(connectionString));*/
 
             // Postgres context
-            /*services.AddScoped<DbContext, PostgresApplicationContext>();
+            services.AddScoped<DbContext, PostgresApplicationContext>();
             services.AddTransient<IUnitOfWork, SqlUnitOfWork>();
             services.AddScoped<IDocumentService, DocumentService>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(SqlGenericRepository<>));
             services.AddDbContext<DbContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("PostgresConnection")));*/
+            options.UseNpgsql(configuration.GetConnectionString("PostgresConnection")));
 
             return services;
         }
