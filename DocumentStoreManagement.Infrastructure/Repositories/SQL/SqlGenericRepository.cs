@@ -44,13 +44,6 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.SQL
             return await _dbSet.Where((Expression<Func<T, bool>>)expression).ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> FindByTypeAsync(string type)
-        {
-            return await _dbSet.FromSqlRaw(@"SELECT *
-            FROM ""Documents""
-            WHERE ""Discriminator"" = '" + type + "';").ToListAsync();
-        }
-
         public Task UpdateAsync(T entityToUpdate)
         {
             _dbContext.Attach(entityToUpdate);
