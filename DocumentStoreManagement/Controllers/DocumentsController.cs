@@ -31,26 +31,6 @@ namespace DocumentStoreManagement.Controllers
         }
 
         /// <summary>
-        /// Gets the document list
-        /// </summary>
-        /// <returns>A list of all documents</returns>
-        /// <remarks>
-        /// Sample request:
-        ///
-        ///     GET api/documents
-        ///
-        /// </remarks>
-        [HttpGet]
-        public async Task<IEnumerable<Document>> GetDocuments()
-        {
-            // Set the expiration of cache
-            TimeSpan expiration = TimeSpan.FromSeconds(30);
-
-            // Get list of documents
-            return await _redisCacheHelper.GetOrSetAsync(cacheKey, _documentService.GetAll, expiration);
-        }
-
-        /// <summary>
         /// Searches the document list by type
         /// </summary>
         /// <param name="type"></param>
@@ -71,9 +51,14 @@ namespace DocumentStoreManagement.Controllers
         {
             try
             {
-                // Get documents by type
-                IEnumerable<Document> result = await _documentService.GetByType(type);
-                return Ok(result);
+                // Set the expiration of cache
+                TimeSpan expiration = TimeSpan.FromSeconds(30);
+
+                // Get list of documents
+                return Ok(await _redisCacheHelper.GetOrSetAsync(
+                    key: $"{cacheKey}-{type}",
+                    func: _documentService.GetByType(type),
+                    expiration: expiration));
             }
             catch (Exception e)
             {
@@ -273,7 +258,7 @@ namespace DocumentStoreManagement.Controllers
         }
 
         #region Helpers 
-        private async Task<ActionResult> CreateDocument(Document newDocument)
+        private async Task<ActionResult> CreateDocument<T>(T newDocument) where T : BaseEntity
         {
             try
             {

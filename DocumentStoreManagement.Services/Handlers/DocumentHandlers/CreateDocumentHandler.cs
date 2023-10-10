@@ -5,11 +5,11 @@ using MediatR;
 
 namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
 {
-    public class CreateDocumentHandler : IRequestHandler<CreateDocumentCommand, Document>
+    public class CreateDocumentHandler<T> : IRequestHandler<CreateDocumentCommand<T>, T> where T : BaseEntity
     {
-        private readonly IGenericRepository<Document> _documentRepository;
+        private readonly IGenericRepository<T> _documentRepository;
 
-        public CreateDocumentHandler(IGenericRepository<Document> documentRepository)
+        public CreateDocumentHandler(IGenericRepository<T> documentRepository)
         {
             _documentRepository = documentRepository;
         }
@@ -19,7 +19,7 @@ namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
         /// </summary>
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
-        public async Task<Document> Handle(CreateDocumentCommand command, CancellationToken cancellationToken)
+        public async Task<T> Handle(CreateDocumentCommand<T> command, CancellationToken cancellationToken)
         {
             await _documentRepository.AddAsync(command.Document);
             return command.Document;

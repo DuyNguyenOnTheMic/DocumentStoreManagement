@@ -42,10 +42,10 @@ namespace DocumentStoreManagement.Services
             await _mediator.Send(new UpdateDocumentCommand(document));
         }
 
-        public async Task Create(Document document)
+        public async Task Create<T>(T document)
         {
             // Create new document
-            await _mediator.Send(new CreateDocumentCommand(document));
+            await _mediator.Send(new CreateDocumentCommand<T>(document));
         }
 
         public async Task Delete(string id)

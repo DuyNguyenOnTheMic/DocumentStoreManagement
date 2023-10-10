@@ -10,7 +10,7 @@ namespace DocumentStoreManagement.Services.Interfaces
         Task<IEnumerable<Document>> GetAll();
         Task<IEnumerable<Document>> GetByType(int type);
         Task<Document> GetById(string id);
-        Task Create(Document document);
+        Task Create<T>(T document);
         Task Update(Document document);
         Task Delete(string id);
     }

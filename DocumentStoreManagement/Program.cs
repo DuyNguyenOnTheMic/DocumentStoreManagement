@@ -10,14 +10,14 @@ using System.Reflection;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-// Register MediatR services.
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(AppDomain.CurrentDomain.Load("DocumentStoreManagement.Services")));
-builder.Services.AddSingleton(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
-
 // Add services to the container.
 builder.Services.Configure<MongoDbSettings>(
     builder.Configuration.GetSection("MongoDBDatabase"));
 builder.Services.AddDIServices(builder.Configuration);
+
+// Register MediatR services.
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(AppDomain.CurrentDomain.Load("DocumentStoreManagement.Services")));
+builder.Services.AddSingleton(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 
 builder.Services.AddControllers(opts =>
     opts.Conventions.Add(new RouteTokenTransformerConvention(new ToKebabParameterTransformer())));
