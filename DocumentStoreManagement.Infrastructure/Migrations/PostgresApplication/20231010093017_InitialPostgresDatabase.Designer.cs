@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DocumentStoreManagement.Infrastructure.Migrations.PostgresApplication
 {
     [DbContext(typeof(PostgresApplicationContext))]
-    [Migration("20231009165446_InitialPostgresDatabase")]
+    [Migration("20231010093017_InitialPostgresDatabase")]
     partial class InitialPostgresDatabase
     {
         /// <inheritdoc />
@@ -31,10 +31,6 @@ namespace DocumentStoreManagement.Infrastructure.Migrations.PostgresApplication
                         .ValueGeneratedOnAdd()
                         .HasColumnType("text");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("PublisherName")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -47,9 +43,7 @@ namespace DocumentStoreManagement.Infrastructure.Migrations.PostgresApplication
 
                     b.ToTable("Documents");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Document");
-
-                    b.UseTphMappingStrategy();
+                    b.UseTptMappingStrategy();
                 });
 
             modelBuilder.Entity("DocumentStoreManagement.Core.Models.Order", b =>
@@ -98,10 +92,10 @@ namespace DocumentStoreManagement.Infrastructure.Migrations.PostgresApplication
                         .HasColumnType("integer");
 
                     b.Property<decimal>("Total")
-                        .HasColumnType("numeric");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<decimal>("UnitPrice")
-                        .HasColumnType("numeric");
+                        .HasColumnType("decimal(18,4)");
 
                     b.HasKey("Id");
 
@@ -124,7 +118,7 @@ namespace DocumentStoreManagement.Infrastructure.Migrations.PostgresApplication
                     b.Property<int>("PageNumber")
                         .HasColumnType("integer");
 
-                    b.HasDiscriminator().HasValue("Book");
+                    b.ToTable("Books");
                 });
 
             modelBuilder.Entity("DocumentStoreManagement.Core.Models.Magazine", b =>
@@ -139,7 +133,7 @@ namespace DocumentStoreManagement.Infrastructure.Migrations.PostgresApplication
                     b.Property<int>("ReleaseNumber")
                         .HasColumnType("integer");
 
-                    b.HasDiscriminator().HasValue("Magazine");
+                    b.ToTable("Magazines");
                 });
 
             modelBuilder.Entity("DocumentStoreManagement.Core.Models.Newspaper", b =>
@@ -149,7 +143,7 @@ namespace DocumentStoreManagement.Infrastructure.Migrations.PostgresApplication
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.HasDiscriminator().HasValue("Newspaper");
+                    b.ToTable("Newspapers");
                 });
 
             modelBuilder.Entity("DocumentStoreManagement.Core.Models.OrderDetail", b =>
@@ -161,7 +155,7 @@ namespace DocumentStoreManagement.Infrastructure.Migrations.PostgresApplication
                         .IsRequired();
 
                     b.HasOne("DocumentStoreManagement.Core.Models.Order", "Order")
-                        .WithMany()
+                        .WithMany("OrderDetails")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -169,6 +163,38 @@ namespace DocumentStoreManagement.Infrastructure.Migrations.PostgresApplication
                     b.Navigation("Document");
 
                     b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("DocumentStoreManagement.Core.Models.Book", b =>
+                {
+                    b.HasOne("DocumentStoreManagement.Core.Models.Document", null)
+                        .WithOne()
+                        .HasForeignKey("DocumentStoreManagement.Core.Models.Book", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DocumentStoreManagement.Core.Models.Magazine", b =>
+                {
+                    b.HasOne("DocumentStoreManagement.Core.Models.Document", null)
+                        .WithOne()
+                        .HasForeignKey("DocumentStoreManagement.Core.Models.Magazine", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DocumentStoreManagement.Core.Models.Newspaper", b =>
+                {
+                    b.HasOne("DocumentStoreManagement.Core.Models.Document", null)
+                        .WithOne()
+                        .HasForeignKey("DocumentStoreManagement.Core.Models.Newspaper", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DocumentStoreManagement.Core.Models.Order", b =>
+                {
+                    b.Navigation("OrderDetails");
                 });
 #pragma warning restore 612, 618
         }
