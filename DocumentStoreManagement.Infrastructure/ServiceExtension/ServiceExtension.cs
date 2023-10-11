@@ -35,6 +35,7 @@ namespace DocumentStoreManagement.Infrastructure.ServiceExtension
             services.AddScoped<IMongoApplicationContext, MongoApplicationContext>();
             services.AddTransient<IUnitOfWork, MongoUnitOfWork>();
             services.AddScoped<IDocumentService, DocumentService>();
+            services.AddScoped<IOrderService, OrderService>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(MongoGenericRepository<>));
             string connectionString = configuration.GetConnectionString("SqlDbConnection") ?? throw new InvalidOperationException("Connection string 'SqlDbConnection' not found.");
             services.AddDbContext<DbContext>(options => options.UseSqlServer(connectionString));
@@ -43,6 +44,7 @@ namespace DocumentStoreManagement.Infrastructure.ServiceExtension
             /*services.AddScoped<DbContext, PostgresApplicationContext>();
             services.AddTransient<IUnitOfWork, SqlUnitOfWork>();
             services.AddScoped<IDocumentService, DocumentService>();
+            services.AddScoped<IOrderService, OrderService>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(SqlGenericRepository<>));
             services.AddDbContext<DbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("PostgresConnection")));*/

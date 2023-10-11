@@ -1,21 +1,27 @@
 ﻿using DocumentStoreManagement.Core.Interfaces;
 using DocumentStoreManagement.Core.Models;
+using DocumentStoreManagement.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DocumentStoreManagement.Controllers
 {
+    /// <summary>
+    /// Order Management API Controller
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class OrdersController : BaseController
     {
+        private readonly IOrderService _orderService;
         private readonly IGenericRepository<Order> _orderRepository;
         private readonly DbContext _context;
 
-        public OrdersController(IUnitOfWork unitOfWork, IGenericRepository<Order> orderRepository, DbContext context) : base(unitOfWork)
+        public OrdersController(IUnitOfWork unitOfWork, IOrderService orderService, IGenericRepository<Order> orderRepository, DbContext context) : base(unitOfWork)
         {
-            _orderRepository = orderRepository;
             _unitOfWork = unitOfWork;
+            _orderService = orderService;
+            _orderRepository = orderRepository;
             _context = context;
         }
 
@@ -76,10 +82,10 @@ namespace DocumentStoreManagement.Controllers
         [HttpPost]
         public async Task<ActionResult<Order>> PostOrder(Order order)
         {
-            await _orderRepository.AddAsync(order);
+            await _orderService.Create(order);
             await _unitOfWork.SaveAsync();
 
-            return CreatedAtAction("GetOrder", new { id = order.Id }, order);
+            return CreatedAtAction(nameof(GetOrder), new { id = order.Id }, order);
         }
 
         // DELETE: api/Orders/5
