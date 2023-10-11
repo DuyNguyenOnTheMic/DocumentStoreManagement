@@ -163,7 +163,7 @@ namespace DocumentStoreManagement.Controllers
         /// <remarks>
         /// Sample request:
         ///
-        ///     POST api/documents/books
+        ///     POST api/documents/book
         ///     {
         ///         "publisherName": "Example Name",
         ///         "releaseQuantity": 12,
@@ -172,7 +172,7 @@ namespace DocumentStoreManagement.Controllers
         ///     }
         ///
         /// </remarks>
-        [HttpPost("books")]
+        [HttpPost("book")]
         public async Task<ActionResult> PostBook([FromBody] Book newBook)
         {
             return await CreateDocument(newBook);
@@ -186,7 +186,7 @@ namespace DocumentStoreManagement.Controllers
         /// <remarks>
         /// Sample request:
         ///
-        ///     POST api/documents/magazines
+        ///     POST api/documents/magazine
         ///     {
         ///         "publisherName": "Example Name",
         ///         "releaseQuantity": 12,
@@ -195,7 +195,7 @@ namespace DocumentStoreManagement.Controllers
         ///     }
         ///
         /// </remarks>
-        [HttpPost("magazines")]
+        [HttpPost("magazine")]
         public async Task<ActionResult> PostMagazine([FromBody] Magazine newMagazine)
         {
             return await CreateDocument(newMagazine);
@@ -209,7 +209,7 @@ namespace DocumentStoreManagement.Controllers
         /// <remarks>
         /// Sample request:
         ///
-        ///     POST api/documents/newspapers
+        ///     POST api/documents/newspaper
         ///     {
         ///         "publisherName": "Example Name",
         ///         "releaseQuantity": 12,
@@ -217,7 +217,7 @@ namespace DocumentStoreManagement.Controllers
         ///     }
         ///
         /// </remarks>
-        [HttpPost("newspapers")]
+        [HttpPost("newspaper")]
         public async Task<ActionResult> PostNewspaper([FromBody] Newspaper newNewspaper)
         {
             return await CreateDocument(newNewspaper);

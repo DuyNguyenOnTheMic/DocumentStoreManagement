@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DocumentStoreManagement.Infrastructure.Migrations.PostgresApplication
 {
     [DbContext(typeof(PostgresApplicationContext))]
-    [Migration("20231010093017_InitialPostgresDatabase")]
+    [Migration("20231011080030_InitialPostgresDatabase")]
     partial class InitialPostgresDatabase
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace DocumentStoreManagement.Infrastructure.Migrations.PostgresApplication
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.11")
+                .HasAnnotation("ProductVersion", "7.0.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
