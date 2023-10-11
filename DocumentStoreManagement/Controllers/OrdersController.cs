@@ -81,7 +81,7 @@ namespace DocumentStoreManagement.Controllers
         // POST: api/Orders
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<OrderDTO>> PostOrder(OrderDTO orderDTO)
+        public async Task<ActionResult> PostOrder(OrderDTO orderDTO)
         {
             Order order = await _orderService.Create(orderDTO);
             await _unitOfWork.SaveAsync();
