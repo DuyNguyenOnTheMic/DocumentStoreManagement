@@ -5,7 +5,7 @@ using MediatR;
 
 namespace DocumentStoreManagement.Services.Handlers.OrderHandlers
 {
-    public class CreateOrderHandler : IRequestHandler<CreateOrderCommand>
+    public class CreateOrderHandler : IRequestHandler<CreateOrderCommand, Order>
     {
         private readonly IGenericRepository<Order> _orderRepository;
 
@@ -19,9 +19,11 @@ namespace DocumentStoreManagement.Services.Handlers.OrderHandlers
         /// </summary>
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
-        public async Task Handle(CreateOrderCommand command, CancellationToken cancellationToken)
+        public async Task<Order> Handle(CreateOrderCommand command, CancellationToken cancellationToken)
         {
-            await _orderRepository.AddAsync(command.Order);
+            Order order = command.Order;
+            await _orderRepository.AddAsync(order);
+            return order;
         }
     }
 }

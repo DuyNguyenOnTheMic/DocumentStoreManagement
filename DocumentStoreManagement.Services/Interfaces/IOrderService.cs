@@ -1,4 +1,5 @@
-﻿using DocumentStoreManagement.Core.Models;
+﻿using DocumentStoreManagement.Core.DTOs;
+using DocumentStoreManagement.Core.Models;
 
 namespace DocumentStoreManagement.Services.Interfaces
 {
@@ -9,7 +10,7 @@ namespace DocumentStoreManagement.Services.Interfaces
     {
         Task<IEnumerable<Order>> GetAll();
         Task<Order> GetById(string id);
-        Task Create(Order order);
+        Task<Order> Create(OrderDTO orderDTO);
         Task Update(Order order);
         Task Delete(string id);
     }

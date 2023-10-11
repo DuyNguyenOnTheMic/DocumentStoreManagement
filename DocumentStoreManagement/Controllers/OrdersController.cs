@@ -1,4 +1,5 @@
-﻿using DocumentStoreManagement.Core.Interfaces;
+﻿using DocumentStoreManagement.Core.DTOs;
+using DocumentStoreManagement.Core.Interfaces;
 using DocumentStoreManagement.Core.Models;
 using DocumentStoreManagement.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -80,9 +81,9 @@ namespace DocumentStoreManagement.Controllers
         // POST: api/Orders
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder(Order order)
+        public async Task<ActionResult<OrderDTO>> PostOrder(OrderDTO orderDTO)
         {
-            await _orderService.Create(order);
+            Order order = await _orderService.Create(orderDTO);
             await _unitOfWork.SaveAsync();
 
             return CreatedAtAction(nameof(GetOrder), new { id = order.Id }, order);
