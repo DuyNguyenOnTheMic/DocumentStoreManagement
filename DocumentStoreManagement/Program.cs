@@ -1,5 +1,4 @@
 using DocumentStoreManagement.Helpers;
-using DocumentStoreManagement.Infrastructure;
 using DocumentStoreManagement.Infrastructure.ServiceExtension;
 using DocumentStoreManagement.Services.Behaviors;
 using MediatR;
@@ -11,8 +10,6 @@ using System.Reflection;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.Configure<MongoDbSettings>(
-    builder.Configuration.GetSection("MongoDBDatabase"));
 builder.Services.AddDIServices(builder.Configuration);
 
 // Register MediatR services.

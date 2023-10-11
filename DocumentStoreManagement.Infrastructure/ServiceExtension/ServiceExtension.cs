@@ -1,7 +1,6 @@
 ﻿using DocumentStoreManagement.Core.Interfaces;
 using DocumentStoreManagement.Core.Models;
 using DocumentStoreManagement.Infrastructure.Repositories.Mongo;
-using DocumentStoreManagement.Infrastructure.Repositories.SQL;
 using DocumentStoreManagement.Services;
 using DocumentStoreManagement.Services.Commands.DocumentCommands;
 using DocumentStoreManagement.Services.Handlers.DocumentHandlers;
@@ -29,13 +28,15 @@ namespace DocumentStoreManagement.Infrastructure.ServiceExtension
             services.AddDbContext<DbContext>(options => options.UseSqlServer(connectionString));*/
 
             // MongoDB context
+            services.Configure<MongoDbSettings>(
+                configuration.GetSection("MongoDBDatabase"));
             services.AddSingleton<IMongoDbSettings>(sp =>
                 sp.GetRequiredService<IOptions<MongoDbSettings>>().Value);
             services.AddScoped<IMongoApplicationContext, MongoApplicationContext>();
-            services.AddTransient<IUnitOfWork, SqlUnitOfWork>();
+            services.AddTransient<IUnitOfWork, MongoUnitOfWork>();
             services.AddScoped<IDocumentService, DocumentService>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(MongoGenericRepository<>));
-            var connectionString = configuration.GetConnectionString("SqlDbConnection") ?? throw new InvalidOperationException("Connection string 'SqlDbConnection' not found.");
+            string connectionString = configuration.GetConnectionString("SqlDbConnection") ?? throw new InvalidOperationException("Connection string 'SqlDbConnection' not found.");
             services.AddDbContext<DbContext>(options => options.UseSqlServer(connectionString));
 
             // Postgres context

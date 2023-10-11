@@ -135,9 +135,6 @@ namespace DocumentStoreManagement.Controllers
                 // Update document
                 await _documentService.Update(updatedDocument);
                 await _unitOfWork.SaveAsync();
-
-                // Clear cache
-                await _redisCacheHelper.FlushAsync(cacheKey);
             }
             catch (Exception e)
             {
@@ -251,9 +248,6 @@ namespace DocumentStoreManagement.Controllers
             await _documentService.Delete(id);
             await _unitOfWork.SaveAsync();
 
-            // Clear cache
-            await _redisCacheHelper.FlushAsync(cacheKey);
-
             return NoContent();
         }
 
@@ -265,9 +259,6 @@ namespace DocumentStoreManagement.Controllers
                 // Add a new document
                 await _documentService.Create(newDocument);
                 await _unitOfWork.SaveAsync();
-
-                // Clear cache
-                await _redisCacheHelper.FlushAsync(cacheKey);
             }
             catch (Exception e)
             {

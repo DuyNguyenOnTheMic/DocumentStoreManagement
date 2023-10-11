@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Comment CommentText="Main API Project">
-    <Position X="1.994" Y="0.633" Height="0.375" Width="4.366" />
+    <Position X="0.5" Y="0.633" Height="0.375" Width="6.072" />
   </Comment>
   <Comment CommentText="Application Core Layer">
     <Position X="7.442" Y="0.625" Height="0.375" Width="10.625" />
@@ -10,117 +10,166 @@
     <Position X="7.432" Y="9.257" Height="0.375" Width="10.625" />
   </Comment>
   <Comment CommentText="Services Layer">
-    <Position X="2" Y="9.25" Height="0.375" Width="4.378" />
+    <Position X="0.509" Y="9.25" Height="0.375" Width="5.998" />
   </Comment>
-  <Class Name="DocumentStoreManagement.Controllers.DocumentsController">
-    <Position X="2" Y="1.5" Width="2.5" />
+  <Class Name="DocumentStoreManagement.Core.Models.BaseEntity" Collapsed="true">
+    <Position X="11.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="DocumentStoreManagement.Core.Models.Book" Collapsed="true">
+    <Position X="11.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="DocumentStoreManagement.Core.Models.Document" Collapsed="true">
+    <Position X="9.5" Y="3" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="DocumentStoreManagement.Core.Models.Magazine" Collapsed="true">
+    <Position X="7.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="DocumentStoreManagement.Core.Models.Newspaper" Collapsed="true">
+    <Position X="9.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="DocumentStoreManagement.Core.Models.Order" Collapsed="true">
+    <Position X="11.75" Y="3" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="DocumentStoreManagement.Core.Models.OrderDetail" Collapsed="true">
+    <Position X="14" Y="3" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="DocumentStoreManagement.Core.CustomConstants" Collapsed="true">
+    <Position X="14" Y="4.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="DocumentStoreManagement.Controllers.BaseController" Collapsed="true">
+    <Position X="2.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAUAAAAAAAAiAAAAAAAAAAAAAAAAAAQAAAgBAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\BaseController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DocumentStoreManagement.Controllers.DocumentsController" Collapsed="true">
+    <Position X="2.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgUAIAAAACAiAAAAAAEAAAAAgAAAAgAAAAgAAAAAAAA=</HashCode>
       <FileName>Controllers\DocumentsController.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DocumentStoreManagement.Infrastructure.Repositories.Mongo.MongoGenericRepository&lt;T&gt;">
-    <Position X="9" Y="12.75" Width="1.5" />
-    <TypeIdentifier />
-    <Lollipop Position="0.2" />
+  <Class Name="DocumentStoreManagement.Controllers.OrdersController" Collapsed="true">
+    <Position X="5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACQQAAAAABAAAAAAAAAAAAAAAAAIAAEAAABAAAAA=</HashCode>
+      <FileName>Controllers\OrdersController.cs</FileName>
+    </TypeIdentifier>
   </Class>
-  <Class Name="DocumentStoreManagement.Infrastructure.ServiceExtension.ServiceExtension">
-    <Position X="9" Y="11" Width="1.5" />
-    <TypeIdentifier />
+  <Class Name="DocumentStoreManagement.Controllers.StudentsController" Collapsed="true">
+    <Position X="0.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAACAAAAAAAAAAAAAAAAABAQBABIAAAAA=</HashCode>
+      <FileName>Controllers\StudentsController.cs</FileName>
+    </TypeIdentifier>
   </Class>
-  <Class Name="DocumentStoreManagement.Infrastructure.MongoApplicationContext">
-    <Position X="11" Y="12.75" Width="2.25" />
-    <TypeIdentifier />
-    <Lollipop Position="0.2" />
+  <Class Name="DocumentStoreManagement.Helpers.RedisCacheHelper" Collapsed="true">
+    <Position X="2.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAACAA=</HashCode>
+      <FileName>Helpers\RedisCacheHelper.cs</FileName>
+    </TypeIdentifier>
   </Class>
-  <Class Name="DocumentStoreManagement.Infrastructure.MongoDbSettings">
-    <Position X="11" Y="10.25" Width="2.25" />
-    <TypeIdentifier />
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="DocumentStoreManagement.Services.Behaviors.LoggingBehavior&lt;TRequest, TResponse&gt;">
-    <Position X="1.5" Y="13.25" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="DocumentStoreManagement.Services.Handlers.DocumentHandlers.CreateDocumentHandler">
-    <Position X="1.5" Y="10.25" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="DocumentStoreManagement.Services.Handlers.DocumentHandlers.DeleteDocumentHandler">
-    <Position X="3.25" Y="10.25" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="DocumentStoreManagement.Services.Handlers.DocumentHandlers.GetDocumentByIdHandler">
-    <Position X="1.5" Y="11.75" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="DocumentStoreManagement.Services.Handlers.DocumentHandlers.GetDocumentListByTypeHandler">
-    <Position X="3.25" Y="11.75" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="DocumentStoreManagement.Services.Handlers.DocumentHandlers.GetDocumentListHandler">
-    <Position X="5" Y="13.25" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="DocumentStoreManagement.Services.Handlers.DocumentHandlers.UpdateDocumentHandler">
-    <Position X="3.25" Y="13.25" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="DocumentStoreManagement.Services.DocumentService" BaseTypeListCollapsed="true">
-    <Position X="5" Y="10.25" Width="1.5" />
-    <TypeIdentifier />
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="DocumentStoreManagement.Helpers.ToKebabParameterTransformer">
-    <Position X="4.75" Y="1.5" Width="1.5" />
+  <Class Name="DocumentStoreManagement.Helpers.ToKebabParameterTransformer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Helpers\ToKebabParameterTransformer.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="DocumentStoreManagement.Core.Models.MongoDB.BaseEntity">
-    <Position X="9.25" Y="1.5" Width="1.5" />
+  <Class Name="DocumentStoreManagement.Services.Behaviors.LoggingBehavior&lt;TRequest, TResponse&gt;" Collapsed="true">
+    <Position X="0.75" Y="12.25" Width="1.5" />
     <TypeIdentifier />
   </Class>
-  <Class Name="DocumentStoreManagement.Core.Models.MongoDB.Book">
-    <Position X="9.25" Y="6.75" Width="1.5" />
+  <Class Name="DocumentStoreManagement.Services.Handlers.DocumentHandlers.CreateDocumentHandler&lt;T&gt;" Collapsed="true">
+    <Position X="0.75" Y="10.25" Width="1.5" />
     <TypeIdentifier />
   </Class>
-  <Class Name="DocumentStoreManagement.Core.Models.MongoDB.Document">
-    <Position X="9.25" Y="3.75" Width="1.5" />
+  <Class Name="DocumentStoreManagement.Services.Handlers.DocumentHandlers.DeleteDocumentHandler" Collapsed="true">
+    <Position X="2.5" Y="10.25" Width="1.5" />
     <TypeIdentifier />
   </Class>
-  <Class Name="DocumentStoreManagement.Core.Models.MongoDB.Magazine">
-    <Position X="7" Y="6.75" Width="1.5" />
+  <Class Name="DocumentStoreManagement.Services.Handlers.DocumentHandlers.GetDocumentByIdHandler" Collapsed="true">
+    <Position X="0.75" Y="11.25" Width="1.5" />
     <TypeIdentifier />
   </Class>
-  <Class Name="DocumentStoreManagement.Core.Models.MongoDB.Newspaper">
-    <Position X="11.5" Y="6.75" Width="1.5" />
+  <Class Name="DocumentStoreManagement.Services.Handlers.DocumentHandlers.GetDocumentListByTypeHandler" Collapsed="true">
+    <Position X="2.5" Y="11.25" Width="1.5" />
     <TypeIdentifier />
   </Class>
-  <Class Name="DocumentStoreManagement.Core.Models.MongoDB.Order">
-    <Position X="14.25" Y="4.75" Width="1.5" />
+  <Class Name="DocumentStoreManagement.Services.Handlers.DocumentHandlers.GetDocumentListHandler" Collapsed="true">
+    <Position X="4.25" Y="11.25" Width="1.5" />
     <TypeIdentifier />
   </Class>
-  <Class Name="DocumentStoreManagement.Core.Models.MongoDB.OrderDetail">
-    <Position X="16.25" Y="4.75" Width="1.5" />
+  <Class Name="DocumentStoreManagement.Services.Handlers.DocumentHandlers.UpdateDocumentHandler" Collapsed="true">
+    <Position X="2.5" Y="12.25" Width="1.5" />
     <TypeIdentifier />
   </Class>
-  <Interface Name="DocumentStoreManagement.Core.Interfaces.IGenericRepository&lt;T&gt;">
-    <Position X="14.25" Y="1.5" Width="1.5" />
+  <Class Name="DocumentStoreManagement.Services.DocumentService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4.25" Y="10.25" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DocumentStoreManagement.Infrastructure.Repositories.Mongo.MongoGenericRepository&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="10" Width="2.25" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DocumentStoreManagement.Infrastructure.Repositories.SQL.SqlGenericRepository&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10" Y="10" Width="2.25" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DocumentStoreManagement.Infrastructure.ServiceExtension.ServiceExtension" Collapsed="true">
+    <Position X="13.75" Y="11.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="DocumentStoreManagement.Infrastructure.MongoApplicationContext" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.5" Y="10" Width="2.25" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DocumentStoreManagement.Infrastructure.MongoDbSettings" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15" Y="10" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DocumentStoreManagement.Infrastructure.PostgresApplicationContext" Collapsed="true">
+    <Position X="9.75" Y="12.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="DocumentStoreManagement.Infrastructure.SqlApplicationContext" Collapsed="true">
+    <Position X="11.5" Y="12.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Interface Name="DocumentStoreManagement.Core.Interfaces.IGenericRepository&lt;T&gt;" Collapsed="true">
+    <Position X="14" Y="5.5" Width="1.5" />
     <TypeIdentifier />
   </Interface>
-  <Interface Name="DocumentStoreManagement.Infrastructure.IMongoApplicationContext">
-    <Position X="13.75" Y="12.75" Width="2.25" />
+  <Interface Name="DocumentStoreManagement.Core.Interfaces.IUnitOfWork" Collapsed="true">
+    <Position X="16" Y="5.5" Width="1.5" />
     <TypeIdentifier />
   </Interface>
-  <Interface Name="DocumentStoreManagement.Infrastructure.IMongoDbSettings">
-    <Position X="13.75" Y="10.75" Width="2.25" />
+  <Interface Name="DocumentStoreManagement.Services.Interfaces.IDocumentService" Collapsed="true">
+    <Position X="0.75" Y="13.5" Width="1.5" />
     <TypeIdentifier />
   </Interface>
-  <Interface Name="DocumentStoreManagement.Services.Interfaces.IDocumentService">
-    <Position X="1.5" Y="14.75" Width="1.5" />
+  <Interface Name="DocumentStoreManagement.Infrastructure.IMongoApplicationContext" Collapsed="true">
+    <Position X="9.75" Y="14" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="DocumentStoreManagement.Infrastructure.IMongoDbSettings" Collapsed="true">
+    <Position X="11.5" Y="14" Width="1.5" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />

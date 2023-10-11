@@ -48,7 +48,7 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.Mongo
 
         public async Task<IEnumerable<T>> FindByTypeAsync(string type)
         {
-            var filter = Builders<T>.Filter.Eq("_t", type);
+            FilterDefinition<T> filter = Builders<T>.Filter.Eq("_t", type);
             return await dbSet.Find(filter).ToListAsync();
         }
 
