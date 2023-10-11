@@ -1,6 +1,6 @@
 ﻿using DocumentStoreManagement.Core.Interfaces;
 using DocumentStoreManagement.Core.Models;
-using DocumentStoreManagement.Helpers;
+using DocumentStoreManagement.Services.Cache;
 using DocumentStoreManagement.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,7 +14,7 @@ namespace DocumentStoreManagement.Controllers
     public class DocumentsController : BaseController
     {
         private readonly IDocumentService _documentService;
-        private readonly RedisCacheHelper _redisCacheHelper;
+        private readonly ICacheService _cacheService;
         private static readonly string cacheKey = "document-list-cache";
 
         /// <summary>
@@ -22,12 +22,12 @@ namespace DocumentStoreManagement.Controllers
         /// </summary>
         /// <param name="unitOfWork"></param>
         /// <param name="documentService"></param>
-        /// <param name="redisCacheHelper"></param>
-        public DocumentsController(IUnitOfWork unitOfWork, IDocumentService documentService, RedisCacheHelper redisCacheHelper) : base(unitOfWork)
+        /// <param name="cacheService"></param>
+        public DocumentsController(IUnitOfWork unitOfWork, IDocumentService documentService, ICacheService cacheService) : base(unitOfWork)
         {
             _unitOfWork = unitOfWork;
             _documentService = documentService;
-            _redisCacheHelper = redisCacheHelper;
+            _cacheService = cacheService;
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace DocumentStoreManagement.Controllers
                 TimeSpan expiration = TimeSpan.FromSeconds(30);
 
                 // Get list of documents
-                return Ok(await _redisCacheHelper.GetOrSetAsync(
+                return Ok(await _cacheService.GetOrSetAsync(
                     key: $"{cacheKey}-{type}",
                     func: _documentService.GetByType(type),
                     expiration: expiration));

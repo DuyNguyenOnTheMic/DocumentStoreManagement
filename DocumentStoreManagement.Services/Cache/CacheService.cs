@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json;
 using StackExchange.Redis;
 
-namespace DocumentStoreManagement.Helpers
+namespace DocumentStoreManagement.Services.Cache
 {
     /// <summary>
-    /// Redis Cache Helper
+    /// Redis Cache Service
     /// </summary>
-    public class RedisCacheHelper
+    public class CacheService : ICacheService
     {
         private readonly IDatabase _database;
 
@@ -14,7 +14,7 @@ namespace DocumentStoreManagement.Helpers
         /// Constructor for database interface
         /// </summary>
         /// <param name="database"></param>
-        public RedisCacheHelper(IDatabase database)
+        public CacheService(IDatabase database)
         {
             _database = database;
         }

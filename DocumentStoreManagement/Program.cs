@@ -1,6 +1,7 @@
 using DocumentStoreManagement.Helpers;
 using DocumentStoreManagement.Infrastructure.ServiceExtension;
 using DocumentStoreManagement.Services.Behaviors;
+using DocumentStoreManagement.Services.Cache;
 using MediatR;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.OpenApi.Models;
@@ -22,7 +23,7 @@ builder.Services.AddControllers(opts =>
 // Register Redis Cache
 IConnectionMultiplexer redis = ConnectionMultiplexer.Connect("localhost");
 builder.Services.AddScoped(s => redis.GetDatabase());
-builder.Services.AddScoped<RedisCacheHelper>();
+builder.Services.AddScoped<ICacheService, CacheService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
