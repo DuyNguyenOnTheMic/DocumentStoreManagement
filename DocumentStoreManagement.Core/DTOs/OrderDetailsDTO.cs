@@ -11,8 +11,6 @@ namespace DocumentStoreManagement.Core.DTOs
         [Required]
         public int Quantity { get; set; }
         [Required]
-        public decimal Total { get; set; }
-        [Required]
         [DefaultValue(null)]
         public string DocumentId { get; set; }
     }

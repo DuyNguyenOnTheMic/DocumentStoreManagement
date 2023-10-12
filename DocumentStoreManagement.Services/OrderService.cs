@@ -4,6 +4,7 @@ using DocumentStoreManagement.Services.Commands.OrderCommands;
 using DocumentStoreManagement.Services.Interfaces;
 using DocumentStoreManagement.Services.Queries.OrderQueries;
 using MediatR;
+using MongoDB.Bson;
 
 namespace DocumentStoreManagement.Services
 {
@@ -41,10 +42,10 @@ namespace DocumentStoreManagement.Services
             {
                 orderDetails.Add(new OrderDetail()
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Id = ObjectId.GenerateNewId().ToString(),
                     UnitPrice = item.UnitPrice,
                     Quantity = item.Quantity,
-                    Total = item.Total,
+                    Total = item.UnitPrice * item.Quantity,
                     DocumentId = item.DocumentId,
                     OrderId = orderDTO.Id
                 });
@@ -71,9 +72,42 @@ namespace DocumentStoreManagement.Services
             throw new NotImplementedException();
         }
 
-        public Task Update(Order order)
+        public async Task Update(OrderDTO orderDTO)
         {
-            throw new NotImplementedException();
+            // Get order details from DTO
+            ICollection<OrderDetailsDTO> orderDetailsDTO = orderDTO.OrderDetailsDTOs;
+
+            // Create a list to store order details
+            List<OrderDetail> orderDetails = new();
+
+            // Loop through each order details to map and create a list of order details
+            foreach (OrderDetailsDTO item in orderDetailsDTO)
+            {
+                orderDetails.Add(new OrderDetail()
+                {
+                    Id = ObjectId.GenerateNewId().ToString(),
+                    UnitPrice = item.UnitPrice,
+                    Quantity = item.Quantity,
+                    Total = item.UnitPrice * item.Quantity,
+                    DocumentId = item.DocumentId,
+                    OrderId = orderDTO.Id
+                });
+            }
+
+            // Map order DTO
+            Order order = new()
+            {
+                Id = orderDTO.Id,
+                FullName = orderDTO.FullName,
+                PhoneNumber = orderDTO.PhoneNumber,
+                BorrowDate = orderDTO.BorrowDate,
+                ReturnDate = orderDTO.ReturnDate,
+                Status = orderDTO.Status,
+                OrderDetails = orderDetails
+            };
+
+            // Create new order
+            await _mediator.Send(new UpdateOrderCommand(order));
         }
     }
 }

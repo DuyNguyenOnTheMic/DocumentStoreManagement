@@ -38,7 +38,7 @@ namespace DocumentStoreManagement.Controllers
         /// <remarks>
         /// Sample request:
         ///
-        ///     GET api/documents/{type}
+        ///     GET api/documents/filter/{type}
         ///     
         /// ***NOTES***: To get data by type, enters one of the following values:
         /// * **1**: Gets the book data.
@@ -104,21 +104,8 @@ namespace DocumentStoreManagement.Controllers
         ///     {
         ///         "id": "id",
         ///         "publisherName": "Example Name",
-        ///         "releaseQuantity": 12,
-        ///         "book": {
-        ///           "authorName": "J. K. Rowling",
-        ///           "pageNumber": 218
-        ///         },
-        ///         "magazine": {
-        ///           "releaseNumber": 200,
-        ///           "releaseMonth": "07/2023"
-        ///         },
-        ///         "newspaper": {
-        ///           "releaseDate": "2023-10-04T08:44:20.351Z"
-        ///         }
+        ///         "releaseQuantity": 12
         ///     }
-        ///
-        /// ***NOTES***: Either book, magazine or newspaper is updated, the others will have null values.
         ///
         /// </remarks>
         [HttpPut("{id}")]
@@ -251,7 +238,12 @@ namespace DocumentStoreManagement.Controllers
             return NoContent();
         }
 
-        #region Helpers 
+        #region Helpers
+        /// <summary>
+        /// Generic method to create new document
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="newDocument"></param>
         private async Task<ActionResult> CreateDocument<T>(T newDocument) where T : BaseEntity
         {
             try

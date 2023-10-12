@@ -15,7 +15,7 @@ namespace DocumentStoreManagement.Services.Handlers.OrderHandlers
         }
 
         /// <summary>
-        /// 
+        /// Handler to get all orders
         /// </summary>
         /// <param name="query"></param>
         /// <param name="cancellationToken"></param>

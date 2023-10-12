@@ -3,7 +3,6 @@ using DocumentStoreManagement.Core.Interfaces;
 using DocumentStoreManagement.Core.Models;
 using DocumentStoreManagement.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace DocumentStoreManagement.Controllers
 {
@@ -71,45 +70,118 @@ namespace DocumentStoreManagement.Controllers
             return order;
         }
 
-        // PUT: api/Orders/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Updates an order
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="updatedOrder"></param>
+        /// <returns>An updated order</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     PUT api/orders/{id}
+        ///     {
+        ///         "id": "id",
+        ///         "fullName": "John Doe",
+        ///         "phoneNumber": "0123456789",
+        ///         "borrowDate": "2023-10-11T07:29:20.408Z",
+        ///         "returnDate": "2023-10-12T07:29:20.409Z",
+        ///         "status": 0,
+        ///         "orderDetailsDTOs": [
+        ///             {
+        ///                 "id": "Order Details Id"
+        ///                 "unitPrice": 20000,
+        ///                 "quantity": 2,
+        ///                 "documentId": "Document Id"
+        ///             }
+        ///         ]
+        ///     }
+        ///
+        /// </remarks>
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrder(string id, Order order)
+        public async Task<IActionResult> PutOrder(string id, OrderDTO updatedOrder)
         {
-            if (id != order.Id)
+            // Return bad request if ids don't match
+            if (id != updatedOrder.Id)
             {
                 return BadRequest();
             }
 
-            await _orderRepository.UpdateAsync(order);
-
             try
             {
+                // Update order
+                await _orderService.Update(updatedOrder);
                 await _unitOfWork.SaveAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception e)
             {
-                if (!await OrderExists(id))
+                // Check if order exists
+                Order order = await _orderService.GetById(id);
+                if (order == null)
                 {
+                    // Return order not found error
                     return NotFound();
                 }
                 else
                 {
-                    throw;
+                    // Return error message
+                    return BadRequest(e.Message);
                 }
             }
 
             return NoContent();
         }
 
-        // POST: api/Orders
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Creates an order
+        /// </summary>
+        /// <param name="newOrder"></param>
+        /// <returns>A newly created order</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST api/orders
+        ///     {
+        ///         "fullName": "John Doe",
+        ///         "phoneNumber": "0123456789",
+        ///         "borrowDate": "2023-10-11T07:29:20.408Z",
+        ///         "returnDate": "2023-10-12T07:29:20.409Z",
+        ///         "status": 1,
+        ///         "orderDetailsDTOs": [
+        ///             {
+        ///                 "unitPrice": 20000,
+        ///                 "quantity": 2,
+        ///                 "documentId": "Document Id"
+        ///             }
+        ///         ]
+        ///     }
+        ///
+        /// </remarks>
         [HttpPost]
-        public async Task<ActionResult> PostOrder(OrderDTO orderDTO)
+        public async Task<ActionResult> PostOrder(OrderDTO newOrder)
         {
-            Order order = await _orderService.Create(orderDTO);
-            await _unitOfWork.SaveAsync();
-
+            Order order;
+            try
+            {
+                // Add a new order
+                order = await _orderService.Create(newOrder);
+                await _unitOfWork.SaveAsync();
+            }
+            catch (Exception e)
+            {
+                // Check if order exists
+                order = await _orderService.GetById(newOrder.Id);
+                if (order != null)
+                {
+                    // Return order already exists error
+                    return Conflict();
+                }
+                else
+                {
+                    // Return error message
+                    return BadRequest(e.Message);
+                }
+            }
             return CreatedAtAction(nameof(GetOrder), new { id = order.Id }, order);
         }
 
