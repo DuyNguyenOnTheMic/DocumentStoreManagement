@@ -22,6 +22,12 @@ namespace DocumentStoreManagement.Services
             return await _mediator.Send(new GetOrderListQuery());
         }
 
+        public async Task<Order> GetById(string id)
+        {
+            // Get order by id
+            return await _mediator.Send(new GetOrderByIdQuery(id));
+        }
+
         public async Task<Order> Create(OrderDTO orderDTO)
         {
             // Get order details from DTO
@@ -35,6 +41,7 @@ namespace DocumentStoreManagement.Services
             {
                 orderDetails.Add(new OrderDetail()
                 {
+                    Id = Guid.NewGuid().ToString(),
                     UnitPrice = item.UnitPrice,
                     Quantity = item.Quantity,
                     Total = item.Total,
@@ -60,11 +67,6 @@ namespace DocumentStoreManagement.Services
         }
 
         public Task Delete(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Order> GetById(string id)
         {
             throw new NotImplementedException();
         }

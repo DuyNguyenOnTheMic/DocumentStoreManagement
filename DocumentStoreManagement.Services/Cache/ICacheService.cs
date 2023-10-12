@@ -12,14 +12,12 @@
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <param name="expirationTime"></param>
-        /// <returns></returns>
         Task<IEnumerable<T>> GetOrSetAsync<T>(string key, Task<IEnumerable<T>> func, TimeSpan expiration);
 
         /// <summary>
         /// Flush cache values
         /// </summary>
         /// <param name="key"></param>
-        /// <returns></returns>
         Task FlushAsync(string key);
     }
 }

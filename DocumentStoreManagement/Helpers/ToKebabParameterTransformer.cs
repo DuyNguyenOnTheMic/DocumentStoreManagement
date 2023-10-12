@@ -11,7 +11,6 @@ namespace DocumentStoreManagement.Helpers
         /// Transform URL into kebab-case
         /// </summary>
         /// <param name="value"></param>
-        /// <returns></returns>
         public string TransformOutbound(object value) => value != null
             ? MyRegex().Replace(value.ToString(), "$1-$2").ToLower() // To kebab 
             : null;

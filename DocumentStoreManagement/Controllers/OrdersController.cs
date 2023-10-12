@@ -31,7 +31,7 @@ namespace DocumentStoreManagement.Controllers
         }
 
         /// <summary>
-        /// Get the order list from database
+        /// Gets the order list from database
         /// </summary>
         /// <returns>A list of all orders</returns>
         /// <remarks>
@@ -43,15 +43,26 @@ namespace DocumentStoreManagement.Controllers
         [HttpGet]
         public async Task<IEnumerable<Order>> GetOrders()
         {
+            // Get list of orders
             return await _orderService.GetAll();
         }
 
-        // GET: api/Orders/5
+        /// <summary>
+        /// Gets a order bases on order id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>A order matches input id</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET api/orders/{id}
+        ///
+        /// </remarks>
         [HttpGet("{id}")]
         public async Task<ActionResult<Order>> GetOrder(string id)
         {
-            Order order = await _orderRepository.GetByIdAsync(id);
-
+            // Get order by id
+            Order order = await _orderService.GetById(id);
             if (order == null)
             {
                 return NotFound();

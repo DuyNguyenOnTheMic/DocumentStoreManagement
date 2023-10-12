@@ -28,7 +28,6 @@ namespace DocumentStoreManagement.Controllers
         /// <summary>
         /// Fetchts the random weather forecast properties to api
         /// </summary>
-        /// <returns></returns>
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {

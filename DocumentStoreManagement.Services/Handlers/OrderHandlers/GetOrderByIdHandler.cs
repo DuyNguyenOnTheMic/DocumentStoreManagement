@@ -5,23 +5,23 @@ using MediatR;
 
 namespace DocumentStoreManagement.Services.Handlers.OrderHandlers
 {
-    public class GetOrderListHandler : IRequestHandler<GetOrderListQuery, IEnumerable<Order>>
+    public class GetOrderByIdHandler : IRequestHandler<GetOrderByIdQuery, Order>
     {
         private readonly IGenericRepository<Order> _orderRepository;
 
-        public GetOrderListHandler(IGenericRepository<Order> orderRepository)
+        public GetOrderByIdHandler(IGenericRepository<Order> orderRepository)
         {
             _orderRepository = orderRepository;
         }
 
         /// <summary>
-        /// 
+        /// Hanlder to find order by id
         /// </summary>
-        /// <param name="query"></param>
+        /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
-        public async Task<IEnumerable<Order>> Handle(GetOrderListQuery query, CancellationToken cancellationToken)
+        public async Task<Order> Handle(GetOrderByIdQuery query, CancellationToken cancellationToken)
         {
-            return await _orderRepository.GetAllAsync();
+            return await _orderRepository.GetByIdAsync(query.Id);
         }
     }
 }
