@@ -48,10 +48,10 @@ namespace DocumentStoreManagement.Services
             await _mediator.Send(new CreateDocumentCommand<T>(document));
         }
 
-        public async Task Delete(string id)
+        public async Task Delete(Document document)
         {
             // Delete document
-            await _mediator.Send(new DeleteDocumentCommand(id));
+            await _mediator.Send(new DeleteDocumentCommand(document));
         }
     }
 }

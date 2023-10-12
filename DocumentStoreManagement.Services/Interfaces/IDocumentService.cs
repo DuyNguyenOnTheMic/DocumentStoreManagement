@@ -12,6 +12,6 @@ namespace DocumentStoreManagement.Services.Interfaces
         Task<Document> GetById(string id);
         Task Create<T>(T document);
         Task Update(Document document);
-        Task Delete(string id);
+        Task Delete(Document document);
     }
 }

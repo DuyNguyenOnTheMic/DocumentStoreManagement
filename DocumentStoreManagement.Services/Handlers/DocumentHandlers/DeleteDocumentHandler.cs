@@ -21,13 +21,7 @@ namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
         /// <param name="cancellationToken"></param>
         public async Task Handle(DeleteDocumentCommand command, CancellationToken cancellationToken)
         {
-            Document document = await _documentRepository.GetByIdAsync(command.Id);
-            if (document == null)
-            {
-                new CancellationTokenSource().Cancel();
-            }
-
-            await _documentRepository.RemoveAsync(document);
+            await _documentRepository.RemoveAsync(command.Document);
         }
     }
 }

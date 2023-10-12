@@ -185,25 +185,32 @@ namespace DocumentStoreManagement.Controllers
             return CreatedAtAction(nameof(GetOrder), new { id = order.Id }, order);
         }
 
-        // DELETE: api/Orders/5
+        /// <summary>
+        /// Deletes an order
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Order is deleted</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     DELETE api/orders/{id}
+        ///
+        /// </remarks>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrder(string id)
         {
-            Order order = await _orderRepository.GetByIdAsync(id);
+            // Get order by id
+            Order order = await _orderService.GetById(id);
             if (order == null)
             {
                 return NotFound();
             }
 
-            await _orderRepository.RemoveAsync(order);
+            // Delete order
+            await _orderService.Delete(order);
             await _unitOfWork.SaveAsync();
 
             return NoContent();
-        }
-
-        private async Task<bool> OrderExists(string id)
-        {
-            return await _orderRepository.CheckExistsAsync(e => e.Id == id);
         }
     }
 }

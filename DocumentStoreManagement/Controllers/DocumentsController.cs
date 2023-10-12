@@ -232,7 +232,7 @@ namespace DocumentStoreManagement.Controllers
             }
 
             // Delete document
-            await _documentService.Delete(id);
+            await _documentService.Delete(document);
             await _unitOfWork.SaveAsync();
 
             return NoContent();

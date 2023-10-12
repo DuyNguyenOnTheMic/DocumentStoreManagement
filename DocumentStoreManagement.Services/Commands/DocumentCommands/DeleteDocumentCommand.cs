@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using DocumentStoreManagement.Core.Models;
+using MediatR;
 
 namespace DocumentStoreManagement.Services.Commands.DocumentCommands
 {
@@ -6,5 +7,5 @@ namespace DocumentStoreManagement.Services.Commands.DocumentCommands
     /// Command class to delete document
     /// </summary>
     /// <param name="Id"></param>
-    public record DeleteDocumentCommand(string Id) : IRequest;
+    public record DeleteDocumentCommand(Document Document) : IRequest;
 }

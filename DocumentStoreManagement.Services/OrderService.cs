@@ -67,9 +67,10 @@ namespace DocumentStoreManagement.Services
             return await _mediator.Send(new CreateOrderCommand(order));
         }
 
-        public Task Delete(string id)
+        public async Task Delete(Order order)
         {
-            throw new NotImplementedException();
+            // Delete order
+            await _mediator.Send(new DeleteOrderCommand(order));
         }
 
         public async Task Update(OrderDTO orderDTO)
