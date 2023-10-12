@@ -16,21 +16,34 @@ namespace DocumentStoreManagement.Controllers
     {
         private readonly IOrderService _orderService;
         private readonly IGenericRepository<Order> _orderRepository;
-        private readonly DbContext _context;
 
-        public OrdersController(IUnitOfWork unitOfWork, IOrderService orderService, IGenericRepository<Order> orderRepository, DbContext context) : base(unitOfWork)
+        /// <summary>
+        /// Add dependencies to controller
+        /// </summary>
+        /// <param name="unitOfWork"></param>
+        /// <param name="orderService"></param>
+        /// <param name="orderRepository"></param>
+        public OrdersController(IUnitOfWork unitOfWork, IOrderService orderService, IGenericRepository<Order> orderRepository) : base(unitOfWork)
         {
             _unitOfWork = unitOfWork;
             _orderService = orderService;
             _orderRepository = orderRepository;
-            _context = context;
         }
 
-        // GET: api/Orders
+        /// <summary>
+        /// Get the order list from database
+        /// </summary>
+        /// <returns>A list of all orders</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET api/orders
+        ///
+        /// </remarks>
         [HttpGet]
         public async Task<IEnumerable<Order>> GetOrders()
         {
-            return await _context.Set<Order>().Include(x => x.OrderDetails).ToListAsync();
+            return await _orderService.GetAll();
         }
 
         // GET: api/Orders/5

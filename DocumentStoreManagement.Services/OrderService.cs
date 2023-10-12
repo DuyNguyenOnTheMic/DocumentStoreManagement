@@ -2,6 +2,7 @@
 using DocumentStoreManagement.Core.Models;
 using DocumentStoreManagement.Services.Commands.OrderCommands;
 using DocumentStoreManagement.Services.Interfaces;
+using DocumentStoreManagement.Services.Queries.OrderQueries;
 using MediatR;
 
 namespace DocumentStoreManagement.Services
@@ -13,6 +14,12 @@ namespace DocumentStoreManagement.Services
         public OrderService(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        public async Task<IEnumerable<Order>> GetAll()
+        {
+            // Get order list
+            return await _mediator.Send(new GetOrderListQuery());
         }
 
         public async Task<Order> Create(OrderDTO orderDTO)
@@ -53,11 +60,6 @@ namespace DocumentStoreManagement.Services
         }
 
         public Task Delete(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<Order>> GetAll()
         {
             throw new NotImplementedException();
         }

@@ -1,8 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DocumentStoreManagement.Core.Models;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace DocumentStoreManagement.Core.DTOs
 {
-    public class OrderDetailsDTO
+    public class OrderDetailsDTO : BaseEntity
     {
         [Required]
         public decimal UnitPrice { get; set; }
@@ -11,6 +13,7 @@ namespace DocumentStoreManagement.Core.DTOs
         [Required]
         public decimal Total { get; set; }
         [Required]
+        [DefaultValue(null)]
         public string DocumentId { get; set; }
     }
 }
