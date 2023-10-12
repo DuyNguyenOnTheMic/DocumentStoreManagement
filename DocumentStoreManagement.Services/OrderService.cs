@@ -2,6 +2,7 @@
 using DocumentStoreManagement.Core.Models;
 using DocumentStoreManagement.Services.Commands.OrderCommands;
 using DocumentStoreManagement.Services.Interfaces;
+using DocumentStoreManagement.Services.Queries.DocumentQueries;
 using DocumentStoreManagement.Services.Queries.OrderQueries;
 using MediatR;
 using MongoDB.Bson;
@@ -40,13 +41,16 @@ namespace DocumentStoreManagement.Services
             // Loop through each order details to map and create a list of order details
             foreach (OrderDetailsDTO item in orderDetailsDTO)
             {
+                // Check if document exists
+                Document document = await _mediator.Send(new GetDocumentByIdQuery(item.DocumentId)) ?? throw new Exception("Document id not found!");
+
                 orderDetails.Add(new OrderDetail()
                 {
                     Id = ObjectId.GenerateNewId().ToString(),
                     UnitPrice = item.UnitPrice,
                     Quantity = item.Quantity,
                     Total = item.UnitPrice * item.Quantity,
-                    DocumentId = item.DocumentId,
+                    DocumentId = document.Id,
                     OrderId = orderDTO.Id
                 });
             }
@@ -54,7 +58,6 @@ namespace DocumentStoreManagement.Services
             // Map order DTO
             Order order = new()
             {
-                Id = orderDTO.Id,
                 FullName = orderDTO.FullName,
                 PhoneNumber = orderDTO.PhoneNumber,
                 BorrowDate = orderDTO.BorrowDate,
@@ -64,7 +67,8 @@ namespace DocumentStoreManagement.Services
             };
 
             // Create new order
-            return await _mediator.Send(new CreateOrderCommand(order));
+            var hehe = await _mediator.Send(new CreateOrderCommand(order));
+            return hehe;
         }
 
         public async Task Delete(Order order)

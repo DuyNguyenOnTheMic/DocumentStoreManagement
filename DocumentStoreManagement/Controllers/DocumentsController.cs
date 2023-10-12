@@ -82,10 +82,16 @@ namespace DocumentStoreManagement.Controllers
         public async Task<ActionResult<Document>> GetDocument(string id)
         {
             // Get document by id
-            Document document = await _documentService.GetById(id);
-            if (document == null)
+            Document document;
+            try
             {
-                return NotFound();
+                // Try to find a document
+                document = await _documentService.GetById(id);
+            }
+            catch (Exception e)
+            {
+                // Return not found error message
+                return NotFound(e.Message);
             }
 
             return document;
@@ -126,17 +132,14 @@ namespace DocumentStoreManagement.Controllers
             catch (Exception e)
             {
                 // Check if document exists
-                Document document = await _documentService.GetById(id);
-                if (document == null)
+                if (!await DocumentExists(id))
                 {
                     // Return document not found error
                     return NotFound();
                 }
-                else
-                {
-                    // Return error message
-                    return BadRequest(e.Message);
-                }
+
+                // Return error message
+                return BadRequest(e.Message);
             }
 
             return NoContent();
@@ -255,19 +258,26 @@ namespace DocumentStoreManagement.Controllers
             catch (Exception e)
             {
                 // Check if document exists
-                Document document = await _documentService.GetById(newDocument.Id);
-                if (document != null)
+                if (await DocumentExists(newDocument.Id))
                 {
                     // Return document already exists error
                     return Conflict();
                 }
-                else
-                {
-                    // Return error message
-                    return BadRequest(e.Message);
-                }
+
+                // Return error message
+                return BadRequest(e.Message);
             }
             return CreatedAtAction(nameof(GetDocument), new { id = newDocument.Id }, newDocument);
+        }
+
+        /// <summary>
+        /// Check if document exists method
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Boolean</returns>
+        private async Task<bool> DocumentExists(string id)
+        {
+            return await _documentService.GetById(id) != null;
         }
         #endregion
     }

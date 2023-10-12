@@ -116,17 +116,14 @@ namespace DocumentStoreManagement.Controllers
             catch (Exception e)
             {
                 // Check if order exists
-                Order order = await _orderService.GetById(id);
-                if (order == null)
+                if (!await OrderExists(id))
                 {
                     // Return order not found error
                     return NotFound();
                 }
-                else
-                {
-                    // Return error message
-                    return BadRequest(e.Message);
-                }
+
+                // Return error message
+                return BadRequest(e.Message);
             }
 
             return NoContent();
@@ -170,17 +167,14 @@ namespace DocumentStoreManagement.Controllers
             catch (Exception e)
             {
                 // Check if order exists
-                order = await _orderService.GetById(newOrder.Id);
-                if (order != null)
+                if (await OrderExists(newOrder.Id))
                 {
                     // Return order already exists error
                     return Conflict();
                 }
-                else
-                {
-                    // Return error message
-                    return BadRequest(e.Message);
-                }
+
+                // Return error message
+                return BadRequest(e.Message);
             }
             return CreatedAtAction(nameof(GetOrder), new { id = order.Id }, order);
         }
@@ -212,5 +206,17 @@ namespace DocumentStoreManagement.Controllers
 
             return NoContent();
         }
+
+        #region Helpers
+        /// <summary>
+        /// Check if order exists method
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Boolean</returns>
+        private async Task<bool> OrderExists(string id)
+        {
+            return await _orderService.GetById(id) != null;
+        }
+        #endregion
     }
 }

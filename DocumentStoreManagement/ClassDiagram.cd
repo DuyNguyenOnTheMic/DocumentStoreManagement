@@ -54,14 +54,14 @@
   <Class Name="DocumentStoreManagement.Controllers.DocumentsController" Collapsed="true">
     <Position X="2.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AgUAIAAAACAiAAAAAAEAAAAAgAAAAgAAAAgAAAAAAAA=</HashCode>
+      <HashCode>AgUAIAAAACAiAAAAAAEAAAAAAAAAAgAAAAgAAAAAACA=</HashCode>
       <FileName>Controllers\DocumentsController.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DocumentStoreManagement.Controllers.OrdersController" Collapsed="true">
     <Position X="5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACQQAAAAABAAAAAAAAAAAAAAAAAIAAEAAABAAAAA=</HashCode>
+      <HashCode>AAAACQQAAAAAAAAAAAAAAAAAAAAAAAIAAGAAABAAAAA=</HashCode>
       <FileName>Controllers\OrdersController.cs</FileName>
     </TypeIdentifier>
   </Class>
