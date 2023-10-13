@@ -3,6 +3,7 @@ using System;
 using DocumentStoreManagement.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DocumentStoreManagement.Infrastructure.Migrations.PostgresApplication
 {
     [DbContext(typeof(PostgresApplicationContext))]
-    partial class PostgresApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20231013030929_UpdateDocumentTable")]
+    partial class UpdateDocumentTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

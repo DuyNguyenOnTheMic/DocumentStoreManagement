@@ -47,7 +47,7 @@ namespace DocumentStoreManagement.Controllers
         }
 
         /// <summary>
-        /// Gets a order bases on order id
+        /// Gets an order bases on order id
         /// </summary>
         /// <param name="id"></param>
         /// <returns>A order matches input id</returns>

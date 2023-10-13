@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DocumentStoreManagement.Core.Models
 {
@@ -14,5 +15,8 @@ namespace DocumentStoreManagement.Core.Models
         public string PublisherName { get; set; }
         [Required]
         public int ReleaseQuantity { get; set; }
+        [Required]
+        [Column(TypeName = "decimal(18,4)")]
+        public decimal UnitPrice { get; set; }
     }
 }

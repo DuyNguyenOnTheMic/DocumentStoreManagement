@@ -47,9 +47,8 @@ namespace DocumentStoreManagement.Services
                 orderDetails.Add(new OrderDetail()
                 {
                     Id = ObjectId.GenerateNewId().ToString(),
-                    UnitPrice = item.UnitPrice,
                     Quantity = item.Quantity,
-                    Total = item.UnitPrice * item.Quantity,
+                    Total = document.UnitPrice * item.Quantity,
                     DocumentId = document.Id,
                     OrderId = orderDTO.Id
                 });
@@ -67,8 +66,7 @@ namespace DocumentStoreManagement.Services
             };
 
             // Create new order
-            var hehe = await _mediator.Send(new CreateOrderCommand(order));
-            return hehe;
+            return await _mediator.Send(new CreateOrderCommand(order));
         }
 
         public async Task Delete(Order order)
@@ -88,12 +86,14 @@ namespace DocumentStoreManagement.Services
             // Loop through each order details to map and create a list of order details
             foreach (OrderDetailsDTO item in orderDetailsDTO)
             {
+                // Check if document exists
+                Document document = await _mediator.Send(new GetDocumentByIdQuery(item.DocumentId)) ?? throw new Exception("Document id not found!");
+
                 orderDetails.Add(new OrderDetail()
                 {
                     Id = ObjectId.GenerateNewId().ToString(),
-                    UnitPrice = item.UnitPrice,
                     Quantity = item.Quantity,
-                    Total = item.UnitPrice * item.Quantity,
+                    Total = document.UnitPrice * item.Quantity,
                     DocumentId = item.DocumentId,
                     OrderId = orderDTO.Id
                 });
