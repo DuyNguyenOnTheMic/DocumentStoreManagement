@@ -38,25 +38,32 @@ namespace DocumentStoreManagement.Services
             // Create a list to store order details
             List<OrderDetail> orderDetails = new();
 
+            // Generate new order id
+            string orderId = ObjectId.GenerateNewId().ToString();
+
             // Loop through each order details to map and create a list of order details
             foreach (OrderDetailsDTO item in orderDetailsDTO)
             {
                 // Check if document exists
                 Document document = await _mediator.Send(new GetDocumentByIdQuery(item.DocumentId)) ?? throw new Exception("Document id not found!");
 
+                // Generate new order details id
+                string orderDetailsId = ObjectId.GenerateNewId().ToString();
+
                 orderDetails.Add(new OrderDetail()
                 {
-                    Id = ObjectId.GenerateNewId().ToString(),
+                    Id = orderDetailsId,
                     Quantity = item.Quantity,
                     Total = document.UnitPrice * item.Quantity,
                     DocumentId = document.Id,
-                    OrderId = orderDTO.Id
+                    OrderId = orderId
                 });
             }
 
             // Map order DTO
             Order order = new()
             {
+                Id = orderId,
                 FullName = orderDTO.FullName,
                 PhoneNumber = orderDTO.PhoneNumber,
                 BorrowDate = orderDTO.BorrowDate,
@@ -89,9 +96,12 @@ namespace DocumentStoreManagement.Services
                 // Check if document exists
                 Document document = await _mediator.Send(new GetDocumentByIdQuery(item.DocumentId)) ?? throw new Exception("Document id not found!");
 
+                // Generate new order details id
+                string orderDetailsId = ObjectId.GenerateNewId().ToString();
+
                 orderDetails.Add(new OrderDetail()
                 {
-                    Id = ObjectId.GenerateNewId().ToString(),
+                    Id = item.Id ?? orderDetailsId,
                     Quantity = item.Quantity,
                     Total = document.UnitPrice * item.Quantity,
                     DocumentId = item.DocumentId,

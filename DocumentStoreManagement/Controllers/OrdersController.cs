@@ -164,7 +164,7 @@ namespace DocumentStoreManagement.Controllers
                 // Add a new order
                 order = await _orderService.Create(newOrder);
 
-                //Send the inserted order data to the queue and consumer will listening this data from queue
+                // Send the inserted order data to the queue and consumer will listening this data from queue
                 _rabbitMQProducer.SendOrderMessage(order);
             }
             catch (Exception e)
