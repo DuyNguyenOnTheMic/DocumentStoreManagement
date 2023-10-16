@@ -1,14 +1,17 @@
 ﻿using DocumentStoreManagement.Core.Interfaces;
 using DocumentStoreManagement.Core.Models;
+using DocumentStoreManagement.Infrastructure.Repositories.Mongo;
 using DocumentStoreManagement.Infrastructure.Repositories.SQL;
 using DocumentStoreManagement.Services;
 using DocumentStoreManagement.Services.Commands.DocumentCommands;
 using DocumentStoreManagement.Services.Handlers.DocumentHandlers;
 using DocumentStoreManagement.Services.Interfaces;
+using DocumentStoreManagement.Services.MessageBroker;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace DocumentStoreManagement.Infrastructure.ServiceExtension
 {
@@ -33,8 +36,6 @@ namespace DocumentStoreManagement.Infrastructure.ServiceExtension
                 sp.GetRequiredService<IOptions<MongoDbSettings>>().Value);
             services.AddScoped<IMongoApplicationContext, MongoApplicationContext>();
             services.AddTransient<IUnitOfWork, MongoUnitOfWork>();
-            services.AddScoped<IDocumentService, DocumentService>();
-            services.AddScoped<IOrderService, OrderService>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(MongoGenericRepository<>));
             string connectionString = configuration.GetConnectionString("SqlDbConnection") ?? throw new InvalidOperationException("Connection string 'SqlDbConnection' not found.");
             services.AddDbContext<DbContext>(options => options.UseSqlServer(connectionString));*/
@@ -42,11 +43,22 @@ namespace DocumentStoreManagement.Infrastructure.ServiceExtension
             // Postgres context
             services.AddScoped<DbContext, PostgresApplicationContext>();
             services.AddTransient<IUnitOfWork, SqlUnitOfWork>();
-            services.AddScoped<IDocumentService, DocumentService>();
-            services.AddScoped<IOrderService, OrderService>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(SqlGenericRepository<>));
+            services.AddScoped(typeof(IGenericRepository<Order>), typeof(MongoGenericRepository<Order>));
             services.AddDbContext<DbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("PostgresConnection")));
+            services.Configure<MongoDbSettings>(
+                configuration.GetSection("MongoDBDatabase"));
+            services.AddSingleton<IMongoDbSettings>(sp =>
+                sp.GetRequiredService<IOptions<MongoDbSettings>>().Value);
+            services.AddScoped<IMongoApplicationContext, MongoApplicationContext>();
+
+            // Register services
+            services.AddScoped<IDocumentService, DocumentService>();
+            services.AddScoped<IOrderService, OrderService>();
+
+            // Register RabbitMQ
+            services.AddScoped<IRabbitMQProducer, RabbitMQProducer>();
 
             // Register generic request handler of MediatR
             services.AddTransient<IRequestHandler<CreateDocumentCommand<Book>, Book>, CreateDocumentHandler<Book>>();

@@ -2,6 +2,7 @@
 using DocumentStoreManagement.Core.Interfaces;
 using DocumentStoreManagement.Core.Models;
 using DocumentStoreManagement.Services.Interfaces;
+using DocumentStoreManagement.Services.MessageBroker;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DocumentStoreManagement.Controllers
@@ -14,19 +15,19 @@ namespace DocumentStoreManagement.Controllers
     public class OrdersController : BaseController
     {
         private readonly IOrderService _orderService;
-        private readonly IGenericRepository<Order> _orderRepository;
+        private readonly IRabbitMQProducer _rabbitMQProducer;
 
         /// <summary>
         /// Add dependencies to controller
         /// </summary>
         /// <param name="unitOfWork"></param>
         /// <param name="orderService"></param>
-        /// <param name="orderRepository"></param>
-        public OrdersController(IUnitOfWork unitOfWork, IOrderService orderService, IGenericRepository<Order> orderRepository) : base(unitOfWork)
+        /// <param name="rabbitMQProducer"></param>
+        public OrdersController(IUnitOfWork unitOfWork, IOrderService orderService, IRabbitMQProducer rabbitMQProducer) : base(unitOfWork)
         {
             _unitOfWork = unitOfWork;
             _orderService = orderService;
-            _orderRepository = orderRepository;
+            _rabbitMQProducer = rabbitMQProducer;
         }
 
         /// <summary>
@@ -162,7 +163,9 @@ namespace DocumentStoreManagement.Controllers
             {
                 // Add a new order
                 order = await _orderService.Create(newOrder);
-                await _unitOfWork.SaveAsync();
+
+                //Send the inserted order data to the queue and consumer will listening this data from queue
+                _rabbitMQProducer.SendOrderMessage(order);
             }
             catch (Exception e)
             {
@@ -176,7 +179,7 @@ namespace DocumentStoreManagement.Controllers
                 // Return error message
                 return BadRequest(e.Message);
             }
-            return CreatedAtAction(nameof(GetOrder), new { id = order.Id }, order);
+            return new ObjectResult(order) { StatusCode = StatusCodes.Status201Created };
         }
 
         /// <summary>
