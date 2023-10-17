@@ -8,7 +8,7 @@ using System.Reflection;
 string baseDirectory = Path.GetDirectoryName(Assembly.GetAssembly(typeof(DocumentStoreManagement.WeatherForecast)).Location);
 
 // Create the host builder
-var hostBuilder = new HostBuilder()
+IHostBuilder hostBuilder = new HostBuilder()
     .ConfigureAppConfiguration((hostContext, config) =>
     {
         config.SetBasePath(baseDirectory)
@@ -24,7 +24,7 @@ var hostBuilder = new HostBuilder()
     });
 
 // Build the host
-var host = hostBuilder.Build();
+IHost host = hostBuilder.Build();
 
 // Run the host
 await host.RunAsync();

@@ -124,5 +124,11 @@ namespace DocumentStoreManagement.Services
             // Create new order
             await _mediator.Send(new UpdateOrderCommand(order));
         }
+
+        public async Task<IEnumerable<Order>> GetDateStatistics(DateTime from, DateTime to)
+        {
+            // Create new order
+            return await _mediator.Send(new GetOrderDateStatisticsQuery(from, to));
+        }
     }
 }

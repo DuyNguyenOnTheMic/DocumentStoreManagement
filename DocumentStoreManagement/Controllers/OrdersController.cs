@@ -1,5 +1,4 @@
 ﻿using DocumentStoreManagement.Core.DTOs;
-using DocumentStoreManagement.Core.Interfaces;
 using DocumentStoreManagement.Core.Models;
 using DocumentStoreManagement.Services.Interfaces;
 using DocumentStoreManagement.Services.MessageBroker;
@@ -12,7 +11,7 @@ namespace DocumentStoreManagement.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class OrdersController : BaseController
+    public class OrdersController : ControllerBase
     {
         private readonly IOrderService _orderService;
         private readonly IRabbitMQProducer _rabbitMQProducer;
@@ -20,12 +19,10 @@ namespace DocumentStoreManagement.Controllers
         /// <summary>
         /// Add dependencies to controller
         /// </summary>
-        /// <param name="unitOfWork"></param>
         /// <param name="orderService"></param>
         /// <param name="rabbitMQProducer"></param>
-        public OrdersController(IUnitOfWork unitOfWork, IOrderService orderService, IRabbitMQProducer rabbitMQProducer) : base(unitOfWork)
+        public OrdersController(IOrderService orderService, IRabbitMQProducer rabbitMQProducer)
         {
-            _unitOfWork = unitOfWork;
             _orderService = orderService;
             _rabbitMQProducer = rabbitMQProducer;
         }
@@ -111,7 +108,6 @@ namespace DocumentStoreManagement.Controllers
             {
                 // Update order
                 await _orderService.Update(updatedOrder);
-                await _unitOfWork.SaveAsync();
             }
             catch (Exception e)
             {
@@ -203,9 +199,15 @@ namespace DocumentStoreManagement.Controllers
 
             // Delete order
             await _orderService.Delete(order);
-            await _unitOfWork.SaveAsync();
 
             return NoContent();
+        }
+
+        [HttpGet("statistics/date")]
+        public async Task<IEnumerable<Order>> GetDateStatistics(DateTime from, DateTime to)
+        {
+            // Get list of orders by dates
+            return await _orderService.GetDateStatistics(from, to);
         }
 
         #region Helpers

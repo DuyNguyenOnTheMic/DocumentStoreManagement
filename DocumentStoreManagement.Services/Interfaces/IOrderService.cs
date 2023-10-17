@@ -13,5 +13,6 @@ namespace DocumentStoreManagement.Services.Interfaces
         Task<Order> Create(OrderDTO orderDTO);
         Task Update(OrderDTO order);
         Task Delete(Order order);
+        Task<IEnumerable<Order>> GetDateStatistics(DateTime from, DateTime to);
     }
 }

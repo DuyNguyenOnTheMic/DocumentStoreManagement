@@ -41,9 +41,9 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.Mongo
         }
 
         // NOTE: Not implemented yet
-        public Task<IEnumerable<T>> FindAsync(object expression)
+        public async Task<IEnumerable<T>> FindAsync(object expression)
         {
-            throw new NotImplementedException();
+            return await dbSet.Find((FilterDefinition<T>)expression).ToListAsync();
         }
 
         public async Task<IEnumerable<T>> FindByTypeAsync(string type)
