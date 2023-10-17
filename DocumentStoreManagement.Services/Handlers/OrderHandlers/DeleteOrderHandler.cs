@@ -7,9 +7,9 @@ namespace DocumentStoreManagement.Services.Handlers.OrderHandlers
 {
     public class DeleteOrderHandler : IRequestHandler<DeleteOrderCommand>
     {
-        private readonly IGenericRepository<Order> _orderRepository;
+        private readonly IRepository<Order> _orderRepository;
 
-        public DeleteOrderHandler(IGenericRepository<Order> orderRepository)
+        public DeleteOrderHandler(IRepository<Order> orderRepository)
         {
             _orderRepository = orderRepository;
         }

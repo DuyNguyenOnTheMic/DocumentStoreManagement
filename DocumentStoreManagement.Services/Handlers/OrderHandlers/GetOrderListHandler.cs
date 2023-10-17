@@ -7,9 +7,9 @@ namespace DocumentStoreManagement.Services.Handlers.OrderHandlers
 {
     public class GetOrderListHandler : IRequestHandler<GetOrderListQuery, IEnumerable<Order>>
     {
-        private readonly IGenericRepository<Order> _orderRepository;
+        private readonly IRepository<Order> _orderRepository;
 
-        public GetOrderListHandler(IGenericRepository<Order> orderRepository)
+        public GetOrderListHandler(IRepository<Order> orderRepository)
         {
             _orderRepository = orderRepository;
         }

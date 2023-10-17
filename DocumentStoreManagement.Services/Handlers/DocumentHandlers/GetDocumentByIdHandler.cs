@@ -7,11 +7,11 @@ namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
 {
     public class GetDocumentByIdHandler : IRequestHandler<GetDocumentByIdQuery, Document>
     {
-        private readonly IGenericRepository<Book> _bookRepository;
-        private readonly IGenericRepository<Magazine> _magazineRepository;
-        private readonly IGenericRepository<Newspaper> _newspaperRepository;
+        private readonly IRepository<Book> _bookRepository;
+        private readonly IRepository<Magazine> _magazineRepository;
+        private readonly IRepository<Newspaper> _newspaperRepository;
 
-        public GetDocumentByIdHandler(IGenericRepository<Book> bookRepository, IGenericRepository<Magazine> magazineRepository, IGenericRepository<Newspaper> newspaperRepository)
+        public GetDocumentByIdHandler(IRepository<Book> bookRepository, IRepository<Magazine> magazineRepository, IRepository<Newspaper> newspaperRepository)
         {
             _bookRepository = bookRepository;
             _magazineRepository = magazineRepository;

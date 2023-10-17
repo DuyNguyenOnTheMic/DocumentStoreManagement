@@ -7,9 +7,9 @@ namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
 {
     public class UpdateDocumentHandler : IRequestHandler<UpdateDocumentCommand>
     {
-        private readonly IGenericRepository<Document> _documentRepository;
+        private readonly IRepository<Document> _documentRepository;
 
-        public UpdateDocumentHandler(IGenericRepository<Document> documentRepository)
+        public UpdateDocumentHandler(IRepository<Document> documentRepository)
         {
             _documentRepository = documentRepository;
         }

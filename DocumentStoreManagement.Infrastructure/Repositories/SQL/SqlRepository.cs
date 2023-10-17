@@ -8,12 +8,12 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.SQL
     /// SQL Generic Repository
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class SqlGenericRepository<T> : IGenericRepository<T> where T : class
+    public class SqlRepository<T> : IRepository<T> where T : class
     {
         protected readonly DbContext _dbContext;
         protected readonly DbSet<T> _dbSet;
 
-        public SqlGenericRepository(DbContext dbContext)
+        public SqlRepository(DbContext dbContext)
         {
             _dbContext = dbContext;
             _dbSet = dbContext.Set<T>();

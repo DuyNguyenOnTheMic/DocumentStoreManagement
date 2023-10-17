@@ -43,8 +43,8 @@ namespace DocumentStoreManagement.Infrastructure.ServiceExtension
             // Postgres context
             services.AddScoped<DbContext, PostgresApplicationContext>();
             services.AddTransient<IUnitOfWork, SqlUnitOfWork>();
-            services.AddScoped(typeof(IGenericRepository<>), typeof(SqlGenericRepository<>));
-            services.AddScoped(typeof(IGenericRepository<Order>), typeof(MongoGenericRepository<Order>));
+            services.AddScoped(typeof(IRepository<>), typeof(SqlRepository<>));
+            services.AddScoped(typeof(IRepository<Order>), typeof(MongoRepository<Order>));
             services.AddDbContext<DbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("PostgresConnection")));
             services.Configure<MongoDbSettings>(

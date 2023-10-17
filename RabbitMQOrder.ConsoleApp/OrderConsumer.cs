@@ -10,9 +10,9 @@ namespace RabbitMQOrder.ConsoleApp
 {
     public class OrderConsumer : IHostedService
     {
-        private readonly IGenericRepository<Order> _mongoOrderRepository;
+        private readonly IRepository<Order> _mongoOrderRepository;
 
-        public OrderConsumer(IGenericRepository<Order> mongoOrderRepository)
+        public OrderConsumer(IRepository<Order> mongoOrderRepository)
         {
             _mongoOrderRepository = mongoOrderRepository;
         }

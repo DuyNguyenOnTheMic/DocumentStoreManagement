@@ -7,9 +7,9 @@ namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
 {
     public class DeleteDocumentHandler : IRequestHandler<DeleteDocumentCommand>
     {
-        private readonly IGenericRepository<Document> _documentRepository;
+        private readonly IRepository<Document> _documentRepository;
 
-        public DeleteDocumentHandler(IGenericRepository<Document> documentRepository)
+        public DeleteDocumentHandler(IRepository<Document> documentRepository)
         {
             _documentRepository = documentRepository;
         }

@@ -17,7 +17,7 @@ namespace RabbitMQOrder.ConsoleApp
             services.AddSingleton<IMongoDbSettings>(sp =>
                 sp.GetRequiredService<IOptions<MongoDbSettings>>().Value);
             services.AddScoped<IMongoApplicationContext, MongoApplicationContext>();
-            services.AddScoped(typeof(IGenericRepository<>), typeof(MongoGenericRepository<>));
+            services.AddScoped(typeof(IRepository<>), typeof(MongoRepository<>));
         }
     }
 }

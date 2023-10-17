@@ -7,9 +7,9 @@ namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
 {
     public class CreateDocumentHandler<T> : IRequestHandler<CreateDocumentCommand<T>, T> where T : BaseEntity
     {
-        private readonly IGenericRepository<T> _documentRepository;
+        private readonly IRepository<T> _documentRepository;
 
-        public CreateDocumentHandler(IGenericRepository<T> documentRepository)
+        public CreateDocumentHandler(IRepository<T> documentRepository)
         {
             _documentRepository = documentRepository;
         }

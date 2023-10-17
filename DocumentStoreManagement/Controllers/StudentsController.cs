@@ -12,14 +12,14 @@ namespace DocumentStoreManagement.Controllers
     [ApiController]
     public class StudentsController : BaseController
     {
-        private readonly IGenericRepository<Student> _studentRepository;
+        private readonly IRepository<Student> _studentRepository;
 
         /// <summary>
         /// Add dependencies to controller
         /// </summary>
         /// <param name="unitOfWork"></param>
         /// <param name="studentRepository"></param>
-        public StudentsController(IUnitOfWork unitOfWork, IGenericRepository<Student> studentRepository) : base(unitOfWork)
+        public StudentsController(IUnitOfWork unitOfWork, IRepository<Student> studentRepository) : base(unitOfWork)
         {
             _unitOfWork = unitOfWork;
             _studentRepository = studentRepository;

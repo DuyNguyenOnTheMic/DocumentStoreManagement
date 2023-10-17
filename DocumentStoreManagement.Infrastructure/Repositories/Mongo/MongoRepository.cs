@@ -9,12 +9,12 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.Mongo
     /// Mongodb Generic Repository
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class MongoGenericRepository<T> : IGenericRepository<T> where T : BaseEntity
+    public class MongoRepository<T> : IRepository<T> where T : BaseEntity
     {
         protected readonly IMongoDatabase database;
         protected readonly IMongoCollection<T> dbSet;
 
-        public MongoGenericRepository(IMongoApplicationContext context)
+        public MongoRepository(IMongoApplicationContext context)
         {
             database = context.Database;
             dbSet = database.GetCollection<T>(typeof(T).Name);
