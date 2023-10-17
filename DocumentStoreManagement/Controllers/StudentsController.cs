@@ -86,7 +86,7 @@ namespace DocumentStoreManagement.Controllers
         ///
         /// </remarks>
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutStudent(int id, [FromBody] Student student)
+        public async Task<IActionResult> PutStudent(int id, Student student)
         {
             // Return bad request if ids don't match
             if (id != student.Id)
@@ -136,7 +136,7 @@ namespace DocumentStoreManagement.Controllers
         ///
         /// </remarks>
         [HttpPost]
-        public async Task<ActionResult<Student>> PostStudent([FromBody] Student student)
+        public async Task<ActionResult<Student>> PostStudent(Student student)
         {
             // Add a new student
             await _studentRepository.AddAsync(student);

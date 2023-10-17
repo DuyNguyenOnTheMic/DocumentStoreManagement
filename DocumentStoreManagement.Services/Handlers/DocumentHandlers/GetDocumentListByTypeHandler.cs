@@ -26,23 +26,25 @@ namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
         /// <param name="cancellationToken"></param>
         public async Task<IEnumerable<Document>> Handle(GetDocumentListByTypeQuery query, CancellationToken cancellationToken)
         {
+            // Declare variables
             int type = query.Type;
+            string function = "get_all_documents()";
 
             // Return class model based on input type
             if (type == CustomConstants.DocumentBookType)
             {
                 // Return books
-                return await _bookRepository.GetAllAsync();
+                return await _bookRepository.GetAllAsync(function);
             }
-            else if (type == CustomConstants.DocumentMagazineType)
+            if (type == CustomConstants.DocumentMagazineType)
             {
                 // Return magazines
-                return await _magazineRepository.GetAllAsync();
+                return await _magazineRepository.GetAllAsync(function);
             }
-            else if (type == CustomConstants.DocumentNewsPaperType)
+            if (type == CustomConstants.DocumentNewsPaperType)
             {
                 // Return newspaper
-                return await _newspaperRepository.GetAllAsync();
+                return await _newspaperRepository.GetAllAsync(function);
             }
 
             // Throw error

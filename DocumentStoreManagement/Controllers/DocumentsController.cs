@@ -115,7 +115,7 @@ namespace DocumentStoreManagement.Controllers
         ///
         /// </remarks>
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDocument(string id, [FromBody] Document updatedDocument)
+        public async Task<IActionResult> PutDocument(string id, Document updatedDocument)
         {
             // Return bad request if ids don't match
             if (id != updatedDocument.Id)
@@ -163,7 +163,7 @@ namespace DocumentStoreManagement.Controllers
         ///
         /// </remarks>
         [HttpPost("book")]
-        public async Task<ActionResult> PostBook([FromBody] Book newBook)
+        public async Task<ActionResult> PostBook(Book newBook)
         {
             return await CreateDocument(newBook);
         }
@@ -186,7 +186,7 @@ namespace DocumentStoreManagement.Controllers
         ///
         /// </remarks>
         [HttpPost("magazine")]
-        public async Task<ActionResult> PostMagazine([FromBody] Magazine newMagazine)
+        public async Task<ActionResult> PostMagazine(Magazine newMagazine)
         {
             return await CreateDocument(newMagazine);
         }
@@ -208,7 +208,7 @@ namespace DocumentStoreManagement.Controllers
         ///
         /// </remarks>
         [HttpPost("newspaper")]
-        public async Task<ActionResult> PostNewspaper([FromBody] Newspaper newNewspaper)
+        public async Task<ActionResult> PostNewspaper(Newspaper newNewspaper)
         {
             return await CreateDocument(newNewspaper);
         }

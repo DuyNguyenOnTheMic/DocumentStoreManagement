@@ -18,14 +18,15 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.SQL
             _dbSet = dbContext.Set<T>();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public async Task<IEnumerable<T>> GetAllAsync(string function)
         {
-            return await _dbSet.FromSqlInterpolated($"usp_GetAllBooks").ToListAsync();
+            return await _dbSet.FromSqlRaw($"SELECT * FROM {function}").ToListAsync();
         }
 
-        public Task<T> GetByIdAsync(object id)
+        public async Task<T> GetByIdAsync(object id)
         {
-            throw new NotImplementedException();
+            return await _dbSet.FromSqlRaw($"SELECT * FROM get_document_by_id('{id}')").FirstOrDefaultAsync();
         }
+
     }
 }

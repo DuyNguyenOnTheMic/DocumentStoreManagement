@@ -91,7 +91,6 @@ namespace DocumentStoreManagement.Controllers
         ///         "orderDetailsDTOs": [
         ///             {
         ///                 "id": "Order Details Id"
-        ///                 "unitPrice": 20000,
         ///                 "quantity": 2,
         ///                 "documentId": "Document Id"
         ///             }
@@ -147,7 +146,6 @@ namespace DocumentStoreManagement.Controllers
         ///         "status": 1,
         ///         "orderDetailsDTOs": [
         ///             {
-        ///                 "unitPrice": 20000,
         ///                 "quantity": 2,
         ///                 "documentId": "Document Id"
         ///             }

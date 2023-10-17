@@ -7,15 +7,11 @@ namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
 {
     public class GetDocumentByIdHandler : IRequestHandler<GetDocumentByIdQuery, Document>
     {
-        private readonly IRepository<Book> _bookRepository;
-        private readonly IRepository<Magazine> _magazineRepository;
-        private readonly IRepository<Newspaper> _newspaperRepository;
+        private readonly IQueryRepository<Document> _documentRepository;
 
-        public GetDocumentByIdHandler(IRepository<Book> bookRepository, IRepository<Magazine> magazineRepository, IRepository<Newspaper> newspaperRepository)
+        public GetDocumentByIdHandler(IQueryRepository<Document> documentRepository)
         {
-            _bookRepository = bookRepository;
-            _magazineRepository = magazineRepository;
-            _newspaperRepository = newspaperRepository;
+            _documentRepository = documentRepository;
         }
 
         /// <summary>
@@ -25,30 +21,7 @@ namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
         /// <param name="cancellationToken"></param>
         public async Task<Document> Handle(GetDocumentByIdQuery query, CancellationToken cancellationToken)
         {
-            string id = query.Id;
-
-            // Find in book table
-            Book book = await _bookRepository.GetByIdAsync(id);
-            if (book != null)
-            {
-                return book;
-            }
-
-            // Find in magazine table
-            Magazine magazine = await _magazineRepository.GetByIdAsync(id);
-            if (magazine != null)
-            {
-                return magazine;
-            }
-
-            // Find in newspaper table
-            Newspaper newspaper = await _newspaperRepository.GetByIdAsync(id);
-            if (newspaper != null)
-            {
-                return newspaper;
-            }
-
-            throw new Exception("No document found 😔");
+            return await _documentRepository.GetByIdAsync(query.Id);
         }
     }
 }

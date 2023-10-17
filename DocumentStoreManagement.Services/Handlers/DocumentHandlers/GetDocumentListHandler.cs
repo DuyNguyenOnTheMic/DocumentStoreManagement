@@ -21,7 +21,8 @@ namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
         /// <param name="cancellationToken"></param>
         public async Task<IEnumerable<Document>> Handle(GetDocumentListQuery query, CancellationToken cancellationToken)
         {
-            return await _documentRepository.GetAllAsync();
+            string function = "get_all_documents()";
+            return await _documentRepository.GetAllAsync(function);
         }
     }
 }
