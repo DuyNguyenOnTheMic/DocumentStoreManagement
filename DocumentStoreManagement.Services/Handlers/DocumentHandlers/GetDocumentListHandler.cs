@@ -7,9 +7,9 @@ namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
 {
     public class GetDocumentListHandler : IRequestHandler<GetDocumentListQuery, IEnumerable<Document>>
     {
-        private readonly IRepository<Document> _documentRepository;
+        private readonly IQueryRepository<Document> _documentRepository;
 
-        public GetDocumentListHandler(IRepository<Document> documentRepository)
+        public GetDocumentListHandler(IQueryRepository<Document> documentRepository)
         {
             _documentRepository = documentRepository;
         }
