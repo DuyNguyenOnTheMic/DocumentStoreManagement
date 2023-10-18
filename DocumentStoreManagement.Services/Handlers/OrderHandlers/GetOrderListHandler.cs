@@ -7,9 +7,9 @@ namespace DocumentStoreManagement.Services.Handlers.OrderHandlers
 {
     public class GetOrderListHandler : IRequestHandler<GetOrderListQuery, IEnumerable<Order>>
     {
-        private readonly IRepository<Order> _orderRepository;
+        private readonly IQueryRepository<Order> _orderRepository;
 
-        public GetOrderListHandler(IRepository<Order> orderRepository)
+        public GetOrderListHandler(IQueryRepository<Order> orderRepository)
         {
             _orderRepository = orderRepository;
         }
@@ -21,7 +21,7 @@ namespace DocumentStoreManagement.Services.Handlers.OrderHandlers
         /// <param name="cancellationToken"></param>
         public async Task<IEnumerable<Order>> Handle(GetOrderListQuery query, CancellationToken cancellationToken)
         {
-            return await _orderRepository.GetAllAsync();
+            return await _orderRepository.GetAllAsync("Orders");
         }
     }
 }

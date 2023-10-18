@@ -203,6 +203,12 @@ namespace DocumentStoreManagement.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Finds orders by dates
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns>A list of orders filtered by dates</returns>
         [HttpGet("statistics/date")]
         public async Task<IEnumerable<Order>> GetDateStatistics(DateTime from, DateTime to)
         {

@@ -1,6 +1,5 @@
 ﻿using DocumentStoreManagement.Core.Interfaces;
 using DocumentStoreManagement.Core.Models;
-using DocumentStoreManagement.Infrastructure.Repositories.Mongo;
 using DocumentStoreManagement.Infrastructure.Repositories.SQL;
 using DocumentStoreManagement.Services;
 using DocumentStoreManagement.Services.Commands.DocumentCommands;
@@ -45,7 +44,7 @@ namespace DocumentStoreManagement.Infrastructure.ServiceExtension
             services.AddTransient<IUnitOfWork, SqlUnitOfWork>();
             services.AddScoped(typeof(IRepository<>), typeof(SqlRepository<>));
             services.AddScoped(typeof(IQueryRepository<>), typeof(SqlQueryRepository<>));
-            services.AddScoped(typeof(IRepository<Order>), typeof(MongoRepository<Order>));
+            services.AddScoped(typeof(IRepository<Order>), typeof(SqlRepository<Order>));
             services.AddDbContext<DbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("PostgresConnection")));
             services.Configure<MongoDbSettings>(

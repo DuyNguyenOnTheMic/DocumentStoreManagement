@@ -6,7 +6,7 @@
     /// <typeparam name="T"></typeparam>
     public interface IQueryRepository<T> where T : class
     {
-        Task<IEnumerable<T>> GetAllAsync(string function);
+        Task<IEnumerable<T>> GetAllAsync(string table);
         Task<T> GetByIdAsync(string function);
     }
 }

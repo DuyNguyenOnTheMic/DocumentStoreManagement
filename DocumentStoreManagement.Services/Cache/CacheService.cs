@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using StackExchange.Redis;
+﻿using StackExchange.Redis;
 
 namespace DocumentStoreManagement.Services.Cache
 {
@@ -28,16 +27,16 @@ namespace DocumentStoreManagement.Services.Cache
         /// <param name="expiration"></param>
         public async Task<IEnumerable<T>> GetOrSetAsync<T>(string key, Task<IEnumerable<T>> func, TimeSpan expiration)
         {
-            RedisValue cached = _database.StringGet(key);
-            if (!cached.IsNull)
-            {
-                // Get the cached value
-                return JsonConvert.DeserializeObject<IEnumerable<T>>(cached);
-            }
+            /* RedisValue cached = _database.StringGet(key);
+             if (!cached.IsNull)
+             {
+                 // Get the cached value
+                 return JsonConvert.DeserializeObject<IEnumerable<T>>(cached);
+             }
 
-            // Otherwise, set new cache value
+             // Otherwise, set new cache value*/
             IEnumerable<T> result = await func;
-            await _database.StringSetAsync(key, JsonConvert.SerializeObject(result), expiration, When.NotExists);
+            //await _database.StringSetAsync(key, JsonConvert.SerializeObject(result), expiration, When.NotExists);
             return result;
         }
 
