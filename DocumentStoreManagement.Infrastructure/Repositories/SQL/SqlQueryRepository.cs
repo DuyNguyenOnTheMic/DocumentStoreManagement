@@ -23,9 +23,9 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.SQL
             return await _dbSet.FromSqlRaw($"SELECT * FROM {table}").ToListAsync();
         }
 
-        public async Task<T> GetByIdAsync(string function)
+        public async Task<T> GetByIdAsync(string table, object id)
         {
-            return await _dbSet.FromSqlRaw($"SELECT * FROM {function}").FirstOrDefaultAsync();
+            return await _dbSet.FromSqlRaw($"SELECT * FROM {table} WHERE \"Id\" = '{id}'").FirstOrDefaultAsync();
         }
     }
 }

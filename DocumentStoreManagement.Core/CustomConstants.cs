@@ -17,5 +17,8 @@ namespace DocumentStoreManagement.Core
             {DocumentMagazineType, nameof(Magazine) },
             {DocumentNewsPaperType, nameof(Newspaper) }
         };
+
+        public static readonly string DocumentsTable = "\"Documents\"";
+        public static readonly string OrdersTable = "\"Orders\"";
     }
 }

@@ -7,6 +7,6 @@
     public interface IQueryRepository<T> where T : class
     {
         Task<IEnumerable<T>> GetAllAsync(string table);
-        Task<T> GetByIdAsync(string function);
+        Task<T> GetByIdAsync(string table, object id);
     }
 }

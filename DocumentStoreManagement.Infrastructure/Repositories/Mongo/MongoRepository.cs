@@ -40,7 +40,6 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.Mongo
             return await dbSet.Find(x => x.Id == (string)id).FirstOrDefaultAsync();
         }
 
-        // NOTE: Not implemented yet
         public async Task<IEnumerable<T>> FindAsync(object expression)
         {
             return await dbSet.Find((FilterDefinition<T>)expression).ToListAsync();

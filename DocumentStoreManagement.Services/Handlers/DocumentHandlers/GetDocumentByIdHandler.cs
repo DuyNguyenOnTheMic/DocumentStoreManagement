@@ -1,4 +1,5 @@
-﻿using DocumentStoreManagement.Core.Interfaces;
+﻿using DocumentStoreManagement.Core;
+using DocumentStoreManagement.Core.Interfaces;
 using DocumentStoreManagement.Core.Models;
 using DocumentStoreManagement.Services.Queries.DocumentQueries;
 using MediatR;
@@ -21,8 +22,7 @@ namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
         /// <param name="cancellationToken"></param>
         public async Task<Document> Handle(GetDocumentByIdQuery query, CancellationToken cancellationToken)
         {
-            string function = $"get_document_by_id('{query.Id}')";
-            return await _documentRepository.GetByIdAsync(function);
+            return await _documentRepository.GetByIdAsync(CustomConstants.DocumentsTable, query.Id);
         }
     }
 }

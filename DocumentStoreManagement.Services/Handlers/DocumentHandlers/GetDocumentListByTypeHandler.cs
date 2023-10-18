@@ -28,23 +28,23 @@ namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
         {
             // Declare variables
             int type = query.Type;
+            string table = CustomConstants.DocumentsTable;
 
             // Return class model based on input type
             if (type == CustomConstants.DocumentBookType)
             {
                 // Return books
-                string table = "\"Documents\"";
                 return await _bookRepository.GetAllAsync(table);
             }
             if (type == CustomConstants.DocumentMagazineType)
             {
                 // Return magazines
-                return await _magazineRepository.GetAllAsync("");
+                return await _magazineRepository.GetAllAsync(table);
             }
             if (type == CustomConstants.DocumentNewsPaperType)
             {
                 // Return newspaper
-                return await _newspaperRepository.GetAllAsync("");
+                return await _newspaperRepository.GetAllAsync(table);
             }
 
             // Throw error
