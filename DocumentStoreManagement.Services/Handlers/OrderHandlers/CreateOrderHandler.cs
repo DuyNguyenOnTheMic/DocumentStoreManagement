@@ -1,4 +1,5 @@
-﻿using DocumentStoreManagement.Core.Models;
+﻿using DocumentStoreManagement.Core.Interfaces;
+using DocumentStoreManagement.Core.Models;
 using DocumentStoreManagement.Services.Commands.OrderCommands;
 using MediatR;
 
@@ -6,6 +7,13 @@ namespace DocumentStoreManagement.Services.Handlers.OrderHandlers
 {
     public class CreateOrderHandler : IRequestHandler<CreateOrderCommand, Order>
     {
+        private readonly IRepository<Order> _orderRepository;
+
+        public CreateOrderHandler(IRepository<Order> orderRepository)
+        {
+            _orderRepository = orderRepository;
+        }
+
         /// <summary>
         /// Handler to create order
         /// </summary>
@@ -13,8 +21,9 @@ namespace DocumentStoreManagement.Services.Handlers.OrderHandlers
         /// <param name="cancellationToken"></param>
         public async Task<Order> Handle(CreateOrderCommand command, CancellationToken cancellationToken)
         {
-            await Task.CompletedTask;
-            return command.Order;
+            Order order = command.Order;
+            await _orderRepository.AddAsync(order);
+            return order;
         }
     }
 }

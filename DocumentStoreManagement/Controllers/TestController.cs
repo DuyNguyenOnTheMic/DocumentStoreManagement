@@ -44,5 +44,15 @@ namespace DocumentStoreManagement.Controllers
             // Get list of orders
             return await _orderRepository.GetAllAsync();
         }
+
+        /// <summary>
+        /// Method to get orders with include by Entity Framework
+        /// </summary>
+        [HttpGet("orders/include")]
+        public async Task<IEnumerable<Order>> GetOrdersWithInclude()
+        {
+            // Get list of orders with include
+            return await _orderRepository.GetAllWithIncludeAsync(x => x.OrderDetails);
+        }
     }
 }

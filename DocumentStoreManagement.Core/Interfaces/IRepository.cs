@@ -11,6 +11,7 @@ namespace DocumentStoreManagement.Core.Interfaces
         Task AddAsync(T entity);
         Task AddRangeAsync(IEnumerable<T> entities);
         Task<IEnumerable<T>> GetAllAsync();
+        Task<IEnumerable<T>> GetAllWithIncludeAsync(params Expression<Func<T, object>>[] includes);
         Task<T> GetByIdAsync(object id);
         Task<IEnumerable<T>> FindAsync(object expression);
         Task UpdateAsync(T entity);

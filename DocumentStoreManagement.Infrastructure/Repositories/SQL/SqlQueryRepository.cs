@@ -1,5 +1,6 @@
 ﻿using DocumentStoreManagement.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace DocumentStoreManagement.Infrastructure.Repositories.SQL
 {
@@ -21,6 +22,11 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.SQL
         public async Task<IEnumerable<T>> GetAllAsync(string table)
         {
             return await _dbSet.FromSqlRaw($"SELECT * FROM {table}").ToListAsync();
+        }
+
+        public Task<IQueryable<T>> GetQueryWithIncludeAsync(params Expression<Func<T, object>>[] includes)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<T> GetByIdAsync(string table, object id)

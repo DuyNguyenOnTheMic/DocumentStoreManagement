@@ -10,6 +10,7 @@ namespace DocumentStoreManagement.Services.Interfaces
     {
         Task<IEnumerable<Order>> GetAll();
         Task<Order> GetById(string id);
+        Task<IEnumerable<Order>> GetWithInclude();
         Task<Order> Create(OrderDTO orderDTO);
         Task Update(OrderDTO order);
         Task Delete(Order order);

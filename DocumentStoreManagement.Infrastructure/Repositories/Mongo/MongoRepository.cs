@@ -35,6 +35,12 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.Mongo
             return await dbSet.Find(_ => true).ToListAsync();
         }
 
+        // NOTE: Not implemented yet
+        public Task<IEnumerable<T>> GetAllWithIncludeAsync(params Expression<Func<T, object>>[] includes)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<T> GetByIdAsync(object id)
         {
             return await dbSet.Find(x => x.Id == (string)id).FirstOrDefaultAsync();

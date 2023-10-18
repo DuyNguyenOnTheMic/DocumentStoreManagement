@@ -34,6 +34,16 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.SQL
             return await _dbSet.ToListAsync();
         }
 
+        public async Task<IEnumerable<T>> GetAllWithIncludeAsync(params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> query = _dbSet;
+            if (includes != null)
+            {
+                query = includes.Aggregate(query, (current, include) => current.Include(include));
+            }
+            return await query.ToListAsync();
+        }
+
         public async Task<T> GetByIdAsync(object id)
         {
             return await _dbSet.FindAsync(id);

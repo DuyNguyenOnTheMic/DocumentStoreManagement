@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 
 namespace DocumentStoreManagement.Core.Models
 {
@@ -17,12 +16,8 @@ namespace DocumentStoreManagement.Core.Models
         [Required]
         [ForeignKey("Document")]
         public string DocumentId { get; set; }
-        [JsonIgnore]
-        public virtual Document Document { get; set; }
         [Required]
         [ForeignKey("Order")]
         public string OrderId { get; set; }
-        [JsonIgnore]
-        public virtual Order Order { get; set; }
     }
 }

@@ -30,6 +30,12 @@ namespace DocumentStoreManagement.Services
             return await _mediator.Send(new GetOrderByIdQuery(id));
         }
 
+        public async Task<IEnumerable<Order>> GetWithInclude()
+        {
+            // Get orders with order details list
+            return await _mediator.Send(new GetOrderListWithIncludeQuery());
+        }
+
         public async Task<Order> Create(OrderDTO orderDTO)
         {
             // Get order details from DTO

@@ -1,4 +1,5 @@
 ﻿using DocumentStoreManagement.Core.DTOs;
+using DocumentStoreManagement.Core.Interfaces;
 using DocumentStoreManagement.Core.Models;
 using DocumentStoreManagement.Services.Interfaces;
 using DocumentStoreManagement.Services.MessageBroker;
@@ -11,7 +12,7 @@ namespace DocumentStoreManagement.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class OrdersController : ControllerBase
+    public class OrdersController : BaseController
     {
         private readonly IOrderService _orderService;
         private readonly IRabbitMQProducer _rabbitMQProducer;
@@ -21,8 +22,10 @@ namespace DocumentStoreManagement.Controllers
         /// </summary>
         /// <param name="orderService"></param>
         /// <param name="rabbitMQProducer"></param>
-        public OrdersController(IOrderService orderService, IRabbitMQProducer rabbitMQProducer)
+        /// <param name="unitOfWork"></param>
+        public OrdersController(IUnitOfWork unitOfWork, IOrderService orderService, IRabbitMQProducer rabbitMQProducer) : base(unitOfWork)
         {
+            _unitOfWork = unitOfWork;
             _orderService = orderService;
             _rabbitMQProducer = rabbitMQProducer;
         }
@@ -42,6 +45,23 @@ namespace DocumentStoreManagement.Controllers
         {
             // Get list of orders
             return await _orderService.GetAll();
+        }
+
+        /// <summary>
+        /// Gets the order list with include from database
+        /// </summary>
+        /// <returns>A list of all orders with include</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET api/orders/include
+        ///
+        /// </remarks>
+        [HttpGet("include")]
+        public async Task<IEnumerable<Order>> GetOrdersWithInclude()
+        {
+            // Get list of orders with include
+            return await _orderService.GetWithInclude();
         }
 
         /// <summary>
@@ -108,6 +128,7 @@ namespace DocumentStoreManagement.Controllers
             {
                 // Update order
                 await _orderService.Update(updatedOrder);
+                await _unitOfWork.SaveAsync();
             }
             catch (Exception e)
             {
@@ -157,6 +178,7 @@ namespace DocumentStoreManagement.Controllers
             {
                 // Add a new order
                 order = await _orderService.Create(newOrder);
+                await _unitOfWork.SaveAsync();
 
                 // Send the inserted order data to the queue and consumer will listening this data from queue
                 _rabbitMQProducer.SendOrderMessage(order);
@@ -199,6 +221,7 @@ namespace DocumentStoreManagement.Controllers
 
             // Delete order
             await _orderService.Delete(order);
+            await _unitOfWork.SaveAsync();
 
             return NoContent();
         }
