@@ -2,7 +2,7 @@
 using DocumentStoreManagement.Core.Models;
 using DocumentStoreManagement.Services.Queries.OrderQueries;
 using MediatR;
-using MongoDB.Driver;
+using System.Linq.Expressions;
 
 namespace DocumentStoreManagement.Services.Handlers.OrderHandlers
 {
@@ -23,10 +23,8 @@ namespace DocumentStoreManagement.Services.Handlers.OrderHandlers
         /// <returns></returns>
         public async Task<IEnumerable<Order>> Handle(GetOrderDateStatisticsQuery request, CancellationToken cancellationToken)
         {
-            DateTime today = DateTime.Today;
-            FilterDefinition<Order> myFilter = Builders<Order>.Filter
-                .Where(x => x.BorrowDate >= request.From && x.BorrowDate <= request.To);
-            return await _orderRepository.FindAsync(myFilter);
+            Expression<Func<Order, bool>> filter = x => x.BorrowDate >= request.From && x.BorrowDate <= request.To;
+            return await _orderRepository.FindAsync(filter);
         }
     }
 }

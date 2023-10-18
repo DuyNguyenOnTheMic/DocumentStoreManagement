@@ -52,6 +52,7 @@ namespace DocumentStoreManagement.Infrastructure.ServiceExtension
             services.AddSingleton<IMongoDbSettings>(sp =>
                 sp.GetRequiredService<IOptions<MongoDbSettings>>().Value);
             services.AddScoped<IMongoApplicationContext, MongoApplicationContext>();
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
             // Register services
             services.AddScoped<IDocumentService, DocumentService>();

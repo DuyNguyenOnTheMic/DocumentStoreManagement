@@ -17,7 +17,8 @@ namespace DocumentStoreManagement.Services.Handlers.OrderHandlers
 
         public async Task<IEnumerable<Order>> Handle(GetOrderListWithIncludeQuery request, CancellationToken cancellationToken)
         {
-            return await _orderRepository.GetAllAsync(CustomConstants.OrdersTable);
+            string orderDetailsTableName = CustomConstants.OrderDetailsTable.Trim('"');
+            return await _orderRepository.GetAllWithIncludeAsync(CustomConstants.OrdersTable, orderDetailsTableName);
         }
     }
 }

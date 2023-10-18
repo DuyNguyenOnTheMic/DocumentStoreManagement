@@ -1,6 +1,4 @@
-﻿using System.Linq.Expressions;
-
-namespace DocumentStoreManagement.Core.Interfaces
+﻿namespace DocumentStoreManagement.Core.Interfaces
 {
     /// <summary>
     /// Generic Query Repository interface
@@ -9,7 +7,7 @@ namespace DocumentStoreManagement.Core.Interfaces
     public interface IQueryRepository<T> where T : class
     {
         Task<IEnumerable<T>> GetAllAsync(string table);
-        Task<IQueryable<T>> GetQueryWithIncludeAsync(params Expression<Func<T, object>>[] includes);
+        Task<IEnumerable<T>> GetAllWithIncludeAsync(string table, string includeTable);
         Task<T> GetByIdAsync(string table, object id);
     }
 }

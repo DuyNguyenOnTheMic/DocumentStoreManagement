@@ -20,5 +20,6 @@ namespace DocumentStoreManagement.Core
 
         public static readonly string DocumentsTable = "\"Documents\"";
         public static readonly string OrdersTable = "\"Orders\"";
+        public static readonly string OrderDetailsTable = "\"OrderDetails\"";
     }
 }
