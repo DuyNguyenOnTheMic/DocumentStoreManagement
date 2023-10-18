@@ -6,6 +6,8 @@ namespace DocumentStoreManagement.Services.Queries.OrderQueries
     /// <summary>
     /// Query class to get order date statistics
     /// </summary>
-    public record GetOrderDateStatisticsQuery(DateTime From, DateTime To) : IRequest<IEnumerable<Order>>;
+    /// <param name="From"></param>
+    /// <param name="To"></param>
+    public record GetOrderByDateStatisticsQuery(DateTime From, DateTime To) : IRequest<IEnumerable<Order>>;
 }
 

@@ -18,6 +18,11 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.SQL
             _dbSet = dbContext.Set<T>();
         }
 
+        public async Task<IEnumerable<T>> Get(string query)
+        {
+            return await _dbSet.FromSqlRaw(query).ToListAsync();
+        }
+
         public async Task<IEnumerable<T>> GetAllAsync(string table)
         {
             return await _dbSet.FromSqlRaw($"SELECT * FROM {table}").ToListAsync();
@@ -26,6 +31,11 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.SQL
         public async Task<IEnumerable<T>> GetAllWithIncludeAsync(string table, string includeTable)
         {
             return await _dbSet.FromSqlRaw($"SELECT * FROM {table}").Include(includeTable).ToListAsync();
+        }
+
+        public async Task<IEnumerable<T>> GetBetweenDatesAsync(string table, string column, string from, string to)
+        {
+            return await _dbSet.FromSqlRaw($"SELECT * FROM {table} WHERE \"{column}\" BETWEEN '{from}' AND '{to}'").ToListAsync();
         }
 
         public async Task<T> GetByIdAsync(string table, object id)

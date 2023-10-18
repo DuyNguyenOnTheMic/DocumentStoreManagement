@@ -233,10 +233,17 @@ namespace DocumentStoreManagement.Controllers
         /// <param name="to"></param>
         /// <returns>A list of orders filtered by dates</returns>
         [HttpGet("statistics/date")]
-        public async Task<IEnumerable<Order>> GetDateStatistics(DateTime from, DateTime to)
+        public async Task<IEnumerable<Order>> GetByDateStatistics(DateTime from, DateTime to)
         {
             // Get list of orders by dates
-            return await _orderService.GetDateStatistics(from, to);
+            return await _orderService.GetByDateStatistics(from, to);
+        }
+
+        [HttpGet("statistics/count")]
+        public async Task<IEnumerable<OrderStatisticsDTO>> GetCountStatistics(DateTime from, DateTime to)
+        {
+            // Get list of orders count by date
+            return await _orderService.GetCountStatistics(from, to);
         }
 
         #region Helpers
