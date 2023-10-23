@@ -6,10 +6,44 @@
     /// <typeparam name="T"></typeparam>
     public interface IQueryRepository<T> where T : class
     {
+        /// <summary>
+        /// Gets by query and returns as DTO
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns>List of data</returns>
         Task<IEnumerable<T>> Get(string query);
+
+        /// <summary>
+        /// Gets all the data from a table
+        /// </summary>
+        /// <param name="table"></param>
+        /// <returns>List of data</returns>
         Task<IEnumerable<T>> GetAllAsync(string table);
+
+        /// <summary>
+        /// Gets all the data from a table include with a child table
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="includeTable"></param>
+        /// <returns>List of data</returns>
         Task<IEnumerable<T>> GetAllWithIncludeAsync(string table, string includeTable);
+
+        /// <summary>
+        /// Gets all the data from a table which between 2 dates
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="column"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns>A list of data</returns>
         Task<IEnumerable<T>> GetBetweenDatesAsync(string table, string column, string from, string to);
+
+        /// <summary>
+        /// Gets an item by its Id
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="id"></param>
+        /// <returns>An item which matches the Id</returns>
         Task<T> GetByIdAsync(string table, object id);
     }
 }

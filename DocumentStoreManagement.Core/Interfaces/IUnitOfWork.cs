@@ -5,6 +5,10 @@
     /// </summary>
     public interface IUnitOfWork : IAsyncDisposable
     {
+        /// <summary>
+        /// Save changes
+        /// </summary>
+        /// <returns>Nothing</returns>
         Task SaveAsync();
     }
 }

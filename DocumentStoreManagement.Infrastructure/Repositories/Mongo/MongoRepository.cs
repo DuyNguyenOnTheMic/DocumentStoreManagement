@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 namespace DocumentStoreManagement.Infrastructure.Repositories.Mongo
 {
     /// <summary>
-    /// Mongodb Generic Repository
+    /// MongoDB Generic Repository
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class MongoRepository<T> : IRepository<T> where T : BaseEntity
@@ -51,12 +51,6 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.Mongo
             return await dbSet.Find((FilterDefinition<T>)expression).ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> FindByTypeAsync(string type)
-        {
-            FilterDefinition<T> filter = Builders<T>.Filter.Eq("_t", type);
-            return await dbSet.Find(filter).ToListAsync();
-        }
-
         public async Task UpdateAsync(T entity)
         {
             await dbSet.ReplaceOneAsync(x => x.Id == entity.Id, entity);
@@ -67,7 +61,6 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.Mongo
             await dbSet.DeleteOneAsync(x => x.Id == entity.Id);
         }
 
-        // NOTE: Not implemented yet
         public Task RemoveRangeAsync(IEnumerable<T> entities)
         {
             throw new NotImplementedException();
