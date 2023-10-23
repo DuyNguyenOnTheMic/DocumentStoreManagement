@@ -5,18 +5,13 @@ namespace DocumentStoreManagement.Services.Cache
     /// <summary>
     /// Redis Cache Service
     /// </summary>
-    public class CacheService : ICacheService
+    /// <remarks>
+    /// Constructor for database interface
+    /// </remarks>
+    /// <param name="database"></param>
+    public class CacheService(IDatabase database) : ICacheService
     {
-        private readonly IDatabase _database;
-
-        /// <summary>
-        /// Constructor for database interface
-        /// </summary>
-        /// <param name="database"></param>
-        public CacheService(IDatabase database)
-        {
-            _database = database;
-        }
+        private readonly IDatabase _database = database;
 
         /// <summary>
         /// Get cache or set new if not exists

@@ -6,18 +6,11 @@ using MediatR;
 
 namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
 {
-    public class GetDocumentListByTypeHandler : IRequestHandler<GetDocumentListByTypeQuery, IEnumerable<Document>>
+    public class GetDocumentListByTypeHandler(IQueryRepository<Book> bookRepository, IQueryRepository<Magazine> magazineRepository, IQueryRepository<Newspaper> newspaperRepository) : IRequestHandler<GetDocumentListByTypeQuery, IEnumerable<Document>>
     {
-        private readonly IQueryRepository<Book> _bookRepository;
-        private readonly IQueryRepository<Magazine> _magazineRepository;
-        private readonly IQueryRepository<Newspaper> _newspaperRepository;
-
-        public GetDocumentListByTypeHandler(IQueryRepository<Book> bookRepository, IQueryRepository<Magazine> magazineRepository, IQueryRepository<Newspaper> newspaperRepository)
-        {
-            _bookRepository = bookRepository;
-            _magazineRepository = magazineRepository;
-            _newspaperRepository = newspaperRepository;
-        }
+        private readonly IQueryRepository<Book> _bookRepository = bookRepository;
+        private readonly IQueryRepository<Magazine> _magazineRepository = magazineRepository;
+        private readonly IQueryRepository<Newspaper> _newspaperRepository = newspaperRepository;
 
         /// <summary>
         /// Handler to get documents by type

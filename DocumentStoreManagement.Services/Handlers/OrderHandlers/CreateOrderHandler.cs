@@ -5,14 +5,9 @@ using MediatR;
 
 namespace DocumentStoreManagement.Services.Handlers.OrderHandlers
 {
-    public class CreateOrderHandler : IRequestHandler<CreateOrderCommand, Order>
+    public class CreateOrderHandler(IRepository<Order> orderRepository) : IRequestHandler<CreateOrderCommand, Order>
     {
-        private readonly IRepository<Order> _orderRepository;
-
-        public CreateOrderHandler(IRepository<Order> orderRepository)
-        {
-            _orderRepository = orderRepository;
-        }
+        private readonly IRepository<Order> _orderRepository = orderRepository;
 
         /// <summary>
         /// Handler to create order

@@ -6,20 +6,15 @@ namespace DocumentStoreManagement.Controllers
     /// <summary>
     /// Base controller for databases which need UnitOfWork
     /// </summary>
-    public class BaseController : ControllerBase
+    /// <remarks>
+    /// Constructor for unit of work
+    /// </remarks>
+    /// <param name="unitOfWork"></param>
+    public class BaseController(IUnitOfWork unitOfWork) : ControllerBase
     {
         /// <summary>
         /// Base unit of work
         /// </summary>
-        protected IUnitOfWork _unitOfWork;
-
-        /// <summary>
-        /// Constructor for unit of work
-        /// </summary>
-        /// <param name="unitOfWork"></param>
-        public BaseController(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
+        protected IUnitOfWork _unitOfWork = unitOfWork;
     }
 }

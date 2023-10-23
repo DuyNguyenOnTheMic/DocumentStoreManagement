@@ -3,12 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DocumentStoreManagement.Infrastructure
 {
-    public class PostgresApplicationContext : DbContext
+    public class PostgresApplicationContext(DbContextOptions options) : DbContext(options)
     {
-        public PostgresApplicationContext(DbContextOptions options) : base(options)
-        {
-        }
-
         public DbSet<Document> Documents { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<Magazine> Magazines { get; set; }

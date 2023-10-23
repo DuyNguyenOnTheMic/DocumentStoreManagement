@@ -9,14 +9,9 @@ using MongoDB.Bson;
 
 namespace DocumentStoreManagement.Services
 {
-    public class OrderService : IOrderService
+    public class OrderService(IMediator mediator) : IOrderService
     {
-        private readonly IMediator _mediator;
-
-        public OrderService(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
+        private readonly IMediator _mediator = mediator;
 
         public async Task<IEnumerable<Order>> GetAll()
         {
@@ -42,7 +37,7 @@ namespace DocumentStoreManagement.Services
             ICollection<OrderDetailsDTO> orderDetailsDTO = orderDTO.OrderDetailsDTOs;
 
             // Create a list to store order details
-            List<OrderDetail> orderDetails = new();
+            List<OrderDetail> orderDetails = [];
 
             // Generate new order id
             string orderId = ObjectId.GenerateNewId().ToString();
@@ -94,7 +89,7 @@ namespace DocumentStoreManagement.Services
             ICollection<OrderDetailsDTO> orderDetailsDTO = orderDTO.OrderDetailsDTOs;
 
             // Create a list to store order details
-            List<OrderDetail> orderDetails = new();
+            List<OrderDetail> orderDetails = [];
 
             // Loop through each order details to map and create a list of order details
             foreach (OrderDetailsDTO item in orderDetailsDTO)

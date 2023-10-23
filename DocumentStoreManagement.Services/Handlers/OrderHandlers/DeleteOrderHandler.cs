@@ -5,14 +5,9 @@ using MediatR;
 
 namespace DocumentStoreManagement.Services.Handlers.OrderHandlers
 {
-    public class DeleteOrderHandler : IRequestHandler<DeleteOrderCommand>
+    public class DeleteOrderHandler(IRepository<Order> orderRepository) : IRequestHandler<DeleteOrderCommand>
     {
-        private readonly IRepository<Order> _orderRepository;
-
-        public DeleteOrderHandler(IRepository<Order> orderRepository)
-        {
-            _orderRepository = orderRepository;
-        }
+        private readonly IRepository<Order> _orderRepository = orderRepository;
 
         /// <summary>
         /// Handler to delete order

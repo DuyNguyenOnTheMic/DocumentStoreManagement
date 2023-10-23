@@ -6,16 +6,10 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.SQL
     /// <summary>
     /// Encapsulates all repository transactions.
     /// </summary>
-    public class SqlUnitOfWork : IUnitOfWork
+    public class SqlUnitOfWork(DbContext dbContext) : IUnitOfWork
     {
-        private readonly DbContext _dbContext;
-        private bool _disposed;
-
-        public SqlUnitOfWork(DbContext dbContext)
-        {
-            _dbContext = dbContext;
-            _disposed = false;
-        }
+        private readonly DbContext _dbContext = dbContext;
+        private bool _disposed = false;
 
         public async Task SaveAsync() => await _dbContext.SaveChangesAsync();
 

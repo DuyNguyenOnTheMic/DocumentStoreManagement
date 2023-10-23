@@ -6,17 +6,12 @@ using MediatR;
 
 namespace DocumentStoreManagement.Services.Handlers.OrderHandlers
 {
-    public class GetOrderByIdHandler : IRequestHandler<GetOrderByIdQuery, Order>
+    public class GetOrderByIdHandler(IQueryRepository<Order> orderRepository) : IRequestHandler<GetOrderByIdQuery, Order>
     {
-        private readonly IQueryRepository<Order> _orderRepository;
-
-        public GetOrderByIdHandler(IQueryRepository<Order> orderRepository)
-        {
-            _orderRepository = orderRepository;
-        }
+        private readonly IQueryRepository<Order> _orderRepository = orderRepository;
 
         /// <summary>
-        /// Hanlder to find order by id
+        /// Handler to find order by id
         /// </summary>
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>

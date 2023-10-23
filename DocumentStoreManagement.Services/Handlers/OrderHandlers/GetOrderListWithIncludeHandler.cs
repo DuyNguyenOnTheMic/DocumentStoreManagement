@@ -6,14 +6,9 @@ using MediatR;
 
 namespace DocumentStoreManagement.Services.Handlers.OrderHandlers
 {
-    public class GetOrderListWithIncludeHandler : IRequestHandler<GetOrderListWithIncludeQuery, IEnumerable<Order>>
+    public class GetOrderListWithIncludeHandler(IQueryRepository<Order> orderRepository) : IRequestHandler<GetOrderListWithIncludeQuery, IEnumerable<Order>>
     {
-        private readonly IQueryRepository<Order> _orderRepository;
-
-        public GetOrderListWithIncludeHandler(IQueryRepository<Order> orderRepository)
-        {
-            _orderRepository = orderRepository;
-        }
+        private readonly IQueryRepository<Order> _orderRepository = orderRepository;
 
         public async Task<IEnumerable<Order>> Handle(GetOrderListWithIncludeQuery request, CancellationToken cancellationToken)
         {

@@ -1,20 +1,14 @@
 ﻿using DocumentStoreManagement.Core;
 using DocumentStoreManagement.Core.DTOs;
 using DocumentStoreManagement.Core.Interfaces;
-using DocumentStoreManagement.Core.Models;
 using DocumentStoreManagement.Services.Queries.OrderQueries;
 using MediatR;
 
 namespace DocumentStoreManagement.Services.Handlers.OrderHandlers
 {
-    public class GetOrderCountStatisticsHandler : IRequestHandler<GetOrderCountStatisticsQuery, IEnumerable<OrderStatisticsDTO>>
+    public class GetOrderCountStatisticsHandler(IQueryRepository<OrderStatisticsDTO> orderRepository) : IRequestHandler<GetOrderCountStatisticsQuery, IEnumerable<OrderStatisticsDTO>>
     {
-        private readonly IQueryRepository<Order> _orderRepository;
-
-        public GetOrderCountStatisticsHandler(IQueryRepository<Order> orderRepository)
-        {
-            _orderRepository = orderRepository;
-        }
+        private readonly IQueryRepository<OrderStatisticsDTO> _orderRepository = orderRepository;
 
         public async Task<IEnumerable<OrderStatisticsDTO>> Handle(GetOrderCountStatisticsQuery request, CancellationToken cancellationToken)
         {
@@ -24,13 +18,16 @@ namespace DocumentStoreManagement.Services.Handlers.OrderHandlers
             string toFormatted = request.To.ToString(format);
 
             // Get orders group by borrow date to get count
-            var orders = await _orderRepository.GetBetweenDatesAsync(CustomConstants.OrdersTable, nameof(Order.BorrowDate), fromFormatted, toFormatted);
-            var orderStatistics =
-                orders.GroupBy(o => o.BorrowDate.Date)
-                      .Select(g => new OrderStatisticsDTO { BorrowDate = g.Key, OrderCount = g.Count() })
-                      .OrderByDescending(o => o.BorrowDate);
+            string table = CustomConstants.OrdersTable;
+            string borrowDate = nameof(OrderStatisticsDTO.BorrowDate);
+            string orderCount = nameof(OrderStatisticsDTO.OrderCount);
+            string query = $@"SELECT date_trunc('day', ""{borrowDate}"") AS ""{borrowDate}"", COUNT(*) AS ""{orderCount}"" "
+                           + $@"FROM {table} "
+                           + $@"WHERE ""{borrowDate}"" BETWEEN '{fromFormatted}' AND '{toFormatted}'"
+                           + $@"GROUP BY date_trunc('day', ""{borrowDate}"") "
+                           + $@"ORDER BY date_trunc('day', ""{borrowDate}"") DESC";
 
-            return orderStatistics;
+            return await _orderRepository.Get(query);
         }
     }
 }

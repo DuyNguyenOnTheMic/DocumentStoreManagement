@@ -3,7 +3,7 @@
 namespace DocumentStoreManagement.Helpers
 {
     /// <summary>
-    /// Helper class to tranform URL to kebab-case
+    /// Helper class to transform URL to kebab-case
     /// </summary>
     public partial class ToKebabParameterTransformer : IOutboundParameterTransformer
     {

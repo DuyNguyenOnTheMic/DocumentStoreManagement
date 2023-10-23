@@ -5,14 +5,9 @@ using MediatR;
 
 namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
 {
-    public class CreateDocumentHandler<T> : IRequestHandler<CreateDocumentCommand<T>, T> where T : BaseEntity
+    public class CreateDocumentHandler<T>(IRepository<T> documentRepository) : IRequestHandler<CreateDocumentCommand<T>, T> where T : BaseEntity
     {
-        private readonly IRepository<T> _documentRepository;
-
-        public CreateDocumentHandler(IRepository<T> documentRepository)
-        {
-            _documentRepository = documentRepository;
-        }
+        private readonly IRepository<T> _documentRepository = documentRepository;
 
         /// <summary>
         /// Handler to create new document

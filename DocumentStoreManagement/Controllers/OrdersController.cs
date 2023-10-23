@@ -227,11 +227,17 @@ namespace DocumentStoreManagement.Controllers
         }
 
         /// <summary>
-        /// Finds orders by dates
+        /// Gets orders by dates
         /// </summary>
         /// <param name="from"></param>
         /// <param name="to"></param>
         /// <returns>A list of orders filtered by dates</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET api/orders/statistics/date
+        ///
+        /// </remarks>
         [HttpGet("statistics/date")]
         public async Task<IEnumerable<Order>> GetByDateStatistics(DateTime from, DateTime to)
         {
@@ -239,6 +245,18 @@ namespace DocumentStoreManagement.Controllers
             return await _orderService.GetByDateStatistics(from, to);
         }
 
+        /// <summary>
+        /// Gets orders count by dates
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns>A list of orders count by date</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET api/orders/statistics/count
+        ///
+        /// </remarks>
         [HttpGet("statistics/count")]
         public async Task<IEnumerable<OrderStatisticsDTO>> GetCountStatistics(DateTime from, DateTime to)
         {

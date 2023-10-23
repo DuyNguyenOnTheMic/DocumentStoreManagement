@@ -7,23 +7,17 @@ namespace DocumentStoreManagement.Controllers
     /// <summary>
     /// Test controller
     /// </summary>
+    /// <remarks>
+    /// Add dependencies to controller
+    /// </remarks>
+    /// <param name="bookRepository"></param>
+    /// <param name="orderRepository"></param>
     [Route("api/[controller]")]
     [ApiController]
-    public class TestController : ControllerBase
+    public class TestController(IRepository<Book> bookRepository, IRepository<Order> orderRepository) : ControllerBase
     {
-        private readonly IRepository<Book> _bookRepository;
-        private readonly IRepository<Order> _orderRepository;
-
-        /// <summary>
-        /// Add dependencies to controller
-        /// </summary>
-        /// <param name="bookRepository"></param>
-        /// <param name="orderRepository"></param>
-        public TestController(IRepository<Book> bookRepository, IRepository<Order> orderRepository)
-        {
-            _bookRepository = bookRepository;
-            _orderRepository = orderRepository;
-        }
+        private readonly IRepository<Book> _bookRepository = bookRepository;
+        private readonly IRepository<Order> _orderRepository = orderRepository;
 
         /// <summary>
         /// Method to get books by Entity Framework

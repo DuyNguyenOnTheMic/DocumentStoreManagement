@@ -6,17 +6,12 @@ using MediatR;
 
 namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
 {
-    public class GetDocumentByIdHandler : IRequestHandler<GetDocumentByIdQuery, Document>
+    public class GetDocumentByIdHandler(IQueryRepository<Document> documentRepository) : IRequestHandler<GetDocumentByIdQuery, Document>
     {
-        private readonly IQueryRepository<Document> _documentRepository;
-
-        public GetDocumentByIdHandler(IQueryRepository<Document> documentRepository)
-        {
-            _documentRepository = documentRepository;
-        }
+        private readonly IQueryRepository<Document> _documentRepository = documentRepository;
 
         /// <summary>
-        /// Hanlder to find document by id
+        /// Handler to find document by id
         /// </summary>
         /// <param name="query"></param>
         /// <param name="cancellationToken"></param>

@@ -8,16 +8,10 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.SQL
     /// SQL Generic Repository
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class SqlRepository<T> : IRepository<T> where T : class
+    public class SqlRepository<T>(DbContext dbContext) : IRepository<T> where T : class
     {
-        protected readonly DbContext _dbContext;
-        protected readonly DbSet<T> _dbSet;
-
-        public SqlRepository(DbContext dbContext)
-        {
-            _dbContext = dbContext;
-            _dbSet = dbContext.Set<T>();
-        }
+        protected readonly DbContext _dbContext = dbContext;
+        protected readonly DbSet<T> _dbSet = dbContext.Set<T>();
 
         public async Task AddAsync(T entity)
         {

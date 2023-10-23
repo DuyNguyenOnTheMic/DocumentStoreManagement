@@ -9,14 +9,9 @@ namespace DocumentStoreManagement.Services
     /// <summary>
     /// Service class for document management
     /// </summary>
-    public class DocumentService : IDocumentService
+    public class DocumentService(IMediator mediator) : IDocumentService
     {
-        private readonly IMediator _mediator;
-
-        public DocumentService(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
+        private readonly IMediator _mediator = mediator;
 
         public async Task<IEnumerable<Document>> GetAll()
         {

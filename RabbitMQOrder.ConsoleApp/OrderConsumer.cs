@@ -8,14 +8,9 @@ using System.Text;
 
 namespace RabbitMQOrder.ConsoleApp
 {
-    public class OrderConsumer : IHostedService
+    public class OrderConsumer(IRepository<Order> mongoOrderRepository) : IHostedService
     {
-        private readonly IRepository<Order> _mongoOrderRepository;
-
-        public OrderConsumer(IRepository<Order> mongoOrderRepository)
-        {
-            _mongoOrderRepository = mongoOrderRepository;
-        }
+        private readonly IRepository<Order> _mongoOrderRepository = mongoOrderRepository;
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
@@ -34,7 +29,7 @@ namespace RabbitMQOrder.ConsoleApp
             // Declare the queue after mentioning name and a few property related to that
             channel.QueueDeclare("order", exclusive: false);
 
-            // Set Event object which listen message from chanel which is sent by producer
+            // Set Event object which listen message from channel which is sent by producer
             EventingBasicConsumer consumer = new(channel);
             consumer.Received += async (model, eventArgs) =>
             {

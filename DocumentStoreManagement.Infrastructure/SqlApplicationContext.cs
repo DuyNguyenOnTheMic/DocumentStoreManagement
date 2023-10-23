@@ -3,12 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DocumentStoreManagement.Infrastructure
 {
-    public class SqlApplicationContext : DbContext
+    public class SqlApplicationContext(DbContextOptions options) : DbContext(options)
     {
-        public SqlApplicationContext(DbContextOptions options) : base(options)
-        {
-        }
-
         public DbSet<Student> Students { get; set; }
     }
 }
