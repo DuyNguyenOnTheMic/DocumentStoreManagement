@@ -17,10 +17,12 @@ namespace DocumentStoreManagement.Services.Handlers.OrderHandlers
             string fromFormatted = request.From.ToString(format);
             string toFormatted = request.To.ToString(format);
 
-            // Get orders group by borrow date to get count
+            // Declare table and column names for query
             string table = CustomConstants.OrdersTable;
             string borrowDate = nameof(OrderStatisticsDTO.BorrowDate);
             string orderCount = nameof(OrderStatisticsDTO.OrderCount);
+
+            // Get orders group by borrow date to get count
             string query = $@"SELECT date_trunc('day', ""{borrowDate}"") AS ""{borrowDate}"", COUNT(*) AS ""{orderCount}"" "
                            + $@"FROM {table} "
                            + $@"WHERE ""{borrowDate}"" BETWEEN '{fromFormatted}' AND '{toFormatted}'"
