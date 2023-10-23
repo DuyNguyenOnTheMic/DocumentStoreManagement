@@ -8,7 +8,7 @@ namespace DocumentStoreManagement.Services.MessageBroker
     {
         public void SendOrderMessage<T>(T message)
         {
-            // Here we specify the Rabbit MQ Server. we use rabbitmq docker image and use it
+            // Here we specify the Rabbit MQ Server. we use rabbitMQ docker image and use it
             ConnectionFactory factory = new()
             {
                 HostName = "localhost"
@@ -18,7 +18,7 @@ namespace DocumentStoreManagement.Services.MessageBroker
             IConnection connection = factory.CreateConnection();
 
             // Here we create channel with session and model
-            using IModel channel = connection.CreateModel();
+            using IChannel channel = connection.CreateChannel();
 
             // Declare the queue after mentioning name and a few property related to that
             channel.QueueDeclare("order", exclusive: false);
