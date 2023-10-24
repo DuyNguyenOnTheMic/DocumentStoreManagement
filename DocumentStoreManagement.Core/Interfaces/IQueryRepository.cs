@@ -11,7 +11,7 @@
         /// </summary>
         /// <param name="query"></param>
         /// <returns>List of data</returns>
-        Task<IEnumerable<T>> Get(string query);
+        Task<IEnumerable<T>> GetAsync(string query);
 
         /// <summary>
         /// Gets all the data from a table
@@ -21,12 +21,11 @@
         Task<IEnumerable<T>> GetAllAsync(string table);
 
         /// <summary>
-        /// Gets all the data from a table include with a child table
+        /// Get all the data from a table by a discriminator
         /// </summary>
         /// <param name="table"></param>
-        /// <param name="includeTable"></param>
         /// <returns>List of data</returns>
-        Task<IEnumerable<T>> GetAllWithIncludeAsync(string table, string includeTable);
+        Task<IEnumerable<T>> GetByDiscriminator(string table);
 
         /// <summary>
         /// Gets all the data from a table which between 2 dates

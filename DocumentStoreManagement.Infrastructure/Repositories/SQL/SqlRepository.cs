@@ -13,6 +13,15 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.SQL
         protected readonly DbContext _dbContext = dbContext;
         protected readonly DbSet<T> _dbSet = dbContext.Set<T>();
 
+        /// <summary>
+        /// Test query to select all data from database
+        /// </summary>
+        private static readonly Func<DbContext, IAsyncEnumerable<T>> testQuery = EF.CompileAsyncQuery((DbContext db) => db.Set<T>());
+        public async Task<IEnumerable<T>> GetAllTestAsync()
+        {
+            return await Task.FromResult(testQuery(_dbContext).ToBlockingEnumerable().ToList());
+        }
+
         public async Task AddAsync(T entity)
         {
             await _dbSet.AddAsync(entity);

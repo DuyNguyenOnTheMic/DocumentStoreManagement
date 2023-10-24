@@ -12,8 +12,26 @@ namespace DocumentStoreManagement.Services.Handlers.OrderHandlers
 
         public async Task<IEnumerable<Order>> Handle(GetOrderListWithIncludeQuery request, CancellationToken cancellationToken)
         {
-            string orderDetailsTableName = CustomConstants.OrderDetailsTable.Trim('"');
-            return await _orderRepository.GetAllWithIncludeAsync(CustomConstants.OrdersTable, orderDetailsTableName);
+            // Declare variables
+            Order order;
+            OrderDetail orderDetail;
+            string orderTable = CustomConstants.OrdersTable;
+            string orderDetailTable = CustomConstants.OrderDetailsTable;
+
+            // Query from orders table join with orderDetails
+            string query =
+                $@"SELECT
+                    o.*,
+	                od.""{nameof(orderDetail.Id)}"",
+	                od.""{nameof(orderDetail.Quantity)}"",
+	                od.""{nameof(orderDetail.Total)}"",
+	                od.""{nameof(orderDetail.DocumentId)}""
+                FROM 
+                    {orderTable} o
+                INNER JOIN 
+                    {orderDetailTable} od ON o.""{nameof(order.Id)}"" = od.""{nameof(orderDetail.OrderId)}"";";
+
+            return await _orderRepository.GetAsync(query);
         }
     }
 }
