@@ -180,6 +180,13 @@ namespace DocumentStoreManagement.Controllers
                 order = await _orderService.Create(newOrder);
                 await _unitOfWork.SaveAsync();
 
+                // Loop through each order details to clear values, avoid self referencing loop 
+                foreach (var item in order.OrderDetails)
+                {
+                    item.Order = null;
+                    item.Document = null;
+                }
+
                 // Send the inserted order data to the queue and consumer will listening this data from queue
                 _rabbitMQProducer.SendOrderMessage(order);
             }
