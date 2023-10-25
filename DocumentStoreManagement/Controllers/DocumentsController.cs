@@ -52,13 +52,33 @@ namespace DocumentStoreManagement.Controllers
             try
             {
                 // Set the expiration of cache
-                TimeSpan expiration = TimeSpan.FromSeconds(30);
+                TimeSpan expiration = TimeSpan.FromMinutes(30);
 
                 // Get list of documents
                 return Ok(await _cacheService.GetOrSetAsync(
                     key: $"{cacheKey}-{type}",
                     func: _documentService.GetByType(type),
                     expiration: expiration));
+            }
+            catch (Exception e)
+            {
+                // Return error message
+                return BadRequest(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Test get document by type without using Redis cache
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns>A document list filtered by type</returns>
+        [HttpGet("test/filter/{type}")]
+        public async Task<ActionResult<IEnumerable<Document>>> GetDocumentsByTypeTest(int type)
+        {
+            try
+            {
+                // Get list of documents
+                return Ok(await _documentService.GetByType(type));
             }
             catch (Exception e)
             {

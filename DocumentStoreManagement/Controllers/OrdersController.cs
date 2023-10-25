@@ -1,6 +1,7 @@
 ﻿using DocumentStoreManagement.Core.DTOs;
 using DocumentStoreManagement.Core.Interfaces;
 using DocumentStoreManagement.Core.Models;
+using DocumentStoreManagement.Services.Cache;
 using DocumentStoreManagement.Services.Interfaces;
 using DocumentStoreManagement.Services.MessageBroker;
 using Microsoft.AspNetCore.Mvc;
@@ -16,18 +17,22 @@ namespace DocumentStoreManagement.Controllers
     {
         private readonly IOrderService _orderService;
         private readonly IRabbitMQProducer _rabbitMQProducer;
+        private readonly ICacheService _cacheService;
+        private static readonly string cacheKey = "order-list-cache";
 
         /// <summary>
         /// Add dependencies to controller
         /// </summary>
+        /// <param name="unitOfWork"></param>
         /// <param name="orderService"></param>
         /// <param name="rabbitMQProducer"></param>
-        /// <param name="unitOfWork"></param>
-        public OrdersController(IUnitOfWork unitOfWork, IOrderService orderService, IRabbitMQProducer rabbitMQProducer) : base(unitOfWork)
+        /// <param name="cacheService"></param>
+        public OrdersController(IUnitOfWork unitOfWork, IOrderService orderService, IRabbitMQProducer rabbitMQProducer, ICacheService cacheService) : base(unitOfWork)
         {
             _unitOfWork = unitOfWork;
             _orderService = orderService;
             _rabbitMQProducer = rabbitMQProducer;
+            _cacheService = cacheService;
         }
 
         /// <summary>
@@ -60,8 +65,14 @@ namespace DocumentStoreManagement.Controllers
         [HttpGet("include")]
         public async Task<IEnumerable<Order>> GetOrdersWithInclude()
         {
+            // Set the expiration of cache
+            TimeSpan expiration = TimeSpan.FromMinutes(30);
+
             // Get list of orders with include
-            return await _orderService.GetWithInclude();
+            return await _cacheService.GetOrSetAsync(
+                key: $"{cacheKey}",
+                func: _orderService.GetWithInclude(),
+                expiration: expiration);
         }
 
         /// <summary>
@@ -181,7 +192,7 @@ namespace DocumentStoreManagement.Controllers
                 await _unitOfWork.SaveAsync();
 
                 // Loop through each order details to clear values, avoid self referencing loop 
-                foreach (var item in order.OrderDetails)
+                foreach (OrderDetail item in order.OrderDetails)
                 {
                     item.Order = null;
                     item.Document = null;
