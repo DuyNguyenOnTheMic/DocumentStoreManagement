@@ -68,26 +68,6 @@ namespace DocumentStoreManagement.Controllers
         }
 
         /// <summary>
-        /// Test get document by type without using Redis cache
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns>A document list filtered by type</returns>
-        [HttpGet("test/filter/{type}")]
-        public async Task<ActionResult<IEnumerable<Document>>> GetDocumentsByTypeTest(int type)
-        {
-            try
-            {
-                // Get list of documents
-                return Ok(await _documentService.GetByType(type));
-            }
-            catch (Exception e)
-            {
-                // Return error message
-                return BadRequest(e.Message);
-            }
-        }
-
-        /// <summary>
         /// Gets a document bases on document id
         /// </summary>
         /// <param name="id"></param>
@@ -128,7 +108,7 @@ namespace DocumentStoreManagement.Controllers
         ///
         ///     PUT api/documents/{id}
         ///     {
-        ///         "id": "id",
+        ///         "id": "Id",
         ///         "publisherName": "Example Name",
         ///         "releaseQuantity": 12
         ///     }

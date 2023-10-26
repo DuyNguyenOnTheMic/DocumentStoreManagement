@@ -10,5 +10,12 @@
         /// </summary>
         /// <returns>Nothing</returns>
         Task SaveAsync();
+
+        /// <summary>
+        /// Refresh Materialized View
+        /// </summary>
+        /// <param name="viewName"></param>
+        /// <returns>Nothing</returns>
+        Task RefreshMaterializedViewAsync(string viewName);
     }
 }

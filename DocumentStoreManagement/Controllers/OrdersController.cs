@@ -1,4 +1,5 @@
-﻿using DocumentStoreManagement.Core.DTOs;
+﻿using DocumentStoreManagement.Core;
+using DocumentStoreManagement.Core.DTOs;
 using DocumentStoreManagement.Core.Interfaces;
 using DocumentStoreManagement.Core.Models;
 using DocumentStoreManagement.Services.Cache;
@@ -65,6 +66,13 @@ namespace DocumentStoreManagement.Controllers
         [HttpGet("include")]
         public async Task<IEnumerable<Order>> GetOrdersWithInclude()
         {
+            // Get list of orders with include
+            return await _orderService.GetWithInclude();
+        }
+
+        [HttpGet("test/include")]
+        public async Task<IEnumerable<Order>> GetOrdersWithIncludeTest()
+        {
             // Set the expiration of cache
             TimeSpan expiration = TimeSpan.FromMinutes(30);
 
@@ -110,24 +118,25 @@ namespace DocumentStoreManagement.Controllers
         ///
         ///     PUT api/orders/{id}
         ///     {
-        ///         "id": "id",
+        ///         "id": "Id",
         ///         "fullName": "John Doe",
         ///         "phoneNumber": "0123456789",
         ///         "borrowDate": "2023-10-11T07:29:20.408Z",
         ///         "returnDate": "2023-10-12T07:29:20.409Z",
         ///         "status": 0,
-        ///         "orderDetailsDTOs": [
+        ///         "orderDetails": [
         ///             {
         ///                 "id": "Order Details Id"
         ///                 "quantity": 2,
-        ///                 "documentId": "Document Id"
+        ///                 "documentId": "Document Id",
+        ///                 "orderId": "Order id"
         ///             }
         ///         ]
         ///     }
         ///
         /// </remarks>
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrder(string id, OrderDTO updatedOrder)
+        public async Task<IActionResult> PutOrder(string id, Order updatedOrder)
         {
             // Return bad request if ids don't match
             if (id != updatedOrder.Id)
@@ -140,6 +149,7 @@ namespace DocumentStoreManagement.Controllers
                 // Update order
                 await _orderService.Update(updatedOrder);
                 await _unitOfWork.SaveAsync();
+                await _unitOfWork.RefreshMaterializedViewAsync(CustomConstants.MaterializedViewOrdersInclude);
             }
             catch (Exception e)
             {
@@ -190,6 +200,7 @@ namespace DocumentStoreManagement.Controllers
                 // Add a new order
                 order = await _orderService.Create(newOrder);
                 await _unitOfWork.SaveAsync();
+                await _unitOfWork.RefreshMaterializedViewAsync(CustomConstants.MaterializedViewOrdersInclude);
 
                 // Loop through each order details to clear values, avoid self referencing loop 
                 foreach (OrderDetail item in order.OrderDetails)
@@ -240,6 +251,7 @@ namespace DocumentStoreManagement.Controllers
             // Delete order
             await _orderService.Delete(order);
             await _unitOfWork.SaveAsync();
+            await _unitOfWork.RefreshMaterializedViewAsync(CustomConstants.MaterializedViewOrdersInclude);
 
             return NoContent();
         }
