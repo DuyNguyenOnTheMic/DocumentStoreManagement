@@ -21,7 +21,7 @@ namespace DocumentStoreManagement.Services.Cache
         /// <param name="key"></param>
         /// <param name="func"></param>
         /// <param name="expiration"></param>
-        public async Task<IEnumerable<T>> GetOrSetAsync<T>(string key, Task<IEnumerable<T>> func, TimeSpan expiration)
+        public async Task<IEnumerable<T>> GetOrSetAsync<T>(string key, Func<Task<IEnumerable<T>>> func, TimeSpan expiration)
         {
             RedisValue cached = await _database.StringGetAsync(key);
             if (!cached.IsNull)
@@ -34,7 +34,7 @@ namespace DocumentStoreManagement.Services.Cache
             }
 
             // Otherwise, set new cache value
-            IEnumerable<T> result = await func;
+            IEnumerable<T> result = await func();
             using (StringWriter sw = new())
             {
                 using JsonTextWriter jw = new(sw);

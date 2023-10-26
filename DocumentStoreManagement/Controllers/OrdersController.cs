@@ -71,7 +71,7 @@ namespace DocumentStoreManagement.Controllers
             // Get list of orders with include
             return await _cacheService.GetOrSetAsync(
                 key: $"{cacheKey}",
-                func: _orderService.GetWithInclude(),
+                func: _orderService.GetWithInclude,
                 expiration: expiration);
         }
 

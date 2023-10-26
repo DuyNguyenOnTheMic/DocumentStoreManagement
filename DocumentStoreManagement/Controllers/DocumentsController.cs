@@ -57,7 +57,7 @@ namespace DocumentStoreManagement.Controllers
                 // Get list of documents
                 return Ok(await _cacheService.GetOrSetAsync(
                     key: $"{cacheKey}-{type}",
-                    func: _documentService.GetByType(type),
+                    func: () => _documentService.GetByType(type),
                     expiration: expiration));
             }
             catch (Exception e)
