@@ -70,8 +70,12 @@ namespace DocumentStoreManagement.Controllers
             return await _orderService.GetWithInclude();
         }
 
-        [HttpGet("test/include")]
-        public async Task<IEnumerable<Order>> GetOrdersWithIncludeTest()
+        /// <summary>
+        /// Gets the order list with include from database using Redis Cache
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("include/cache")]
+        public async Task<IEnumerable<Order>> GetOrdersWithIncludeCached()
         {
             // Set the expiration of cache
             TimeSpan expiration = TimeSpan.FromMinutes(30);

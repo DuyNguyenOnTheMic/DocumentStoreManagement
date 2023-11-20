@@ -13,8 +13,7 @@ namespace DocumentStoreManagement.Services.Handlers.OrderHandlers
         public async Task<IEnumerable<Order>> Handle(GetOrderListWithIncludeQuery request, CancellationToken cancellationToken)
         {
             // Query from orders table join with orderDetails
-            string query = $"SELECT * FROM {CustomConstants.MaterializedViewOrdersInclude}";
-            return await _orderRepository.GetAsync(query);
+            return await _orderRepository.GetAllAsync(CustomConstants.MaterializedViewOrdersInclude);
         }
     }
 }
