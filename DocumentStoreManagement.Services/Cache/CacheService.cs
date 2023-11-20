@@ -1,4 +1,5 @@
-﻿using StackExchange.Redis;
+﻿using Newtonsoft.Json;
+using StackExchange.Redis;
 
 namespace DocumentStoreManagement.Services.Cache
 {
@@ -20,18 +21,27 @@ namespace DocumentStoreManagement.Services.Cache
         /// <param name="key"></param>
         /// <param name="func"></param>
         /// <param name="expiration"></param>
-        public async Task<IEnumerable<T>> GetOrSetAsync<T>(string key, Task<IEnumerable<T>> func, TimeSpan expiration)
+        public async Task<IEnumerable<T>> GetOrSetAsync<T>(string key, Func<Task<IEnumerable<T>>> func, TimeSpan expiration)
         {
-            /* RedisValue cached = _database.StringGet(key);
-             if (!cached.IsNull)
-             {
-                 // Get the cached value
-                 return JsonConvert.DeserializeObject<IEnumerable<T>>(cached);
-             }
+            RedisValue cached = await _database.StringGetAsync(key);
+            if (!cached.IsNull)
+            {
+                // Get the cached value
+                using StringReader sr = new(cached);
+                using JsonTextReader jr = new(sr);
+                JsonSerializer serializer = new();
+                return serializer.Deserialize<IEnumerable<T>>(jr);
+            }
 
-             // Otherwise, set new cache value*/
-            IEnumerable<T> result = await func;
-            //await _database.StringSetAsync(key, JsonConvert.SerializeObject(result), expiration, When.NotExists);
+            // Otherwise, set new cache value
+            IEnumerable<T> result = await func();
+            using (StringWriter sw = new())
+            {
+                using JsonTextWriter jw = new(sw);
+                JsonSerializer serializer = new();
+                serializer.Serialize(jw, result);
+                await _database.StringSetAsync(key, sw.ToString(), expiration, When.NotExists);
+            }
             return result;
         }
 

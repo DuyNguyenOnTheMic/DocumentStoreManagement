@@ -12,7 +12,7 @@
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <param name="expirationTime"></param>
-        Task<IEnumerable<T>> GetOrSetAsync<T>(string key, Task<IEnumerable<T>> func, TimeSpan expiration);
+        Task<IEnumerable<T>> GetOrSetAsync<T>(string key, Func<Task<IEnumerable<T>>> func, TimeSpan expiration);
 
         /// <summary>
         /// Flush cache values

@@ -12,7 +12,7 @@ namespace DocumentStoreManagement.Services.Interfaces
         Task<Order> GetById(string id);
         Task<IEnumerable<Order>> GetWithInclude();
         Task<Order> Create(OrderDTO orderDTO);
-        Task Update(OrderDTO order);
+        Task Update(Order order);
         Task Delete(Order order);
         Task<IEnumerable<Order>> GetByDateStatistics(DateTime from, DateTime to);
         Task<IEnumerable<OrderStatisticsDTO>> GetCountStatistics(DateTime from, DateTime to);

@@ -1,6 +1,8 @@
-﻿using DocumentStoreManagement.Core.DTOs;
+﻿using DocumentStoreManagement.Core;
+using DocumentStoreManagement.Core.DTOs;
 using DocumentStoreManagement.Core.Interfaces;
 using DocumentStoreManagement.Core.Models;
+using DocumentStoreManagement.Services.Cache;
 using DocumentStoreManagement.Services.Interfaces;
 using DocumentStoreManagement.Services.MessageBroker;
 using Microsoft.AspNetCore.Mvc;
@@ -16,18 +18,22 @@ namespace DocumentStoreManagement.Controllers
     {
         private readonly IOrderService _orderService;
         private readonly IRabbitMQProducer _rabbitMQProducer;
+        private readonly ICacheService _cacheService;
+        private static readonly string cacheKey = "order-list-cache";
 
         /// <summary>
         /// Add dependencies to controller
         /// </summary>
+        /// <param name="unitOfWork"></param>
         /// <param name="orderService"></param>
         /// <param name="rabbitMQProducer"></param>
-        /// <param name="unitOfWork"></param>
-        public OrdersController(IUnitOfWork unitOfWork, IOrderService orderService, IRabbitMQProducer rabbitMQProducer) : base(unitOfWork)
+        /// <param name="cacheService"></param>
+        public OrdersController(IUnitOfWork unitOfWork, IOrderService orderService, IRabbitMQProducer rabbitMQProducer, ICacheService cacheService) : base(unitOfWork)
         {
             _unitOfWork = unitOfWork;
             _orderService = orderService;
             _rabbitMQProducer = rabbitMQProducer;
+            _cacheService = cacheService;
         }
 
         /// <summary>
@@ -65,6 +71,23 @@ namespace DocumentStoreManagement.Controllers
         }
 
         /// <summary>
+        /// Gets the order list with include from database using Redis Cache
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("include/cache")]
+        public async Task<IEnumerable<Order>> GetOrdersWithIncludeCached()
+        {
+            // Set the expiration of cache
+            TimeSpan expiration = TimeSpan.FromMinutes(30);
+
+            // Get list of orders with include
+            return await _cacheService.GetOrSetAsync(
+                key: $"{cacheKey}",
+                func: _orderService.GetWithInclude,
+                expiration: expiration);
+        }
+
+        /// <summary>
         /// Gets an order bases on order id
         /// </summary>
         /// <param name="id"></param>
@@ -99,24 +122,25 @@ namespace DocumentStoreManagement.Controllers
         ///
         ///     PUT api/orders/{id}
         ///     {
-        ///         "id": "id",
+        ///         "id": "Id",
         ///         "fullName": "John Doe",
         ///         "phoneNumber": "0123456789",
         ///         "borrowDate": "2023-10-11T07:29:20.408Z",
         ///         "returnDate": "2023-10-12T07:29:20.409Z",
         ///         "status": 0,
-        ///         "orderDetailsDTOs": [
+        ///         "orderDetails": [
         ///             {
         ///                 "id": "Order Details Id"
         ///                 "quantity": 2,
-        ///                 "documentId": "Document Id"
+        ///                 "documentId": "Document Id",
+        ///                 "orderId": "Order id"
         ///             }
         ///         ]
         ///     }
         ///
         /// </remarks>
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrder(string id, OrderDTO updatedOrder)
+        public async Task<IActionResult> PutOrder(string id, Order updatedOrder)
         {
             // Return bad request if ids don't match
             if (id != updatedOrder.Id)
@@ -129,6 +153,7 @@ namespace DocumentStoreManagement.Controllers
                 // Update order
                 await _orderService.Update(updatedOrder);
                 await _unitOfWork.SaveAsync();
+                await _unitOfWork.RefreshMaterializedViewAsync(CustomConstants.MaterializedViewOrdersInclude);
             }
             catch (Exception e)
             {
@@ -179,6 +204,14 @@ namespace DocumentStoreManagement.Controllers
                 // Add a new order
                 order = await _orderService.Create(newOrder);
                 await _unitOfWork.SaveAsync();
+                await _unitOfWork.RefreshMaterializedViewAsync(CustomConstants.MaterializedViewOrdersInclude);
+
+                // Loop through each order details to clear values, avoid self referencing loop 
+                foreach (OrderDetail item in order.OrderDetails)
+                {
+                    item.Order = null;
+                    item.Document = null;
+                }
 
                 // Send the inserted order data to the queue and consumer will listening this data from queue
                 _rabbitMQProducer.SendOrderMessage(order);
@@ -222,6 +255,7 @@ namespace DocumentStoreManagement.Controllers
             // Delete order
             await _orderService.Delete(order);
             await _unitOfWork.SaveAsync();
+            await _unitOfWork.RefreshMaterializedViewAsync(CustomConstants.MaterializedViewOrdersInclude);
 
             return NoContent();
         }

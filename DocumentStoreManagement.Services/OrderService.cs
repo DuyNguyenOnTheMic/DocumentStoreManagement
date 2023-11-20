@@ -83,46 +83,24 @@ namespace DocumentStoreManagement.Services
             await _mediator.Send(new DeleteOrderCommand(order));
         }
 
-        public async Task Update(OrderDTO orderDTO)
+        public async Task Update(Order order)
         {
-            // Get order details from DTO
-            ICollection<OrderDetailsDTO> orderDetailsDTO = orderDTO.OrderDetailsDTOs;
+            // Get order details
+            ICollection<OrderDetail> orderDetails = order.OrderDetails;
 
-            // Create a list to store order details
-            List<OrderDetail> orderDetails = [];
-
-            // Loop through each order details to map and create a list of order details
-            foreach (OrderDetailsDTO item in orderDetailsDTO)
+            // Loop through each order details to check for ids
+            foreach (OrderDetail item in orderDetails)
             {
                 // Check if document exists
-                Document document = await _mediator.Send(new GetDocumentByIdQuery(item.DocumentId)) ?? throw new Exception("Document id not found!");
+                _ = await _mediator.Send(new GetDocumentByIdQuery(item.DocumentId)) ?? throw new Exception("Document id not found!");
 
                 // Generate new order details id
                 string orderDetailsId = ObjectId.GenerateNewId().ToString();
 
-                orderDetails.Add(new OrderDetail()
-                {
-                    Id = item.Id ?? orderDetailsId,
-                    Quantity = item.Quantity,
-                    Total = document.UnitPrice * item.Quantity,
-                    DocumentId = item.DocumentId,
-                    OrderId = orderDTO.Id
-                });
+                item.Id ??= orderDetailsId;
             }
 
-            // Map order DTO
-            Order order = new()
-            {
-                Id = orderDTO.Id,
-                FullName = orderDTO.FullName,
-                PhoneNumber = orderDTO.PhoneNumber,
-                BorrowDate = orderDTO.BorrowDate,
-                ReturnDate = orderDTO.ReturnDate,
-                Status = orderDTO.Status,
-                OrderDetails = orderDetails
-            };
-
-            // Create new order
+            // Update order
             await _mediator.Send(new UpdateOrderCommand(order));
         }
 

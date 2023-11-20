@@ -27,17 +27,17 @@ namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
             if (type == CustomConstants.DocumentBookType)
             {
                 // Return books
-                return await _bookRepository.GetAllAsync(table);
+                return await _bookRepository.GetByDiscriminator(table);
             }
             if (type == CustomConstants.DocumentMagazineType)
             {
                 // Return magazines
-                return await _magazineRepository.GetAllAsync(table);
+                return await _magazineRepository.GetByDiscriminator(table);
             }
             if (type == CustomConstants.DocumentNewsPaperType)
             {
                 // Return newspaper
-                return await _newspaperRepository.GetAllAsync(table);
+                return await _newspaperRepository.GetByDiscriminator(table);
             }
 
             // Throw error

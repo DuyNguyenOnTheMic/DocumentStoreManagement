@@ -12,6 +12,8 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.Mongo
         /// </summary>
         public async Task SaveAsync() => await Task.CompletedTask;
 
+        public async Task RefreshMaterializedViewAsync(string viewName) => await Task.CompletedTask;
+
         /// <summary>
         /// Cleans up any resources being used.
         /// </summary>

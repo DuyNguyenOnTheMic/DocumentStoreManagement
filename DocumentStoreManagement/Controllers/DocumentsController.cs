@@ -52,12 +52,12 @@ namespace DocumentStoreManagement.Controllers
             try
             {
                 // Set the expiration of cache
-                TimeSpan expiration = TimeSpan.FromSeconds(30);
+                TimeSpan expiration = TimeSpan.FromMinutes(30);
 
                 // Get list of documents
                 return Ok(await _cacheService.GetOrSetAsync(
                     key: $"{cacheKey}-{type}",
-                    func: _documentService.GetByType(type),
+                    func: () => _documentService.GetByType(type),
                     expiration: expiration));
             }
             catch (Exception e)
@@ -108,7 +108,7 @@ namespace DocumentStoreManagement.Controllers
         ///
         ///     PUT api/documents/{id}
         ///     {
-        ///         "id": "id",
+        ///         "id": "Id",
         ///         "publisherName": "Example Name",
         ///         "releaseQuantity": 12
         ///     }

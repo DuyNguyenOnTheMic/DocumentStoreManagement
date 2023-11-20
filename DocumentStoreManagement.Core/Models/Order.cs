@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace DocumentStoreManagement.Core.Models
 {
@@ -13,8 +14,11 @@ namespace DocumentStoreManagement.Core.Models
         }
 
         [Required]
+        [MaxLength(255)]
         public string FullName { get; set; }
         [Required]
+        [Unicode(false)]
+        [MaxLength(15)]
         public string PhoneNumber { get; set; }
         [Required]
         public DateTime BorrowDate { get; set; }

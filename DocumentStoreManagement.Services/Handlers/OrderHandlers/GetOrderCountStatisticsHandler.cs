@@ -29,7 +29,7 @@ namespace DocumentStoreManagement.Services.Handlers.OrderHandlers
                            + $@"GROUP BY date_trunc('day', ""{borrowDate}"") "
                            + $@"ORDER BY date_trunc('day', ""{borrowDate}"") DESC";
 
-            return await _orderRepository.Get(query);
+            return await _orderRepository.GetAsync(query);
         }
     }
 }

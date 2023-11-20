@@ -13,6 +13,7 @@ namespace DocumentStoreManagement.Core.Models
     {
         [Key]
         [BsonId]
+        [MaxLength(128)]
         [DefaultValue(null)]
         [BsonRepresentation(BsonType.ObjectId)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

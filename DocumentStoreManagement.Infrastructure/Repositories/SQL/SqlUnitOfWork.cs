@@ -1,5 +1,6 @@
 ﻿using DocumentStoreManagement.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.CompilerServices;
 
 namespace DocumentStoreManagement.Infrastructure.Repositories.SQL
 {
@@ -12,6 +13,15 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.SQL
         private bool _disposed = false;
 
         public async Task SaveAsync() => await _dbContext.SaveChangesAsync();
+
+        public async Task RefreshMaterializedViewAsync(string viewName)
+        {
+            await _dbContext.Database.ExecuteSqlAsync(
+                FormattableStringFactory.Create(
+                    $"REFRESH MATERIALIZED VIEW {viewName}"
+                )
+            );
+        }
 
         /// <summary>
         /// Cleans up any resources being used.

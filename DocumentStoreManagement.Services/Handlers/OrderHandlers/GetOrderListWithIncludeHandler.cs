@@ -12,8 +12,8 @@ namespace DocumentStoreManagement.Services.Handlers.OrderHandlers
 
         public async Task<IEnumerable<Order>> Handle(GetOrderListWithIncludeQuery request, CancellationToken cancellationToken)
         {
-            string orderDetailsTableName = CustomConstants.OrderDetailsTable.Trim('"');
-            return await _orderRepository.GetAllWithIncludeAsync(CustomConstants.OrdersTable, orderDetailsTableName);
+            // Query from orders table join with orderDetails
+            return await _orderRepository.GetAllAsync(CustomConstants.MaterializedViewOrdersInclude);
         }
     }
 }

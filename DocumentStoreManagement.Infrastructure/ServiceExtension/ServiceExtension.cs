@@ -11,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Npgsql;
+using System.Data;
 
 namespace DocumentStoreManagement.Infrastructure.ServiceExtension
 {
@@ -40,12 +42,15 @@ namespace DocumentStoreManagement.Infrastructure.ServiceExtension
             services.AddDbContext<DbContext>(options => options.UseSqlServer(connectionString));*/
 
             // Postgres context
+            string connectionString = configuration.GetConnectionString("PostgresConnection");
             services.AddScoped<DbContext, PostgresApplicationContext>();
             services.AddTransient<IUnitOfWork, SqlUnitOfWork>();
             services.AddScoped(typeof(IRepository<>), typeof(SqlRepository<>));
             services.AddScoped(typeof(IQueryRepository<>), typeof(SqlQueryRepository<>));
             services.AddDbContext<DbContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("PostgresConnection")));
+                options.UseNpgsql(connectionString));
+            services.AddTransient<IDbConnection>(db =>
+                new NpgsqlConnection(connectionString));
             services.Configure<MongoDbSettings>(
                 configuration.GetSection("MongoDBDatabase"));
             services.AddSingleton<IMongoDbSettings>(sp =>
