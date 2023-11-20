@@ -45,7 +45,6 @@ namespace DocumentStoreManagement.Services.Cache
             return result;
         }
 
-
         /// <summary>
         /// Flush cache values
         /// </summary>
