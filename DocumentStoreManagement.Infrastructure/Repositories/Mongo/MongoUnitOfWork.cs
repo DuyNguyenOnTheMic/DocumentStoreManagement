@@ -7,11 +7,10 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.Mongo
     /// </summary>
     public class MongoUnitOfWork : IUnitOfWork
     {
-        /// <summary>
-        /// Add an empty method as MongoDb doesn't need saving
-        /// </summary>
-        public async Task SaveAsync() => await Task.CompletedTask;
+        /// <inheritdoc/>
+        public async Task SaveAsync(CancellationToken cancellationToken = default) => await Task.CompletedTask;
 
+        /// <inheritdoc/>
         public async Task RefreshMaterializedViewAsync(string viewName) => await Task.CompletedTask;
 
         /// <summary>

@@ -5,6 +5,7 @@ using MediatR;
 
 namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
 {
+    /// <inheritdoc/>
     public class DeleteDocumentHandler(IRepository<Document> documentRepository) : IRequestHandler<DeleteDocumentCommand>
     {
         private readonly IRepository<Document> _documentRepository = documentRepository;

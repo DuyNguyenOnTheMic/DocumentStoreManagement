@@ -5,6 +5,7 @@ using MediatR;
 
 namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
 {
+    /// <inheritdoc/>
     public class UpdateDocumentHandler(IRepository<Document> documentRepository) : IRequestHandler<UpdateDocumentCommand>
     {
         private readonly IRepository<Document> _documentRepository = documentRepository;

@@ -13,17 +13,20 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.SQL
     {
         private readonly IDbConnection _db = db;
 
+        /// <inheritdoc/>
         public async Task<IEnumerable<T>> GetAsync(string query)
         {
             return await _db.QueryAsync<T>(query);
         }
 
+        /// <inheritdoc/>
         public async Task<IEnumerable<T>> GetAllAsync(string table)
         {
             string query = $"SELECT * FROM {table}";
             return await _db.QueryAsync<T>(query);
         }
 
+        /// <inheritdoc/>
         public async Task<IEnumerable<T>> GetByDiscriminator(string table)
         {
             string query = $@"SELECT * FROM {table} 
@@ -31,6 +34,7 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.SQL
             return await _db.QueryAsync<T>(query);
         }
 
+        /// <inheritdoc/>
         public async Task<IEnumerable<T>> GetBetweenDatesAsync(string table, string column, string from, string to)
         {
             string query = $@"SELECT * FROM {table}
@@ -39,6 +43,7 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.SQL
             return await _db.QueryAsync<T>(query);
         }
 
+        /// <inheritdoc/>
         public async Task<T> GetByIdAsync(string table, object id)
         {
             string query = $@"SELECT * FROM {table}

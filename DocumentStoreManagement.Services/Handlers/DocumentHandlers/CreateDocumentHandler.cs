@@ -5,6 +5,7 @@ using MediatR;
 
 namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
 {
+    /// <inheritdoc/>
     public class CreateDocumentHandler<T>(IRepository<T> documentRepository) : IRequestHandler<CreateDocumentCommand<T>, T> where T : BaseEntity
     {
         private readonly IRepository<T> _documentRepository = documentRepository;
@@ -16,7 +17,7 @@ namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
         /// <param name="cancellationToken"></param>
         public async Task<T> Handle(CreateDocumentCommand<T> command, CancellationToken cancellationToken)
         {
-            await _documentRepository.AddAsync(command.Document);
+            await _documentRepository.AddAsync(command.Document, cancellationToken);
             return command.Document;
         }
     }

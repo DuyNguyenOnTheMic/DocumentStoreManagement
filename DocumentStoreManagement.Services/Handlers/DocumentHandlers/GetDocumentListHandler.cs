@@ -6,6 +6,7 @@ using MediatR;
 
 namespace DocumentStoreManagement.Services.Handlers.DocumentHandlers
 {
+    /// <inheritdoc/>
     public class GetDocumentListHandler(IQueryRepository<Document> documentRepository) : IRequestHandler<GetDocumentListQuery, IEnumerable<Document>>
     {
         private readonly IQueryRepository<Document> _documentRepository = documentRepository;

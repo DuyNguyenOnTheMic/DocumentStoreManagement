@@ -9,28 +9,36 @@ using MongoDB.Bson;
 
 namespace DocumentStoreManagement.Services
 {
+    /// <summary>
+    /// Order service
+    /// </summary>
+    /// <param name="mediator"></param>
     public class OrderService(IMediator mediator) : IOrderService
     {
         private readonly IMediator _mediator = mediator;
 
+        /// <inheritdoc/>
         public async Task<IEnumerable<Order>> GetAll()
         {
             // Get order list
             return await _mediator.Send(new GetOrderListQuery());
         }
 
+        /// <inheritdoc/>
         public async Task<Order> GetById(string id)
         {
             // Get order by id
             return await _mediator.Send(new GetOrderByIdQuery(id));
         }
 
+        /// <inheritdoc/>
         public async Task<IEnumerable<Order>> GetWithInclude()
         {
             // Get orders with order details list
             return await _mediator.Send(new GetOrderListWithIncludeQuery());
         }
 
+        /// <inheritdoc/>
         public async Task<Order> Create(OrderDTO orderDTO)
         {
             // Get order details from DTO
@@ -77,12 +85,14 @@ namespace DocumentStoreManagement.Services
             return await _mediator.Send(new CreateOrderCommand(order));
         }
 
+        /// <inheritdoc/>
         public async Task Delete(Order order)
         {
             // Delete order
             await _mediator.Send(new DeleteOrderCommand(order));
         }
 
+        /// <inheritdoc/>
         public async Task Update(Order order)
         {
             // Get order details
@@ -104,12 +114,14 @@ namespace DocumentStoreManagement.Services
             await _mediator.Send(new UpdateOrderCommand(order));
         }
 
+        /// <inheritdoc/>
         public async Task<IEnumerable<Order>> GetByDateStatistics(DateTime from, DateTime to)
         {
             // Get orders by date
             return await _mediator.Send(new GetOrderByDateStatisticsQuery(from, to));
         }
 
+        /// <inheritdoc/>
         public async Task<IEnumerable<OrderStatisticsDTO>> GetCountStatistics(DateTime from, DateTime to)
         {
             // Get orders count

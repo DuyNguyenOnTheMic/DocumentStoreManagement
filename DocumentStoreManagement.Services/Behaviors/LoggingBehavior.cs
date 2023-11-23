@@ -16,8 +16,10 @@ namespace DocumentStoreManagement.Services.Behaviors
         /// <summary>
         /// Logging information when request is handled
         /// </summary>
-        /// <typeparam name="TRequest"></typeparam>
-        /// <typeparam name="TResponse"></typeparam>
+        /// <param name="request"></param>
+        /// <param name="next"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns><typeparamref name="TResponse"/></returns>
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Handling {TRequestName}", typeof(TRequest).Name);

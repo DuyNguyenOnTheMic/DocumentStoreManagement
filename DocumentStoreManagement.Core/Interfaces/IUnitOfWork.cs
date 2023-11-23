@@ -9,7 +9,7 @@
         /// Save changes
         /// </summary>
         /// <returns>Nothing</returns>
-        Task SaveAsync();
+        Task SaveAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Refresh Materialized View

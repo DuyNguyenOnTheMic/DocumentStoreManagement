@@ -16,6 +16,9 @@ using System.Data;
 
 namespace DocumentStoreManagement.Infrastructure.ServiceExtension
 {
+    /// <summary>
+    /// Service Extension Helper
+    /// </summary>
     public static class ServiceExtension
     {
         /// <summary>

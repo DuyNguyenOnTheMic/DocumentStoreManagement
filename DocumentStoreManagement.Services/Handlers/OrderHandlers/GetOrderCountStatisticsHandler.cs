@@ -6,10 +6,17 @@ using MediatR;
 
 namespace DocumentStoreManagement.Services.Handlers.OrderHandlers
 {
+    /// <inheritdoc/>
     public class GetOrderCountStatisticsHandler(IQueryRepository<OrderStatisticsDTO> orderRepository) : IRequestHandler<GetOrderCountStatisticsQuery, IEnumerable<OrderStatisticsDTO>>
     {
         private readonly IQueryRepository<OrderStatisticsDTO> _orderRepository = orderRepository;
 
+        /// <summary>
+        /// Handlers to get order count statistics
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<OrderStatisticsDTO>> Handle(GetOrderCountStatisticsQuery request, CancellationToken cancellationToken)
         {
             // Format datetime into sql server datetime query

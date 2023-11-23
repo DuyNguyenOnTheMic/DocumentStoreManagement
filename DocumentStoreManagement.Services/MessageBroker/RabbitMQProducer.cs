@@ -4,8 +4,12 @@ using System.Text;
 
 namespace DocumentStoreManagement.Services.MessageBroker
 {
+    /// <summary>
+    /// RabbitMQ Producer
+    /// </summary>
     public class RabbitMQProducer : IRabbitMQProducer
     {
+        /// <inheritdoc/>
         public void SendOrderMessage<T>(T message)
         {
             // Here we specify the Rabbit MQ Server. we use rabbitMQ docker image and use it

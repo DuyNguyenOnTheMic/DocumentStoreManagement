@@ -5,6 +5,7 @@ using MediatR;
 
 namespace DocumentStoreManagement.Services.Handlers.OrderHandlers
 {
+    /// <inheritdoc/>
     public class UpdateOrderHandler(IRepository<Order> orderRepository) : IRequestHandler<UpdateOrderCommand>
     {
         private readonly IRepository<Order> _orderRepository = orderRepository;

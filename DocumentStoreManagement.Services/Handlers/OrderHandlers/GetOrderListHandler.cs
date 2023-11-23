@@ -6,6 +6,7 @@ using MediatR;
 
 namespace DocumentStoreManagement.Services.Handlers.OrderHandlers
 {
+    /// <inheritdoc/>
     public class GetOrderListHandler(IQueryRepository<Order> orderRepository) : IRequestHandler<GetOrderListQuery, IEnumerable<Order>>
     {
         private readonly IQueryRepository<Order> _orderRepository = orderRepository;

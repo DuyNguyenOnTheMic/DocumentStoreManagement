@@ -21,8 +21,7 @@ builder.Services.AddControllers(opts =>
     opts.Conventions.Add(new RouteTokenTransformerConvention(new ToKebabParameterTransformer())));
 
 // Register Redis Cache
-IConnectionMultiplexer redis = ConnectionMultiplexer.Connect("localhost");
-builder.Services.AddScoped(s => redis.GetDatabase());
+builder.Services.AddScoped(s => ConnectionMultiplexer.Connect("localhost").GetDatabase());
 builder.Services.AddScoped<ICacheService, CacheService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

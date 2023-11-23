@@ -12,8 +12,10 @@ namespace DocumentStoreManagement.Infrastructure.Repositories.SQL
         private readonly DbContext _dbContext = dbContext;
         private bool _disposed = false;
 
-        public async Task SaveAsync() => await _dbContext.SaveChangesAsync();
+        /// <inheritdoc/>
+        public async Task SaveAsync(CancellationToken cancellationToken = default) => await _dbContext.SaveChangesAsync(cancellationToken);
 
+        /// <inheritdoc/>
         public async Task RefreshMaterializedViewAsync(string viewName)
         {
             await _dbContext.Database.ExecuteSqlAsync(
