@@ -14,13 +14,7 @@ namespace DocumentStoreManagement.Services.Cache
     {
         private readonly IDatabase _database = database;
 
-        /// <summary>
-        /// Get cache or set new if not exists
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="key"></param>
-        /// <param name="func"></param>
-        /// <param name="expiration"></param>
+        /// <inheritdoc/>
         public async Task<IEnumerable<T>> GetOrSetAsync<T>(string key, Func<Task<IEnumerable<T>>> func, TimeSpan expiration)
         {
             RedisValue cached = await _database.StringGetAsync(key);
@@ -45,10 +39,7 @@ namespace DocumentStoreManagement.Services.Cache
             return result;
         }
 
-        /// <summary>
-        /// Flush cache values
-        /// </summary>
-        /// <param name="key"></param>
+        /// <inheritdoc/>
         public async Task FlushAsync(string key)
         {
             // Flush cached value by key
